@@ -1,19 +1,12 @@
-.feature-page {
-  h1 {
-    font-size: 2em;
-    margin-bottom: 0.25em;
+.registration-page {
+  display: flex;
+  box-shadow: 1px 1px 3px rgba(black, 0.5);
+  &_left{
+    flex: 0 1 60%;
   }
-  
-  ul {
-    font-family: Georgia, Times, 'Times New Roman', serif;
-    padding-left: 1.75em;
-
-    li {
-      margin: 1em 0;
-
-      p.title {
-        font-weight: bold;
-      }
-    }
+  &_right{
+    flex: 0 1 40%;
+    background-color: #ebccf5;
+    padding: 60px;
   }
 }
