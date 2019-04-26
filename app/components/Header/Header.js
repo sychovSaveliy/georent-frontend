@@ -7,9 +7,6 @@ class Header extends Component { // eslint-disable-line react/prefer-stateless-f
   render() {
     return (
       <div className="header">
-        <a href="https://twitter.com/flexdinesh">
-          <img src={Banner} alt="react-redux-boilerplate - Logo" />
-        </a>
         <div className="nav-bar">
           <Link className="router-link" to="/">
             Home
