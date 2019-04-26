@@ -40,7 +40,7 @@ export default class RegistrationPage extends Component {
 
 	onCheck = event => {
 		this.setState({
-			[event.target.name]: !event.target.checked
+			[event.target.name]: event.target.checked
 		});
 	};
 
@@ -105,120 +105,119 @@ export default class RegistrationPage extends Component {
 		}
 	};
 
-  render() {
-    return (
-      <div className="registration-page">
-        <Helmet>
-          <title>Registration Page</title>
-          <meta
-            name="description"
-            content="Feature page of React.js Boilerplate application"
-          />
-        </Helmet>
-        <div className="registration-page_left">
-          <p>Have some stuff to share?</p>
-          <p>Easy way to earn money from stuff that is not in use</p>
-          <img src={signup} />
-          <p>Sign up and start to share</p>
-        </div>
-        <div className="registration-page_right">
-        <h2>Sign Up</h2>
-			<div className="form-container card">
-				<form className="form card-body">
-					<Field
-						id="username"
-						labelText="Username"
-						type="text"
-						placeholder="Enter username"
-						name="username"
-						value={this.state.username}
-						onChange={this.onChange}
-						error={this.state.errors.username}
+	render() {
+		return (
+			<div className="registration-page">
+				<Helmet>
+					<title>Registration Page</title>
+					<meta
+						name="description"
+						content="Feature page of React.js Boilerplate application"
 					/>
-					<Field
-						id="userSurname"
-						labelText="User Surname"
-						type="text"
-						placeholder="Enter user surname"
-						name="userSurname"
-						value={this.state.userSurname}
-						onChange={this.onChange}
-						error={this.state.errors.userSurname}
-					/>
-					<Field
-						id="email"
-						labelText="Email"
-						type="text"
-						placeholder="Enter email"
-						name="email"
-						value={this.state.email}
-						onChange={this.onChange}
-						error={this.state.errors.email}
-					/>
-					<Field
-						id="phone"
-						labelText="Phone"
-						type="text"
-						placeholder="Enter phone (000)-000-0000"
-						name="phone"
-						value={this.state.phone}
-						onChange={this.onChange}
-						error={this.state.errors.phone}
-					/>
-					<Field
-						id="password"
-						labelText="Password"
-						type="password"
-						placeholder="Enter password"
-						name="password"
-						value={this.state.password}
-						onChange={this.onChange}
-						error={this.state.errors.password}
-					/>
-					<Field
-						id="repeatPassword"
-						labelText="Repeat password"
-						type="password"
-						placeholder="Repeat password"
-						name="repeatPassword"
-						value={this.state.repeatPassword}
-						onChange={this.onChange}
-						error={this.state.errors.repeatPassword}
-					/>
-					<Check
-						className="form-check-input"
-						type="checkbox"
-						id="agreeTerms"
-						labelText="Confirm the Terms"
-						name="agreeTerms"
-						value={this.state.agreeTerms}
-						onChange={this.onCheck}
-						checked={this.state.agreeTerms}
-						error={this.state.errors.agreeTerms}
-					/>
-					<Check
-						className="form-check-input"
-						type="checkbox"
-						id="agreeConfidential"
-						labelText="Confirm the processing of data"
-						name="agreeConfidential"
-						value={this.state.agreeConfidential}
-						onChange={this.onCheck}
-						checked={this.state.agreeConfidential}
-						error={this.state.errors.agreeConfidential}
-					/>
-					<button
-						type="submit"
-						className="btn btn-primary w-100"
-						onClick={this.onSubmit}
-					>
-						Submit
-					</button>
-				</form>
+				</Helmet>
+				<div className="registration-page_left">
+					<p>Have some stuff to share?</p>
+					<p>Easy way to earn money from stuff that is not in use</p>
+					<img src={signup} />
+					<p>Sign up and start to share</p>
+				</div>
+				<div className="registration-page_right">
+					<h2>Sign Up</h2>
+					<div className="form-container card">
+						<form className="form card-body">
+							<Field
+								id="username"
+								labelText="Username"
+								type="text"
+								placeholder="Enter username"
+								name="username"
+								value={this.state.username}
+								onChange={this.onChange}
+								error={this.state.errors.username}
+							/>
+							<Field
+								id="userSurname"
+								labelText="User Surname"
+								type="text"
+								placeholder="Enter user surname"
+								name="userSurname"
+								value={this.state.userSurname}
+								onChange={this.onChange}
+								error={this.state.errors.userSurname}
+							/>
+							<Field
+								id="email"
+								labelText="Email"
+								type="text"
+								placeholder="Enter email"
+								name="email"
+								value={this.state.email}
+								onChange={this.onChange}
+								error={this.state.errors.email}
+							/>
+							<Field
+								id="phone"
+								labelText="Phone"
+								type="text"
+								placeholder="(000) 000-0000"
+								name="phone"
+								value={this.state.phone}
+								onChange={this.onChange}
+								error={this.state.errors.phone}
+							/>
+							<Field
+								id="password"
+								labelText="Password"
+								type="password"
+								placeholder="Enter password"
+								name="password"
+								value={this.state.password}
+								onChange={this.onChange}
+								error={this.state.errors.password}
+							/>
+							<Field
+								id="repeatPassword"
+								labelText="Repeat password"
+								type="password"
+								placeholder="Repeat password"
+								name="repeatPassword"
+								value={this.state.repeatPassword}
+								onChange={this.onChange}
+								error={this.state.errors.repeatPassword}
+							/>
+							<Check
+								className="form-check-input"
+								type="checkbox"
+								id="agreeTerms"
+								labelText="Confirm the Terms"
+								name="agreeTerms"
+								value={this.state.agreeTerms}
+								onChange={this.onCheck}
+								checked={this.state.agreeTerms}
+								error={this.state.errors.agreeTerms}
+							/>
+							<Check
+								className="form-check-input"
+								type="checkbox"
+								id="agreeConfidential"
+								labelText="Confirm the processing of data"
+								name="agreeConfidential"
+								value={this.state.agreeConfidential}
+								onChange={this.onCheck}
+								checked={this.state.agreeConfidential}
+								error={this.state.errors.agreeConfidential}
+							/>
+							<button
+								type="submit"
+								className="btn btn-primary w-100"
+								onClick={this.onSubmit}
+							>
+								Submit
+							</button>
+						</form>
+					</div>
+				</div>
 			</div>
 		);
-        </div>
-      </div>
-    );
-  }
+	}
 }
