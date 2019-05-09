@@ -23,3 +23,13 @@ label {
   font-family: Georgia, Times, 'Times New Roman', serif;
   line-height: 1.5em;
 }
+.leaflet-container {
+  height: 400px;
+  width: 800px;
+}
+.content{
+  display: flex;
+}
+.sidebar{
+  width: 400px;
+}

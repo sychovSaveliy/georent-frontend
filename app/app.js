@@ -18,12 +18,8 @@ import createHistory from 'history/createBrowserHistory';
 import 'sanitize.css/sanitize.css';
 
 // Import root app
-import App from 'containers/App';
+import App from './App/App';
 
-// Load the favicon
-/* eslint-disable import/no-webpack-loader-syntax */
-import '!file-loader?name=[name].[ext]!./images/favicon.ico';
-/* eslint-enable import/no-webpack-loader-syntax */
 
 // Import CSS reset and Global Styles
 import 'styles/theme.scss';
@@ -64,7 +60,7 @@ if (module.hot) {
   // Hot reloadable React components and translation json files
   // modules.hot.accept does not accept dynamic dependencies,
   // have to be constants at compile-time
-  module.hot.accept(['containers/App'], () => {
+  module.hot.accept(['./App'], () => {
     ReactDOM.unmountComponentAtNode(MOUNT_NODE);
     render();
   });
