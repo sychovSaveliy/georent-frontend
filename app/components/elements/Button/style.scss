@@ -1,69 +1,13 @@
-.btn-violet {
-  -moz-box-shadow: 0px 1px 2px 0px #000000;
-  -webkit-box-shadow: 0px 1px 2px 0px #000000;
-  box-shadow: 0px 1px 2px 0px #000000;
-  background-color:#9500b3;
-  -moz-border-radius:7px;
-  -webkit-border-radius:7px;
-  border-radius:7px;
-  border:1px solid #9500b3;
-  display:inline-block;
-  cursor:pointer;
-  color:#ffffff;
-  font-size:14px;
-  padding:7px 20px;
-  text-decoration:none;
-  text-shadow:0px 1px 0px #283966;
-
-&:hover {
-  background-color: rgba(149, 0, 179, 0.8);
-}
+button {
+  padding: 10px;
+  border: none;
+  margin: 0 5px;
+  background-color: white;
+  border-radius: 5px;
 }
 
-.btn-transparent {
-background-color:transparent;
-display:inline-block;
-cursor:pointer;
-color:black;
-font-size:14px;
-padding:7px 20px;
-text-decoration:none;
-text-shadow:0px 1px 0px #283966;
-border: none;
-
-&:hover {
-  color: #9500b3;
-}
-}
-
-.btn-search {
--moz-box-shadow: 0px 1px 2px 0px #000000;
--webkit-box-shadow: 0px 1px 2px 0px #000000;
-box-shadow: 0px 1px 2px 0px #000000;
-background-color:#9500b3;
--moz-border-radius:7px;
--webkit-border-radius:7px;
-border-radius:7px;
-border:1px solid #9500b3;
-display:inline-block;
-cursor:pointer;
-text-align: center;
-
-&:hover {
-  background-color: rgba(149, 0, 179, 0.8);
-}
-
-&:after {
-  display: inline-block;
-  font-family: FontAwesome;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
+.active {
+  background-color: purple;
   color: white;
-  padding: 7px;
-  margin: 0;
-  line-height: 1em;
-  cursor: pointer;
-  content: "\f002";
-}
+  border-radius: 10px;
 }

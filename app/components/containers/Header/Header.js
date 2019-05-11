@@ -1,31 +1,20 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-
-import Field from '../../elements/Field/index';
+import Button from '../../elements/Button/index';
 import './style.scss';
-import Button from '../../elements/Button';
 
 class Header extends Component { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
       <div className="header">
-        <div className="nav-bar">
-          <Link className="router-link" to="/">
-            Home
-          </Link>
-          <Link className="router-link" to="/signup">
-            Sign Up
-          </Link>
-          <Link className="router-link" to="/login">
-            Login
-          </Link>
-          <Link className="router-link" to="/profile">
-            Profile Page
-          </Link>
-          <Link className="router-link" to="/create-ad">
-            Create Ad
-          </Link>
-          {/* <Field /> */}
+        <img src='https://www.freelogodesign.org/Content/img/logo-ex-7.png' />
+        <h4>
+          Best servise to rent or share your stuff in the neighbourhood
+        </h4>
+        <div>
+          <Button text={'Contact info'}/>
+          <Button text={'Sign in'}/>
+          <Button text={'Share my staff'} active={'active'}/>
         </div>
       </div>
     );

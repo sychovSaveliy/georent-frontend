@@ -1,16 +1,10 @@
 
-import React, { Component } from 'react';
+import React from 'react';
+import style from './style.scss';
 
-class Button extends Component {
-  onClickHandler=() => {
-    console.log('click');
-  }
-
-  render() {
-    const { className, style, text } = this.props;
-    return (
-      <button onClick={this.onClickHandler}>{text}</button>
-    );
-  }
-}
+const Button = (props) => {
+  return (
+    <button className={props.active}>{props.text}</button>
+  );
+};
 export default Button;
