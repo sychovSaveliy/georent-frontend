@@ -14,7 +14,7 @@ const ProductCardList = (props) => {
             <div className="LocatIcon"></div>
             <span className="AdressWrapper">{item.itemAdress}</span>
             <span className="PriceItem">{item.itemPrice}<span>{item.itemPriceCurrency}</span>/day</span>
-            <div className="CardButton"><Button /></div>
+            <div className="CardButton"><Button text={'to rent'} active={'active'}/></div>
           </div>
         </div>
       </div>
