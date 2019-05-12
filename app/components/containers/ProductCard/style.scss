@@ -7,7 +7,6 @@
 .CardWrapper{
   box-sizing: border-box;
   display: inline-block;
-
   min-width: 395px;
   padding: 3px;
   border: 1px #ccc solid;
@@ -20,7 +19,6 @@
   display: inline-block;
   height: 100px;
   width: 100px;
-  
   background-color: gray;
   vertical-align: baseline;
 }
@@ -28,10 +26,20 @@
 .ItemInfoWrapper{
   display: inline-block;
   width: 70%;
+  min-height: 100px;
   margin: 0;
   padding-left: 5px;
   vertical-align: top;
+  position: relative;
 }
+
+.IfoContentAlign{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  min-height: 100px;
+}
+
 .InfoStr{
   margin: 0px 0px 5px;
   color: gray;
@@ -54,8 +62,18 @@
   width: 22px;
   background-image: url("./pin_svg/geo_pin.svg");
   background-size: cover;
-
   color: purple;
-  // background-color: gray;
   margin-right: 5px;
+}
+
+.CardFooter{
+  position: relative;
+  bottom: 0;
+}
+
+.CardButton{
+  display: inline-block;
+  position: absolute;
+  right: 0;
+  bottom: 0;
 }
