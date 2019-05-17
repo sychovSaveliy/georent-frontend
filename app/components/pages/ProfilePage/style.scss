@@ -1,19 +1,50 @@
-.feature-page {
-  h1 {
-    font-size: 2em;
-    margin-bottom: 0.25em;
-  }
-  
-  ul {
-    font-family: Georgia, Times, 'Times New Roman', serif;
-    padding-left: 1.75em;
+.ProfilePageWrapper{
+  box-sizing: border-box;
+}
 
-    li {
-      margin: 1em 0;
 
-      p.title {
-        font-weight: bold;
-      }
-    }
-  }
+
+.SubHeaderWrapper{
+  display: block;
+  position: relative;
+}
+
+.SubHeaderH3{
+  display: inline-block;
+}
+
+.BtnWrapper{
+  position: absolute;
+  right: 0px;
+}
+
+
+.Wrapper{
+  display: block;
+}
+
+.ProfilePageSideBar{
+  display: inline-block;
+  width: 22%;
+  border: solid 1px gray;
+}
+
+.PersonalInfoWrapper{
+  display: inline-block;
+  margin: 5px;
+
+  width: 90%;
+
+  border: solid 1px gray;
+}
+.PersonalInfoWrapper img{
+  width: 50%;
+}
+
+
+
+.ProfileInputWrapper{
+  display: inline-block;
+  width: 78%;
+  padding: 10px;
 }
