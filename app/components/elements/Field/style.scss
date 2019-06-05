@@ -1,14 +1,7 @@
-footer {
-  display: flex;
-  justify-content: space-between;
-  padding: 3em 0;
-  border-top: 1px solid #666;
-
-  a {
-    color: #41addd;
-  
-    &:hover {
-      color: #6cc0e5;
-    }
-  }
+.FormGroup input{
+    height: 30px;
+    margin: 5px;
+    border-radius: 5px;
+    border: solid 1px rgb(207, 207, 207);
+    box-shadow: 3px 3px 3px gray;
 }

@@ -41,10 +41,24 @@
   width: 50%;
 }
 
-
-
 .ProfileInputWrapper{
   display: inline-block;
   width: 78%;
   padding: 10px;
+}
+
+.InputBlock{
+  display: inline-block;
+  width: 100%;
+}
+
+.InputBlock h3{
+  padding-bottom: 10px;
+  border-bottom: 1px solid gray;
+  color: purple;
+}
+
+.BtnFormWrapper{
+  display: inline-block;
+  margin: 20px 0px 20px 0px;
 }
