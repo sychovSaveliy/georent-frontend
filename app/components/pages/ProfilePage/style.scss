@@ -1,64 +1,78 @@
-.ProfilePageWrapper{
+.profilePageWrapper{
   box-sizing: border-box;
 }
 
-
-
-.SubHeaderWrapper{
+.subHeaderWrapper{
   display: block;
   position: relative;
 }
 
-.SubHeaderH3{
+.subHeaderH3{
   display: inline-block;
 }
 
-.BtnWrapper{
+.btnWrapper{
   position: absolute;
   right: 0px;
 }
 
 
-.Wrapper{
+.wrapper{
   display: block;
 }
 
-.ProfilePageSideBar{
+.profilePageSideBar{
   display: inline-block;
   width: 22%;
   border: solid 1px gray;
 }
+.profilePageSideBar div{
+  display: block;
+}
 
-.PersonalInfoWrapper{
-  display: inline-block;
-  margin: 5px;
-
+.profilePageSideBar div>h5{
+  display: block;
   width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
 
+
+
+.personalInfoWrapper{
+  display: block;
+  margin: 10px auto;
+  width: 90%;
   border: solid 1px gray;
-}
-.PersonalInfoWrapper img{
-  width: 50%;
+  padding: 5px;
 }
 
-.ProfileInputWrapper{
+.personalInfoWrapper img{
+  width: 50%;
+  height: auto;
+  margin:5px;
+}
+
+
+
+.profileInputWrapper{
   display: inline-block;
   width: 78%;
   padding: 10px;
 }
 
-.InputBlock{
+.inputBlock{
   display: inline-block;
   width: 100%;
 }
 
-.InputBlock h3{
+.inputBlock h3{
   padding-bottom: 10px;
   border-bottom: 1px solid gray;
   color: purple;
 }
 
-.BtnFormWrapper{
+.btnFormWrapper{
   display: inline-block;
   margin: 20px 0px 20px 0px;
 }

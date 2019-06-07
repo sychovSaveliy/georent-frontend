@@ -2,11 +2,31 @@
 import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
 import Header from '../../containers/Header';
-import Input from '../../elements/Input';
 import Field from '../../elements/Field';
 import './style.scss';
 import Button from '../../elements/Button';
 import Footer from '../../containers/Footer/Footer';
+import PersonInfoList from './PersonsInfo.JSON';
+
+const infoList = PersonInfoList;
+
+const PersonInformation = (props) => {
+  const PersonInfoContent = props.infoList.map((person) => (
+    <div key={person.userID} className="personalInfoWrapper">
+      <img src={person.userPhoto} alt="#" />
+      <h5>{person.userName} {person.userSurname}</h5>
+      <p>{person.userAddress}</p>
+      <p>+38 {person.userPhone}</p>
+      <div>Rating: {person.userRating}</div>
+    </div>
+  )
+  );
+  return (
+    <div>
+      { PersonInfoContent }
+    </div>
+  );
+};
 
 export default class ProfilePage extends Component {
   constructor() {
@@ -96,10 +116,17 @@ export default class ProfilePage extends Component {
 	      errors: {}
 	    });
 
-      console.log('submit', this.state);
+      // console.log('submit', this.state);
       
 	    const {
-	      username, userSurname, email, phone, location, oldPassword, password, repeatPassword,
+        username,
+        userSurname,
+        email,
+        phone,
+        location,
+        oldPassword,
+        password,
+        repeatPassword,
 	    } = this.state;
 	    fetch('https://httpbin.org/post', {
 	      method: 'POST',
@@ -108,41 +135,57 @@ export default class ProfilePage extends Component {
 	        'Content-Type': 'application/json'
 	      },
 	      body: JSON.stringify({
-	        username, userSurname, email, phone, location, oldPassword, password, repeatPassword,
+          username,
+          userSurname,
+          email,
+          phone,
+          location,
+          oldPassword,
+          password,
+          repeatPassword,
 	      })
 	    });
 	  }
   };
 
+
   render() {
     return (
-      <div className="ProfilePageWrapper">
+      <div className="profilePageWrapper">
         <Helmet>
           <title>Profile Page</title>
           <meta name="description" content="Profile Page"/>
         </Helmet>
         <Header />
-        <div className="SubHeaderWrapper">
-          <h3 className="SubHeaderH3">Personal account</h3>
-          <div className="BtnWrapper">
-            <Button text={'+ Create an ad'} active={'active'} />
+        <div className="subHeaderWrapper">
+          <h3 className="subHeaderH3">Personal account</h3>
+          <div className="btnWrapper">
+            <Button text="+ Create an ad" active="active" />
           </div>
         </div>
-        <div className="ProfilePageSideBar">
-          <div className="PersonalInfoWrapper">
-            <img/>
+        <div className="profilePageSideBar">
+
+          <PersonInformation infoList={infoList} />
+
+          {/* <div className="personalInfoWrapper">
+            <img src={avatarDemoPicture} alt="#" />
             <h5>James Bond</h5>
             <p>Geroev Stalingrada 15</p>
             <p>+38 000 000 00 00</p>
             <div>Rating</div>
+          </div> */}
+
+          <div>
+            <h5>My profile</h5>
+            <h5>My shared stuff</h5>
           </div>
-          <h5>My profile</h5>
-          <h5>My shared stuff</h5>
-          <Button text={'+ Create an ad'} active={'active'} />
+          <div className="btnFormWrapper">
+            <Button text="+ Create an ad" active="active" />
+          </div>
           <Footer />
         </div>
-        <div className="ProfileInputWrapper">
-          <div className="InputBlock">
+        <div className="profileInputWrapper">
+          <div className="inputBlock">
             <h3>General Information</h3>
             <Field 
               id="username"
@@ -172,7 +215,7 @@ export default class ProfilePage extends Component {
               error={this.state.errors.email}
             />
           </div>
-          <div className="InputBlock">
+          <div className="inputBlock">
             <h3>Contact Information</h3>
             <Field 
               id="phone"
@@ -193,7 +236,7 @@ export default class ProfilePage extends Component {
               error={this.state.errors.location}
             />
           </div>
-          <div className="InputBlock">
+          <div className="inputBlock">
             <h3>Change Password</h3>
             <Field 
               id="oldPassword"
@@ -223,9 +266,9 @@ export default class ProfilePage extends Component {
               error={this.state.errors.repeatPassword}
             />
           </div>
-          <div className="BtnFormWrapper">
-            <Button text={'Edit'} active={'active'} />
-            <Button text={'Safe'} active={'active'} />
+          <div className="btnFormWrapper">
+            <Button text="Edit" active="active" />
+            <Button text="Safe" active="active" />
           </div>
         </div>
       </div>

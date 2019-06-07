@@ -13,7 +13,7 @@ const Field = (props) => {
     error
   } = props;
   return (
-    <div className="FormGroup">
+    <div className="formGroup">
       <label htmlFor={id}>{labelText}</label>
       <input 
         id={id}

@@ -126,13 +126,13 @@ export default class RegistrationPage extends Component {
         <meta
         name="description"
         content="Feature page of React.js Boilerplate application"
-      />
+        />
       </Helmet>
 
       <div className="registration-page_left">
         <p>Have some stuff to share?</p>
         <p>Easy way to earn money from stuff that is not in use</p>
-        <img src={signup} />
+        <img src={signup} alt="#" />
         <p>Sign up and start to share</p>
       </div>
       <div className="registration-page_right">
