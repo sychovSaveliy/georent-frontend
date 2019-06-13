@@ -14,11 +14,12 @@ const Field = (props) => {
   } = props;
   return (
     <div className="formGroup">
-      <label htmlFor={id}>{labelText}</label>
-      <input 
+      <label htmlFor={id}>{labelText}
+      </label>
+      <input
         id={id}
         type={type}
-        className="FormControl"
+        className="formControl"
         placeholder={placeholder}
         name={name}
         value={value}
