@@ -3,11 +3,11 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Switch, Route } from 'react-router-dom';
 
-import NotFoundPage from '../components/pages/NotFoundPage';
-import Header from '../components/containers/Header';
+// import NotFoundPage from '../components/pages/NotFoundPage';
+// import Header from '../components/containers/Header';
 import HomePage from '../components/pages/HomePage/index';
 import FeaturePage from '../components/pages/FeaturePage';
-import Footer from '../components/containers/Footer';
+// import Footer from '../components/containers/Footer';
 import RegistrationPage from '../components/pages/RegistrationPage';
 import './style.scss';
 import LoginPopup from '../components/pages/LoginPopup';
