@@ -1,10 +1,10 @@
-.CardHeader {
+.cardHeader {
   color: black;
   font-size: 18px;
   margin: 0px 0px 5px 0px;
 }
 
-.CardWrapper{
+.cardWrapper{
   box-sizing: border-box;
   display: inline-block;
   min-width: 395px;
@@ -15,7 +15,7 @@
   margin: 0px 5px 5px 0px;
 }
 
-.CardIMGStyle{
+.cardIMGStyle{
   display: inline-block;
   height: 100px;
   width: 100px;
@@ -23,7 +23,7 @@
   vertical-align: baseline;
 }
 
-.ItemInfoWrapper{
+.itemInfoWrapper{
   display: inline-block;
   width: 74%;
   min-height: 100px;
@@ -33,30 +33,30 @@
   position: relative;
 }
 
-.IfoContentAlign{
+.ifoContentAlign{
   display: flex;
   justify-content: space-between;
   flex-direction: column;
   min-height: 100px;
 }
 
-.InfoStr{
+.infoStr{
   margin: 0px 0px 5px;
   color: gray;
 }
 
-.AdressWrapper{
+.addressWrapper{
   display: inline-block;
   max-width: 100px;
   margin-right: 5px;
 }
 
-.PriceItem{
+.priceItem{
   color: purple;
   margin: 0px 5px 0px 0px;
 }
 
-.LocatIcon{
+.locationIcon{
   display: inline-block;
   height: 25px;
   width: 22px;
@@ -66,12 +66,12 @@
   margin-right: 5px;
 }
 
-.CardFooter{
+.cardFooter{
   position: relative;
   bottom: 0;
 }
 
-.CardButton{
+.cardButton{
   display: inline-block;
   position: absolute;
   right: 0;

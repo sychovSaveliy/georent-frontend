@@ -1,4 +1,5 @@
 import React from 'react';
+import './style.scss';
 
 const Field = (props) => {
   const {
@@ -12,12 +13,13 @@ const Field = (props) => {
     error
   } = props;
   return (
-    <div className="form-group">
-      <label htmlFor={id}>{labelText}</label>
+    <div className="formGroup">
+      <label htmlFor={id}>{labelText}
+      </label>
       <input
         id={id}
         type={type}
-        className="form-control"
+        className="formControl"
         placeholder={placeholder}
         name={name}
         value={value}

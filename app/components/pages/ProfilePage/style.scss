@@ -1,19 +1,78 @@
-.feature-page {
-  h1 {
-    font-size: 2em;
-    margin-bottom: 0.25em;
-  }
-  
-  ul {
-    font-family: Georgia, Times, 'Times New Roman', serif;
-    padding-left: 1.75em;
+.profilePageWrapper{
+  box-sizing: border-box;
+}
 
-    li {
-      margin: 1em 0;
+.subHeaderWrapper{
+  display: block;
+  position: relative;
+}
 
-      p.title {
-        font-weight: bold;
-      }
-    }
-  }
+.subHeaderH3{
+  display: inline-block;
+}
+
+.btnWrapper{
+  position: absolute;
+  right: 0px;
+}
+
+
+.wrapper{
+  display: block;
+}
+
+.profilePageSideBar{
+  display: inline-block;
+  width: 22%;
+  border: solid 1px gray;
+}
+.profilePageSideBar div{
+  display: block;
+}
+
+.profilePageSideBar div>h5{
+  display: block;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+
+.personalInfoWrapper{
+  display: block;
+  margin: 10px auto;
+  width: 90%;
+  border: solid 1px gray;
+  padding: 5px;
+}
+
+.personalInfoWrapper img{
+  width: 50%;
+  height: auto;
+  margin:5px;
+}
+
+
+
+.profileInputWrapper{
+  display: inline-block;
+  width: 78%;
+  padding: 10px;
+}
+
+.inputBlock{
+  display: inline-block;
+  width: 100%;
+}
+
+.inputBlock h3{
+  padding-bottom: 10px;
+  border-bottom: 1px solid gray;
+  color: purple;
+}
+
+.btnFormWrapper{
+  display: inline-block;
+  margin: 20px 0px 20px 0px;
 }
