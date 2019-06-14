@@ -4,6 +4,36 @@
 
 const path = require('path');
 const webpack = require('webpack');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+/**
+ * CSS/SASS loaders configuration which is compatible with MiniCssExtractPlugin
+ * extraction plugin
+ *
+ * @type {*[]}
+ */
+const cssExtractRules = [
+  {
+    test: /\.s?css$/,
+    exclude: [dirs.node_modules, dirs.styles],
+    use: [
+      MiniCssExtractPlugin.loader,
+      cssLoaderConfig,
+      'resolve-url-loader',
+      'sass-loader?sourceMap',
+    ],
+  },
+  {
+    test: /\.s?css$/,
+    include: [dirs.node_modules, dirs.styles],
+    use: [
+      MiniCssExtractPlugin.loader,
+      'css-loader',
+      'resolve-url-loader',
+      'sass-loader?sourceMap',
+    ],
+  }
+];
 
 process.noDeprecation = true;
 
@@ -19,17 +49,6 @@ module.exports = (options) => ({
     options.output
   ), // Merge with env dependent settings
   module: {
-    loaders: [
-      {
-        test: /\.jsx?$/,
-        loader: 'babel',
-        exclude: /node_modules/,
-        query: {
-          cacheDirectory: true,
-          presets: ['react', 'es2015']
-        }
-      }
-    ],
     rules: [
       {
         test: /\.js$/, // Transform all .js files required somewhere with Babel
