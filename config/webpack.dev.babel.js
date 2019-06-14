@@ -6,6 +6,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = require('./webpack.base.babel')({
   mode: 'development',
@@ -32,7 +33,14 @@ module.exports = require('./webpack.base.babel')({
     new CircularDependencyPlugin({
       exclude: /a\.js|node_modules/, // exclude node_modules
       failOnError: false // show a warning when there is a circular dependency
-    })
+    }),
+    new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // both options are optional
+      hashDigestLength: 8,
+      filename: '[name].[chunkhash].css',
+      chunkFilename: '[name].[chunkhash].css'
+    }),
   ],
 
   // Emit a source map for easier debugging

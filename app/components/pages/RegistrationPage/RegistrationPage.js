@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-no-comment-textnodes */
 import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
-import './style.scss';
+// import './style.scss';
 
 import Field from '../../elements/Field';
 import Check from '../../elements/Check';

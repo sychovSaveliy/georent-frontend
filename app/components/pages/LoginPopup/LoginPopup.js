@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './style.scss';
+// import './style.scss';
 import Field from '../../elements/Field';
 import Header from '../../containers/Header';
 

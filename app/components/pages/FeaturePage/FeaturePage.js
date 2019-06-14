@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
-import './style.scss';
+// import './style.scss';
 
 export default class FeaturePage extends Component {
   render() {
