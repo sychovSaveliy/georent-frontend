@@ -30,3 +30,12 @@
     margin-left: 0.4em;
   }
 }
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  &>div {
+    flex: 1;
+    max-width: 50%;
+  }
+}

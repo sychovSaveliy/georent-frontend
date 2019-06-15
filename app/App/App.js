@@ -3,16 +3,16 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Switch, Route } from 'react-router-dom';
 
-import NotFoundPage from '../components/pages/NotFoundPage';
-import Header from '../components/containers/Header';
-import HomePage from '../components/pages/HomePage/index';
-import FeaturePage from '../components/pages/FeaturePage';
-import Footer from '../components/containers/Footer';
-import RegistrationPage from '../components/pages/RegistrationPage';
-import './style.scss';
-import LoginPopup from '../components/pages/LoginPopup';
-import ProfilePage from '../components/pages/ProfilePage';
-import CreateAdPage from '../components/pages/CreateAdPage';
+// import NotFoundPage from '../components/pages/NotFoundPage';
+// import Header from '../components/containers/Header';
+import HomePage from 'components/pages/HomePage/index';
+import FeaturePage from 'components/pages/FeaturePage';
+// import Footer from '../components/containers/Footer';
+import RegistrationPage from 'components/pages/RegistrationPage';
+// import './style.scss';
+import LoginPopup from 'components/pages/LoginPopup';
+import ProfilePage from 'components/pages/ProfilePage';
+import CreateAdPage from 'components/pages/CreateAdPage';
 
 const App = () => (
   <div className="app-wrapper">

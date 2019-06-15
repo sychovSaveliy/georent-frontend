@@ -1,9 +1,114 @@
 /**
  * COMMON WEBPACK CONFIGURATION
  */
-
+const { resolve } = require('path');
 const path = require('path');
 const webpack = require('webpack');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+const constants = {
+  PUBLIC_PATH: 'static'
+};
+
+const dirs = {
+  src: resolve('app'),
+  styles: resolve('app/styles'),
+  dist: resolve(`dist/${constants.PUBLIC_PATH}`),
+  dev: resolve('dev'),
+  node_modules: resolve('node_modules')
+};
+
+const cssLoaderConfig = {
+  loader: 'css-loader',
+  options: {
+    modules: true,
+    localIdentName: '[local]-[hash:base64:7]',
+    sourceMap: true
+  }
+};
+
+/**
+ * CSS/SASS loaders configuration which is compatible with MiniCssExtractPlugin
+ * extraction plugin
+ *
+ * @type {*[]}
+ */
+const cssExtractRules = [
+  {
+    test: /\.s?css$/,
+    exclude: [dirs.node_modules, dirs.styles],
+    use: [
+      MiniCssExtractPlugin.loader,
+      cssLoaderConfig,
+      'resolve-url-loader',
+      'sass-loader?sourceMap',
+    ],
+  },
+  {
+    test: /\.s?css$/,
+    include: [dirs.node_modules, dirs.styles],
+    use: [
+      MiniCssExtractPlugin.loader,
+      'css-loader',
+      'resolve-url-loader',
+      'sass-loader?sourceMap',
+    ],
+  }
+];
+
+
+/**
+ * Webpack rules
+ *
+ * @type {[]}
+ */
+const rules = [
+  {
+    test: /\.jsx?$/,
+    exclude: dirs.node_modules,
+    use: [
+      'babel-loader',
+    ],
+  },
+  {
+    test: /\.(jpe?g|png|gif)$/,
+    loader: 'url-loader',
+    options: {
+      limit: 1024,
+      name: 'images/[name].[hash:8].[ext]',
+    },
+  }, {
+    test: /\.svg$/,
+    loader: 'url-loader',
+    options: {
+      limit: 1024,
+      name: 'images/[name].[hash:8].[ext]',
+    },
+  }, {
+    test: /\.(eot)(\?[a-z0-9=&.]+)?$/,
+    loader: 'url-loader',
+    options: {
+      limit: 1024,
+      name: 'fonts/[name].[hash:8].[ext]',
+    },
+  }, {
+    test: /\.(ttf|otf)(\?[a-z0-9=&.]+)?$/,
+    loader: 'url-loader',
+    options: {
+      limit: 1024,
+      mimetype: 'application/octet-stream',
+      name: 'fonts/[name].[hash:8].[ext]',
+    },
+  }, {
+    test: /\.woff(2)?(\?[a-z0-9=&.]+)?$/,
+    loader: 'url-loader',
+    options: {
+      limit: 1024,
+      mimetype: 'application/font-woff',
+      name: 'fonts/[name].[hash:8].[ext]',
+    },
+  }
+];
 
 process.noDeprecation = true;
 
@@ -20,47 +125,8 @@ module.exports = (options) => ({
   ), // Merge with env dependent settings
   module: {
     rules: [
-      {
-        test: /\.js$/, // Transform all .js files required somewhere with Babel
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-          options: options.babelQuery
-        }
-      },
-      {
-        // Preprocess our own .scss files
-        test: /\.scss$/,
-        exclude: /node_modules/,
-        use: ['style-loader', 'css-loader', 'sass-loader']
-      },
-      {
-        // Preprocess 3rd party .css files located in node_modules
-        test: /\.css$/,
-        include: /node_modules/,
-        use: ['style-loader', 'css-loader']
-      },
-      {
-        test: /\.(eot|svg|otf|ttf|woff|woff2)$/,
-        use: 'file-loader'
-      },
-      {
-        test: /\.(jpg|png|gif)$/,
-        use: 'file-loader'
-      },
-      {
-        test: /\.html$/,
-        use: 'html-loader'
-      },
-      {
-        test: /\.(mp4|webm)$/,
-        use: {
-          loader: 'url-loader',
-          options: {
-            limit: 10000
-          }
-        }
-      }
+      ...cssExtractRules,
+      ...rules
     ]
   },
   plugins: options.plugins.concat([

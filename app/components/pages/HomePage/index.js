@@ -1,8 +1,11 @@
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
+import { withStyles } from 'utils/styling';
+
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
+
 import {
   makeSelectRepos,
   makeSelectLoading,
@@ -13,6 +16,8 @@ import { changeUsername } from './actions';
 import { makeSelectUsername } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
+
+import styles from './styles.scss';
 import HomePage from './HomePage';
 
 const mapDispatchToProps = (dispatch) => ({
@@ -35,5 +40,11 @@ const withConnect = connect(mapStateToProps, mapDispatchToProps);
 const withReducer = injectReducer({ key: 'home', reducer });
 const withSaga = injectSaga({ key: 'home', saga });
 
-export default compose(withReducer, withSaga, withConnect)(HomePage);
+export default compose(
+  withReducer,
+  withSaga,
+  withConnect,
+  withStyles(styles)
+)(HomePage);
+
 export { mapDispatchToProps };

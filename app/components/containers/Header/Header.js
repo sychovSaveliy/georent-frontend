@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../../elements/Button/index';
-import './style.scss';
+// import './style.scss';
 
 class Header extends Component { // eslint-disable-line react/prefer-stateless-function
   render() {
