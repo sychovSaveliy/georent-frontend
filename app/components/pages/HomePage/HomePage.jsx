@@ -8,6 +8,11 @@ import RentMap from 'components//containers/RentMap';
 
 // eslint-disable-next-line react/prefer-stateless-function
 const HomePage = ({ styles }) => (
+  changePage = (page) => {
+    fetch(`api/bla/bla/${page}`).then((v)=> {
+      this.setState({ lots: v, currentPage: page })
+    })
+  }
   <div>
     <Helmet>
       <title>HomePage</title>
@@ -19,7 +24,8 @@ const HomePage = ({ styles }) => (
     <Header />
     <h1>GeoRent:</h1>
     <div className={styles.content}>
-      <LotsList />
+      <LotsList lots={this.state.lots}/>
+      <Pagination onClick={this.changePage} currentPage={this.state.currentPage}/>
       <div>
         <RentMap />
       </div>
