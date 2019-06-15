@@ -7,7 +7,7 @@ const itemList = ItemList.list;
 
 const LotsList = ({ styles }) => (
   <div className={styles.lotsListContainer}>
-    <h1>Products Sidebar</h1>
+    <h1>Lots list</h1>
     {itemList.map((item) => (
       <div key={item.itemCardID} className={styles.CardWrapper}>
         <div className={styles.CardIMGStyle}>
