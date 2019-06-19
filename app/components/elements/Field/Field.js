@@ -14,17 +14,18 @@ const Field = (props) => {
   } = props;
   return (
     <div className="formGroup">
-      <label htmlFor={id}>{labelText}
+      <label htmlFor={id} className="fieldLabel">
+        {labelText}
+        <input
+          id={id}
+          type={type}
+          className="formControl"
+          placeholder={placeholder}
+          name={name}
+          value={value}
+          onChange={onChange}
+        />
       </label>
-      <input
-        id={id}
-        type={type}
-        className="formControl"
-        placeholder={placeholder}
-        name={name}
-        value={value}
-        onChange={onChange}
-      />
       {error ? <div className="invalid-feedback">{error}</div> : null}
     </div>
   );
