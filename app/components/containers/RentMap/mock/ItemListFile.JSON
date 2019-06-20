@@ -1,0 +1,11 @@
+{
+	"list": [
+		{"id":1,"price":null,"coordinates":{"address":null,"latitude":901.9,"longitude":801.8},"description":{"pictureIds":[],"lotName":"item 01","lotDescription":null,"urls":[]}},
+		{"id":2,"price":null,"coordinates":{"address":null,"latitude":900.9,"longitude":800.8},"description":{"pictureIds":[],"lotName":"item 02","lotDescription":null,"urls":[]}},
+		{"id":3,"price":null,"coordinates":{"address":null,"latitude":850.9,"longitude":751.8},"description":{"pictureIds":[],"lotName":"item 03","lotDescription":null,"urls":[]}},
+		{"id":4,"price":null,"coordinates":{"address":null,"latitude":901.9,"longitude":801.8},"description":{"pictureIds":[],"lotName":"item 04","lotDescription":null,"urls":[]}}
+	]
+}
+
+
+
