@@ -1,0 +1,11 @@
+pagesList {
+  list-style: none;
+  display: flex;
+}
+
+pagesList > li {
+  margin-right: 0.3em;
+  color: darkviolet;
+  user-select: none;
+  cursor: pointer;
+}
