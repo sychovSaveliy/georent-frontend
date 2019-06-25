@@ -1,15 +1,15 @@
-/* eslint-disable indent */
-/* eslint-disable react/jsx-no-comment-textnodes */
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
-// import './style.scss';
-
 import Field from '../../elements/Field';
 import Check from '../../elements/Check';
 import signup from '../../../images/signup.jpg';
 import Header from '../../containers/Header';
 
 export default class RegistrationPage extends Component {
+  static propTypes = {
+    styles: PropTypes.object.isRequired
+  }
   constructor() {
     super();
 
@@ -116,12 +116,10 @@ export default class RegistrationPage extends Component {
 	};
 
 	render() {
+    const { styles } = this.props;
 	  return (
-  <div>
-    <Header />
-    <div className="registration-page">
+    <div className={styles.registrationPage}>
       <Helmet>
-  // eslint-disable-next-line indent
         <title>Registration Page</title>
         <meta
         name="description"
@@ -129,13 +127,13 @@ export default class RegistrationPage extends Component {
       />
       </Helmet>
 
-      <div className="registration-page_left">
+      <div className={styles.registrationPageLeft}>
         <p>Have some stuff to share?</p>
         <p>Easy way to earn money from stuff that is not in use</p>
         <img src={signup} />
         <p>Sign up and start to share</p>
       </div>
-      <div className="registration-page_right">
+      <div className={styles.registrationPageRight}>
         <h2>Sign Up</h2>
         <div className="form-container card">
         <form className="form card-body">
@@ -231,11 +229,9 @@ export default class RegistrationPage extends Component {
           >
 						Submit
           </button>
-    </form>
+      </form>
       </div>
-		);
       </div>
-    </div>
   </div>
 
 

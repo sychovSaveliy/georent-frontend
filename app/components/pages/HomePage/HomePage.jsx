@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import LotsList from 'components/containers/LotsList';
 import Footer from 'components/containers/Footer';
-import RentMap from 'components//containers/RentMap';
+import RentMap from 'components/containers/RentMap';
 import Pagination from 'components/containers/Pagination';
 import { Helmet } from 'react-helmet';
 
@@ -17,13 +17,15 @@ class HomePage extends Component {
       items: [],
       currentPage: 1,
       itemsPerPage: 15,
-      pagesList: 5
+      pagesList: 5,
+      allLots: []
     };
   }
 
   componentDidMount = () => {
     const { currentPage } = this.state;
     this.getLots(currentPage);
+    this.getAllLots();
   }
 
   setCurrentPage = (currentPage) => {
@@ -38,24 +40,38 @@ class HomePage extends Component {
       .then((res) => res.json())
       .then((res) => {
         this.setState({
-          items: res.content
+          items: res
         });
       });
   }
+
+  getAllLots = () => {
+    const link = 'http://ec2-54-173-110-187.compute-1.amazonaws.com:8080/lot/';
+    fetch(link)
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        this.setState({
+          lots: data
+        });
+      });
+  };
 
   render() {
     const { styles } = this.props;
     const {
       items,
       currentPage,
-      pagesList
+      pagesList,
+      allLots
     } = this.state;
     return (
       <div>
         <div className={styles.content}>
           <LotsList itemsList={items} />
           <div>
-            <RentMap />
+            <RentMap lots={allLots} />
           </div>
         </div>
         <div>
