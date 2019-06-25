@@ -11,15 +11,12 @@ class HomePage extends Component {
     styles: PropTypes.object.isRequired
   }
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      items: [],
-      currentPage: 1,
-      itemsPerPage: 15,
-      pagesList: 5
-    };
-  }
+  state = {
+    items: [],
+    currentPage: 1,
+    itemsPerPage: 15,
+    pagesList: 5
+  };
 
   componentDidMount = () => {
     const { currentPage } = this.state;
@@ -27,13 +24,13 @@ class HomePage extends Component {
   }
 
   setCurrentPage = (currentPage) => {
-    console.log(this.state)
+    console.log(this.state);
     this.setState({ currentPage });
     this.getLots(currentPage);
   }
 
   getLots = (numberPage) => {
-    const { itemsPerPage } = this.state
+    const { itemsPerPage } = this.state;
     fetch(`http://ec2-54-173-110-187.compute-1.amazonaws.com:8080/lot/page/${numberPage}/${itemsPerPage}/first`)
       .then((res) => res.json())
       .then((res) => {
