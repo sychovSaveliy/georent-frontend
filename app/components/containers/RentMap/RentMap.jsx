@@ -4,7 +4,6 @@ import {
   Map as LeafletMap, TileLayer, Marker, Popup
 } from 'react-leaflet';
 const RentMap = ({ styles, lots }) => {
-  //console.log(lots);
   return (
       <LeafletMap
         center={[50.436795, 30.5305163]}
@@ -22,18 +21,24 @@ const RentMap = ({ styles, lots }) => {
           url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
         />
         {lots.map((item) => (
-          <Marker key={item.id} position={[item.coordinates.latitude, item.coordinates.longitude]}>
+/*          <Marker key={item.id} position={[item.coordinates.latitude, item.coordinates.longitude]}>
             <Popup>
-              {item.description.lotName}
+              {item.id} {item.description.lotName}
             </Popup>
-          </Marker>          
+          </Marker>*/
+          <Marker key={item.id} position={[50.436795, 30.5305163]}>
+            <Popup>
+              {item.id} {item.description.lotName}
+            </Popup>
+          </Marker> 
         ))}
       </LeafletMap>
 );
 };
 
 RentMap.propTypes = {
-  styles: PropTypes.object.isRequired
+  styles: PropTypes.object.isRequired,
+  lots: PropTypes.array.isRequired,
 };
 
 export default RentMap;

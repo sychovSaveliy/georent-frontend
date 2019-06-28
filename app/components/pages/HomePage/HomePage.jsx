@@ -5,6 +5,7 @@ import Footer from 'components/containers/Footer';
 import RentMap from 'components/containers/RentMap';
 import Pagination from 'components/containers/Pagination';
 import { Helmet } from 'react-helmet';
+/*import { baseUrl, getData} from 'utils/api.js';*/
 const baseURL = 'http://ec2-54-173-110-187.compute-1.amazonaws.com:8080/lot/';
 class HomePage extends Component {
   static propTypes = {
@@ -25,8 +26,8 @@ class HomePage extends Component {
   }
 
   componentDidMount = () => {
-    this.getLots(this.getPageUrl(), 'currentPageLots');
-    this.getLots(baseURL, 'lots');
+    this.getData(this.getPageUrl(), 'currentPageLots');
+    this.getData(baseURL, 'lots');
   }
 
   getPageUrl = () => {
@@ -34,11 +35,10 @@ class HomePage extends Component {
     return `${baseURL}page/${currentPage}/${itemsPerPage}/first`
   }
 
-  getLots = (url, target) => {
+  getData = (url, target) => {
     fetch(url)
       .then(response => response.json())
       .then(data => {
-          console.log(target)
           this.setState({
             [target]: data
           });
@@ -49,7 +49,7 @@ class HomePage extends Component {
     this.setState({ 
       currentPage
     });
-    this.getLots(this.getPageUrl(), 'currentPageLots');
+    this.getData(this.getPageUrl(), 'currentPageLots');
   }
 
   render() {
