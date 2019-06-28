@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import {
   Map as LeafletMap, TileLayer, Marker, Popup
 } from 'react-leaflet';
-const RentMap = ({ styles, lots }) => (
+const RentMap = ({ styles, lots }) => {
+  //console.log(lots);
+  return (
       <LeafletMap
-        center={[901.9, 801.8]}
+        center={[50.436795, 30.5305163]}
         zoom={14}
         maxZoom={20}
         attributionControl
@@ -28,6 +30,7 @@ const RentMap = ({ styles, lots }) => (
         ))}
       </LeafletMap>
 );
+};
 
 RentMap.propTypes = {
   styles: PropTypes.object.isRequired

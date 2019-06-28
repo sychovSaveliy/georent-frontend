@@ -5,7 +5,7 @@ import Footer from 'components/containers/Footer';
 import RentMap from 'components/containers/RentMap';
 import Pagination from 'components/containers/Pagination';
 import { Helmet } from 'react-helmet';
-
+const baseURL = 'http://ec2-54-173-110-187.compute-1.amazonaws.com:8080/lot/';
 class HomePage extends Component {
   static propTypes = {
     styles: PropTypes.object.isRequired
@@ -14,64 +14,58 @@ class HomePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: [],
       currentPage: 1,
       itemsPerPage: 15,
       pagesList: 5,
-      allLots: []
+      currentPageLots: {
+        content: []
+      },
+      lots: [],
     };
   }
 
   componentDidMount = () => {
-    const { currentPage } = this.state;
-    this.getLots(currentPage);
-    this.getAllLots();
+    this.getLots(this.getPageUrl(), 'currentPageLots');
+    this.getLots(baseURL, 'lots');
+  }
+
+  getPageUrl = () => {
+    const { currentPage, itemsPerPage } = this.state
+    return `${baseURL}page/${currentPage}/${itemsPerPage}/first`
+  }
+
+  getLots = (url, target) => {
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+          console.log(target)
+          this.setState({
+            [target]: data
+          });
+      });
   }
 
   setCurrentPage = (currentPage) => {
-    console.log(this.state)
-    this.setState({ currentPage });
-    this.getLots(currentPage);
+    this.setState({ 
+      currentPage
+    });
+    this.getLots(this.getPageUrl(), 'currentPageLots');
   }
-
-  getLots = (numberPage) => {
-    const { itemsPerPage } = this.state
-    fetch(`http://ec2-54-173-110-187.compute-1.amazonaws.com:8080/lot/page/${numberPage}/${itemsPerPage}/first`)
-      .then((res) => res.json())
-      .then((res) => {
-        this.setState({
-          items: res
-        });
-      });
-  }
-
-  getAllLots = () => {
-    const link = 'http://ec2-54-173-110-187.compute-1.amazonaws.com:8080/lot/';
-    fetch(link)
-      .then(response => {
-        return response.json();
-      })
-      .then(data => {
-        this.setState({
-          lots: data
-        });
-      });
-  };
 
   render() {
     const { styles } = this.props;
     const {
-      items,
+      currentPageLots,
       currentPage,
       pagesList,
-      allLots
+      lots
     } = this.state;
     return (
       <div>
         <div className={styles.content}>
-          <LotsList itemsList={items} />
+          <LotsList lots={currentPageLots} />
           <div>
-            <RentMap lots={allLots} />
+           <RentMap lots={lots} />
           </div>
         </div>
         <div>
