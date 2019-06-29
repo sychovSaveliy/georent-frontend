@@ -11,19 +11,15 @@ class HomePage extends Component {
   static propTypes = {
     styles: PropTypes.object.isRequired
   }
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentPage: 1,
-      itemsPerPage: 15,
-      pagesList: 5,
-      currentPageLots: {
-        content: []
-      },
-      lots: [],
-    };
-  }
+  state = {
+    currentPage: 1,
+    itemsPerPage: 15,
+    currentPageLots: {
+      content: [],
+      totalPages: 0
+    },
+    lots: [],
+  };
 
   componentDidMount = () => {
     this.getData(this.getPageUrl(), 'currentPageLots');
@@ -57,19 +53,22 @@ class HomePage extends Component {
     const {
       currentPageLots,
       currentPage,
-      pagesList,
       lots
     } = this.state;
+    const {
+      content,
+      totalPages
+    } = currentPageLots;
     return (
       <div>
         <div className={styles.content}>
-          <LotsList lots={currentPageLots} />
+          <LotsList lots={content} />
           <div>
            <RentMap lots={lots} />
           </div>
         </div>
         <div>
-          <Pagination getCurrentPage={this.setCurrentPage} currentPage={currentPage} pagesList={pagesList} />
+          <Pagination getCurrentPage={this.setCurrentPage} currentPage={currentPage} pagesList={totalPages} />
         </div>
         <Footer />
       </div>

@@ -16,6 +16,7 @@ const RentMap = ({ styles, lots }) => {
         dragging
         animate
         easeLinearity={0.35}
+        className={styles.leaflet_container}
       >
         <TileLayer
           url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"

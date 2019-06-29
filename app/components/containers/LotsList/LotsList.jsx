@@ -5,7 +5,7 @@ import Button from '../../elements/Button';
 const LotsList = ({ styles, lots }) => (
   <div className={styles.lotsListContainer}>
     <h1>Lots list</h1>
-    {lots.content.map((item) => (
+    {lots.map((item) => (
       <div key={item.id} className={styles.CardWrapper}>
         <div className={styles.CardIMGStyle}>
           <img src={item.imageUrl} alt="" />
@@ -27,7 +27,7 @@ const LotsList = ({ styles, lots }) => (
 
 LotsList.propTypes = {
   styles: PropTypes.object.isRequired,
-  lots: PropTypes.object.isRequired,
+  lots: PropTypes.array.isRequired,
 };
 
 export default LotsList;

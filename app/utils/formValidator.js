@@ -9,6 +9,8 @@ const validateEmail = email => {
     return regex.test(email);
 }
 const validatePhone = phone => {
+    let regex = /^[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-/\s.]?[0-9]{4}$/;
+    return regex.test(phone);
 }
 
 /*
@@ -28,5 +30,6 @@ const validatePassword = pass => {
 export {
     validateName,
     validateEmail,
+    validatePhone,
     validatePassword
 }
