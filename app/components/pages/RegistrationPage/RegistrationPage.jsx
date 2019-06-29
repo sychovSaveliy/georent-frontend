@@ -1,31 +1,31 @@
-/* eslint-disable indent */
-/* eslint-disable react/jsx-no-comment-textnodes */
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
-// import './style.scss';
-
 import Field from '../../elements/Field';
 import Check from '../../elements/Check';
 import signup from '../../../images/signup.jpg';
 import Header from '../../containers/Header';
-
+/*import { validateName, validateEmail, validatePassword, validatePhone } from 'utils/formValidator.js';*/
 export default class RegistrationPage extends Component {
+  static propTypes = {
+    styles: PropTypes.object.isRequired
+  }
   constructor() {
     super();
 
     this.state = {
-      username: '',
-      userSurname: '',
+      firstName: '',
+      lastName: '',
       email: '',
-      phone: '',
+      phoneNumber: '',
       password: '',
       agreeTerms: true,
       agreeConfidential: true,
       errors: {
-        username: false,
-        userSurname: false,
+        firstName: false,
+        lastName: false,
         email: false,
-        phone: false,
+        phoneNumber: false,
         password: false,
         repeatPassword: false,
         agreeTerms: false,
@@ -57,20 +57,20 @@ export default class RegistrationPage extends Component {
 
 	  const phoneRegExp = /^[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-/\s.]?[0-9]{4}$/;
 
-	  if (this.state.username.length < 3 && !nameRegExp.test(this.state.username)) {
-	    errors.username = 'Must be 3 characters or more, only letters';
+	  if (this.state.firstName.length < 3 && !nameRegExp.test(this.state.firstName)) {
+	    errors.firstName = 'Must be 3 characters or more, only letters';
 	  }
 
-	  if (this.state.userSurname.length < 3 && !nameRegExp.test(this.state.userSurname)) {
-	    errors.userSurname = 'Must be 3 characters or more';
+	  if (this.state.lastName.length < 3 && !nameRegExp.test(this.state.lastName)) {
+	    errors.lastName = 'Must be 3 characters or more';
 	  }
 
 	  if (!emailRegExp.test(this.state.email)) {
 	    errors.email = 'Must be symbol @';
 	  }
 
-	  if (!phoneRegExp.test(this.state.phone)) {
-	    errors.phone = 'Must be only digitals and +';
+	  if (!phoneRegExp.test(this.state.phoneNumber)) {
+	    errors.phoneNumber = 'Must be only digitals and +';
 	  }
 
 	  if (this.state.password < 3) {
@@ -100,28 +100,26 @@ export default class RegistrationPage extends Component {
 
 	    console.log('submit', this.state);
 	    const {
-	      username, userSurname, email, phone, password, repeatPassword, agreeTerms, agreeConfidential
+	      firstName, lastName, email, phoneNumber, password, repeatPassword, agreeTerms, agreeConfidential
 	    } = this.state;
-	    fetch('https://httpbin.org/post', {
+	    fetch('http://ec2-54-173-110-187.compute-1.amazonaws.com:8080/register', {
 	      method: 'POST',
 	      headers: {
 	        Accept: 'application/json',
 	        'Content-Type': 'application/json'
 	      },
 	      body: JSON.stringify({
-	        username, userSurname, email, phone, password, repeatPassword, agreeTerms, agreeConfidential
+	        firstName, lastName, email, phoneNumber, password, repeatPassword, agreeTerms, agreeConfidential
 	      })
 	    });
 	  }
 	};
 
 	render() {
+    const { styles } = this.props;
 	  return (
-  <div>
-    <Header />
-    <div className="registration-page">
+    <div className={styles.registrationPage}>
       <Helmet>
-  // eslint-disable-next-line indent
         <title>Registration Page</title>
         <meta
         name="description"
@@ -129,35 +127,35 @@ export default class RegistrationPage extends Component {
       />
       </Helmet>
 
-      <div className="registration-page_left">
+      <div className={styles.registrationPageLeft}>
         <p>Have some stuff to share?</p>
         <p>Easy way to earn money from stuff that is not in use</p>
         <img src={signup} />
         <p>Sign up and start to share</p>
       </div>
-      <div className="registration-page_right">
+      <div className={styles.registrationPageRight}>
         <h2>Sign Up</h2>
         <div className="form-container card">
         <form className="form card-body">
       <Field
-            id="username"
-            labelText="Username"
+            id="firstName"
+            labelText="firstName"
             type="text"
-            placeholder="Enter username"
-            name="username"
-            value={this.state.username}
+            placeholder="Enter firstName"
+            name="firstName"
+            value={this.state.firstName}
             onChange={this.onChange}
-            error={this.state.errors.username}
+            error={this.state.errors.firstName}
           />
       <Field
-            id="userSurname"
-            labelText="User Surname"
+            id="lastName"
+            labelText="User lastName"
             type="text"
-            placeholder="Enter user surname"
-            name="userSurname"
-            value={this.state.userSurname}
+            placeholder="Enter user lastName"
+            name="lastName"
+            value={this.state.lastName}
             onChange={this.onChange}
-            error={this.state.errors.userSurname}
+            error={this.state.errors.lastName}
           />
       <Field
             id="email"
@@ -170,14 +168,14 @@ export default class RegistrationPage extends Component {
             error={this.state.errors.email}
           />
       <Field
-            id="phone"
-            labelText="Phone"
+            id="phoneNumber"
+            labelText="phoneNumber"
             type="text"
             placeholder="Enter phone (000)-000-0000"
             name="phone"
-            value={this.state.phone}
+            value={this.state.phoneNumber}
             onChange={this.onChange}
-            error={this.state.errors.phone}
+            error={this.state.errors.phoneNumber}
           />
       <Field
             id="password"
@@ -226,16 +224,14 @@ export default class RegistrationPage extends Component {
 
       <button
             type="submit"
-            className="btn btn-primary w-100"
+            className="btn"
             onClick={this.onSubmit}
           >
 						Submit
           </button>
-    </form>
+      </form>
       </div>
-		);
       </div>
-    </div>
   </div>
 
 

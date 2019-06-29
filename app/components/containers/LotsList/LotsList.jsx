@@ -1,25 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ItemList from './mock/ItemListFile.JSON';
 import Button from '../../elements/Button';
 
-const itemList = ItemList.list;
-
-const LotsList = ({ styles }) => (
+const LotsList = ({ styles, lots }) => (
   <div className={styles.lotsListContainer}>
     <h1>Lots list</h1>
-    {itemList.map((item) => (
-      <div key={item.itemCardID} className={styles.CardWrapper}>
+    {lots.map((item) => (
+      <div key={item.id} className={styles.CardWrapper}>
         <div className={styles.CardIMGStyle}>
-          <img src={item.itemImage} alt="" />
+          <img src={item.imageUrl} alt="" />
         </div>
         <div className={styles.ItemInfoWrapper}>
-          <h2 className={styles.CardHeader}><span>{item.itemName}.</span><span>{item.itemInformation}</span></h2>
-          <p className={styles.InfoStr}>{item.itemDescription}</p>
+          <h2 className={styles.CardHeader}><span>{item.id}. </span><span>{item.lotName}</span></h2>
           <div className={styles.CardFooter}>
             <div className={styles.LocatIcon}></div>
-            <span className={styles.AdressWrapper}>{item.itemAdress}</span>
-            <span className={styles.PriceItem}>{item.itemPrice}<span>{item.itemPriceCurrency}</span>/day</span>
+            <div className={styles.AdressWrapper}>{item.address}</div>
+            <div className={styles.PriceItem}>{item.price} грн/day</div>
             <div className={styles.CardButton}><Button text="to rent" active="active" /></div>
           </div>
         </div>
@@ -30,7 +26,8 @@ const LotsList = ({ styles }) => (
 );
 
 LotsList.propTypes = {
-  styles: PropTypes.object.isRequired
+  styles: PropTypes.object.isRequired,
+  lots: PropTypes.array.isRequired,
 };
 
 export default LotsList;
