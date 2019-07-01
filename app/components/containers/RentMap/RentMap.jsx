@@ -7,7 +7,7 @@ const RentMap = ({ styles, lots }) => {
   return (
       <LeafletMap
         center={[50.436795, 30.5305163]}
-        zoom={14}
+        zoom={10}
         maxZoom={20}
         attributionControl
         zoomControl
@@ -22,16 +22,16 @@ const RentMap = ({ styles, lots }) => {
           url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
         />
         {lots.map((item) => (
-/*          <Marker key={item.id} position={[item.coordinates.latitude, item.coordinates.longitude]}>
+          <Marker key={item.id} position={[item.coordinates.latitude, item.coordinates.longitude]}>
             <Popup>
-              {item.id} {item.description.lotName}
+              {item.id} {item.lotName}
             </Popup>
-          </Marker>*/
-          <Marker key={item.id} position={[50.436795, 30.5305163]}>
+          </Marker>
+/*          <Marker key={item.id} position={[50.436795, 30.5305163]}>
             <Popup>
-              {item.id} {item.description.lotName}
+              {item.id} {item.lotName}
             </Popup>
-          </Marker> 
+          </Marker> */
         ))}
       </LeafletMap>
 );

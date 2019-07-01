@@ -6,7 +6,7 @@ import RentMap from 'components/containers/RentMap';
 import Pagination from 'components/containers/Pagination';
 import { Helmet } from 'react-helmet';
 /*import { baseUrl, getData} from 'utils/api.js';*/
-const baseURL = 'http://ec2-54-173-110-187.compute-1.amazonaws.com:8080/lot/';
+const baseURL = 'http://ec2-52-206-69-68.compute-1.amazonaws.com:8080/lot/';
 class HomePage extends Component {
   static propTypes = {
     styles: PropTypes.object.isRequired
@@ -15,7 +15,7 @@ class HomePage extends Component {
     currentPage: 1,
     itemsPerPage: 15,
     currentPageLots: {
-      content: [],
+      lots: [],
       totalPages: 0
     },
     lots: [],
@@ -55,20 +55,16 @@ class HomePage extends Component {
       currentPage,
       lots
     } = this.state;
-    const {
-      content,
-      totalPages
-    } = currentPageLots;
     return (
       <div>
         <div className={styles.content}>
-          <LotsList lots={content} />
+          <LotsList lots={currentPageLots.lots} />
           <div>
            <RentMap lots={lots} />
           </div>
         </div>
         <div>
-          <Pagination getCurrentPage={this.setCurrentPage} currentPage={currentPage} pagesList={totalPages} />
+          <Pagination getCurrentPage={this.setCurrentPage} currentPage={currentPage} pagesList={currentPageLots.totalPages} />
         </div>
         <Footer />
       </div>
