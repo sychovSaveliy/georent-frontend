@@ -5,8 +5,7 @@ import Footer from 'components/containers/Footer';
 import RentMap from 'components/containers/RentMap';
 import Pagination from 'components/containers/Pagination';
 import { Helmet } from 'react-helmet';
-/*import { baseUrl, getData} from 'utils/api.js';*/
-const baseURL = 'http://ec2-52-206-69-68.compute-1.amazonaws.com:8080/lot/';
+import { baseUrl, getData} from 'utils/api';
 class HomePage extends Component {
   static propTypes = {
     styles: PropTypes.object.isRequired
@@ -22,19 +21,17 @@ class HomePage extends Component {
   };
 
   componentDidMount = () => {
-    this.getData(this.getPageUrl(), 'currentPageLots');
-    this.getData(baseURL, 'lots');
+    this.setData(this.getPageUrl(), 'currentPageLots');
+    this.setData(baseUrl + 'lot/', 'lots');
   }
 
   getPageUrl = () => {
     const { currentPage, itemsPerPage } = this.state
-    return `${baseURL}page/${currentPage}/${itemsPerPage}/first`
+    return `${baseUrl}lot/page/${currentPage}/${itemsPerPage}/first`
   }
 
-  getData = (url, target) => {
-    fetch(url)
-      .then(response => response.json())
-      .then(data => {
+  setData = (url, target) => {
+    getData(url).then(data => {
           this.setState({
             [target]: data
           });
@@ -45,7 +42,7 @@ class HomePage extends Component {
     this.setState({ 
       currentPage
     });
-    this.getData(this.getPageUrl(), 'currentPageLots');
+    setData(this.getPageUrl(), 'currentPageLots');
   }
 
   render() {
