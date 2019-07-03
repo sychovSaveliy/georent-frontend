@@ -10,28 +10,29 @@ class HomePage extends Component {
   static propTypes = {
     styles: PropTypes.object.isRequired
   }
-  state = {
-    currentPage: 1,
-    itemsPerPage: 15,
+    state = {
+    itemsPerPage: 3,
     currentPageLots: {
+      pageNumber: 1,
       lots: [],
       totalPages: 0
     },
-    lots: [],
+    lotsAll: [],
   };
 
   componentDidMount = () => {
     this.setData(this.getPageUrl(), 'currentPageLots');
-    this.setData(baseUrl + 'lot/', 'lots');
+    this.setData(baseUrl + 'lot/', 'lotsAll');
   }
 
   getPageUrl = () => {
-    const { currentPage, itemsPerPage } = this.state
-    return `${baseUrl}lot/page/${currentPage}/${itemsPerPage}/first`
+    const { currentPageLots: { pageNumber }, itemsPerPage } = this.state;
+    return `${baseUrl}lot/page/${pageNumber}/${itemsPerPage}/current`;
   }
 
   setData = (url, target) => {
     getData(url).then(data => {
+          console.log(data);
           this.setState({
             [target]: data
           });
@@ -39,29 +40,28 @@ class HomePage extends Component {
   }
 
   setCurrentPage = (currentPage) => {
-    this.setState({ 
-      currentPage
-    });
-    setData(this.getPageUrl(), 'currentPageLots');
+    const { currentPageLots } = this.state;
+    currentPageLots.pageNumber = currentPage;
+    this.setState({ currentPageLots });
+    this.setData(this.getPageUrl(), 'currentPageLots');
   }
 
   render() {
     const { styles } = this.props;
     const {
-      currentPageLots,
-      currentPage,
-      lots
+      currentPageLots: { pageNumber, totalPages, lots },
+      lotsAll
     } = this.state;
     return (
       <div>
         <div className={styles.content}>
-          <LotsList lots={currentPageLots.lots} />
+          <LotsList lots={lots} />
           <div>
-           <RentMap lots={lots} />
+           <RentMap lots={lotsAll} />
           </div>
         </div>
         <div>
-          <Pagination getCurrentPage={this.setCurrentPage} currentPage={currentPage} pagesList={currentPageLots.totalPages} />
+          <Pagination getCurrentPage={this.setCurrentPage} currentPage={pageNumber} pagesList={totalPages} />
         </div>
         <Footer />
       </div>
