@@ -4,14 +4,13 @@ import LotsList from 'components/containers/LotsList';
 import Footer from 'components/containers/Footer';
 import RentMap from 'components/containers/RentMap';
 import Pagination from 'components/containers/Pagination';
-/* import { baseUrl, getData} from 'utils/api.js'; */
-const baseURL = 'http://ec2-52-206-69-68.compute-1.amazonaws.com:8080/lot/';
+import { Helmet } from 'react-helmet';
+import { baseUrl, getData} from 'utils/api';
 class HomePage extends Component {
   static propTypes = {
     styles: PropTypes.object.isRequired
   }
-
-  state = {
+    state = {
     itemsPerPage: 3,
     currentPageLots: {
       pageNumber: 1,
@@ -22,22 +21,21 @@ class HomePage extends Component {
   };
 
   componentDidMount = () => {
-    this.getData(this.getPageUrl(), 'currentPageLots');
-    this.getData(baseURL, 'lotsAll');
+    this.setData(this.getPageUrl(), 'currentPageLots');
+    this.setData(baseUrl + 'lot/', 'lotsAll');
   }
 
   getPageUrl = () => {
     const { currentPageLots: { pageNumber }, itemsPerPage } = this.state;
-    return `${baseURL}page/${pageNumber}/${itemsPerPage}/current`;
+    return `${baseUrl}lot/page/${pageNumber}/${itemsPerPage}/current`;
   }
 
-  getData = (url, target) => {
-    fetch(url)
-      .then((response) => response.json())
-      .then((data) => {
-        this.setState({
-          [target]: data
-        });
+  setData = (url, target) => {
+    getData(url).then(data => {
+          console.log(data);
+          this.setState({
+            [target]: data
+          });
       });
   }
 
@@ -45,7 +43,7 @@ class HomePage extends Component {
     const { currentPageLots } = this.state;
     currentPageLots.pageNumber = currentPage;
     this.setState({ currentPageLots });
-    this.getData(this.getPageUrl(), 'currentPageLots');
+    this.setData(this.getPageUrl(), 'currentPageLots');
   }
 
   render() {
@@ -59,7 +57,7 @@ class HomePage extends Component {
         <div className={styles.content}>
           <LotsList lots={lots} />
           <div>
-            <RentMap lots={lotsAll} />
+           <RentMap lots={lotsAll} />
           </div>
         </div>
         <div>

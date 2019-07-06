@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import cs from 'classnames';
 
 const Pagination = (props) => {
