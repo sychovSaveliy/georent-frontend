@@ -21,7 +21,31 @@ const Pagination = (props) => {
   return (
     <div>
       <ul id="page-numbers" className={styles.pagesList}>
+        <li
+          className={cs(styles.pagesListItem)}
+          onClick={() => getCurrentPage(1)}
+        >
+          {'<<<'}
+        </li>
+        <li
+          className={cs(styles.pagesListItem)}
+          onClick={() => getCurrentPage(currentPage !== 1 ? currentPage - 1 : currentPage)}
+        >
+          {'<'}
+        </li>
         {renderPageNumbers}
+        <li
+          className={cs(styles.pagesListItem)}
+          onClick={() => getCurrentPage(currentPage !== pagesList ? currentPage + 1 : pagesList)}
+        >
+          {'>'}
+        </li>
+        <li
+          className={cs(styles.pagesListItem)}
+          onClick={() => getCurrentPage(pagesList)}
+        >
+          {'>>>'}
+        </li>
       </ul>
     </div>
   );
