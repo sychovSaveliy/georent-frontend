@@ -19,6 +19,7 @@ export default class RegistrationPage extends Component {
       email: '',
       phoneNumber: '',
       password: '',
+      repeatPassword: '',
       agreeTerms: true,
       agreeConfidential: true,
       errors: {
@@ -35,6 +36,7 @@ export default class RegistrationPage extends Component {
   }
 
 	onChange = (event) => {
+    console.log(event.target.value)
 	  this.setState({
 	    [event.target.name]: event.target.value
 	  });
@@ -45,7 +47,9 @@ export default class RegistrationPage extends Component {
 	    [event.target.name]: event.target.checked
 	  });
 	};
-
+  onResponse = () => {
+    this.props.history.push('/lots')
+  }
 	onSubmit = (event) => {
 	  event.preventDefault();
 	  const errors = {};
@@ -81,13 +85,13 @@ export default class RegistrationPage extends Component {
 	    errors.repeatPassword = 'Must be equal password';
 	  }
 
-	  if (!this.state.agreeTerms) {
+/*	  if (!this.state.agreeTerms) {
 	    errors.agreeTerms = 'You should agree';
 	  }
 
 	  if (!this.state.agreeConfidential) {
 	    errors.agreeConfidential = 'You should agree';
-	  }
+	  }*/
 
 	  if (Object.keys(errors).length > 0) {
 	    this.setState({
@@ -99,19 +103,17 @@ export default class RegistrationPage extends Component {
 	    });
 
 	    console.log('submit', this.state);
-	    const {
-	      firstName, lastName, email, phoneNumber, password, repeatPassword, agreeTerms, agreeConfidential
-	    } = this.state;
-	    fetch('http://ec2-54-173-110-187.compute-1.amazonaws.com:8080/register', {
+	    const { firstName, lastName, email, phoneNumber, password } = this.state;
+	    fetch('http://ec2-52-206-69-68.compute-1.amazonaws.com:8080/register', {
 	      method: 'POST',
 	      headers: {
 	        Accept: 'application/json',
 	        'Content-Type': 'application/json'
 	      },
 	      body: JSON.stringify({
-	        firstName, lastName, email, phoneNumber, password, repeatPassword, agreeTerms, agreeConfidential
+	        firstName, lastName, email, phoneNumber, password
 	      })
-	    });
+	    }).then(this.onResponse);
 	  }
 	};
 
@@ -172,7 +174,7 @@ export default class RegistrationPage extends Component {
             labelText="phoneNumber"
             type="text"
             placeholder="Enter phone (000)-000-0000"
-            name="phone"
+            name="phoneNumber"
             value={this.state.phoneNumber}
             onChange={this.onChange}
             error={this.state.errors.phoneNumber}
@@ -197,19 +199,8 @@ export default class RegistrationPage extends Component {
         onChange={this.onChange}
         error={this.state.errors.repeatPassword}
       />
-      <Check
-            className="form-check-input"
-            type="checkbox"
-            id="agreeTerms"
-            labelText="Confirm the Terms"
-            name="agreeTerms"
-            value={this.state.agreeTerms}
-            defaultChecked={this.state.agreeTerms}
-            onChange={this.onCheck}
-            checked={this.state.agreeTerms}
-            error={this.state.errors.agreeTerms}
-          />
-      <Check
+
+{/*      <Check
             className="form-check-input"
             type="checkbox"
             id="agreeConfidential"
@@ -220,7 +211,7 @@ export default class RegistrationPage extends Component {
             onChange={this.onCheck}
             checked={this.state.agreeConfidential}
             error={this.state.errors.agreeConfidential}
-          />
+          />*/}
 
       <button
             type="submit"

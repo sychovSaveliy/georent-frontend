@@ -9,7 +9,7 @@ import HomePage from 'components/pages/HomePage/index';
 // import FeaturePage from 'components/pages/FeaturePage';
 import RegistrationPage from 'components/pages/RegistrationPage';
 // import './style.scss';
-// import LoginPopup from 'components/pages/LoginPopup';
+import LoginPopup from 'components/pages/LoginPopup';
 import ProfilePage from 'components/pages/ProfilePage';
 import CreateAdPage from 'components/pages/CreateAdPage';
 import DetailsPage from 'components/pages/DetailsPage';
@@ -28,7 +28,7 @@ const App = () => (
       <Route exact path="/lots/:lotId" component={DetailsPage} />
       {/* <Route path="/features" component={FeaturePage} /> */}
       <Route path="/signup" component={RegistrationPage} />
-      {/* <Route path="/login" component={LoginPopup} /> */}
+      <Route path="/login" component={LoginPopup} />
       <Route path="/profile" component={ProfilePage} />
       <Route path="/create-ad" component={CreateAdPage} />
       <Redirect to="/lots" />
