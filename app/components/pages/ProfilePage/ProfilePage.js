@@ -25,6 +25,103 @@ const PersonInformation = (props) => (
   )
 );
 
+const generalIfoFields = [
+  {
+  id : "username",
+  type: "text",
+  placeholder: "First Name*",
+  name:"username",
+  value:()=>{this.state.username},
+  onChange:()=>{this.onChange},
+  error:()=>{this.state.errors.username}
+  },
+  {
+  id:"userSurname",
+  type:"text",
+  placeholder:"Last Name*",
+  name:"userSurname",
+  value:()=>{this.state.userSurname},
+  onChange:()=>{this.onChange},
+  error:()=>{this.state.errors.userSurname}
+  },
+  {
+  id:"email",
+  type:"text",
+  placeholder:"Email*",
+  name:"email",
+  value:()=>{this.state.email},
+  onChange:()=>{this.onChange},
+  error:()=>{this.state.errors.email}
+  }
+];
+
+const contactInfoFields =[
+  {
+    id:"phone",
+    type:"text",
+    placeholder:"Phone XXXXXXX",
+    name:"phone",
+    value:()=>{this.state.phone},
+    onChange:()=>{this.onChange},
+    error:()=>{this.state.errors.phone}
+  },
+  {
+    id:"location",
+    type:"text",
+    placeholder:"Location",
+    name:"location",
+    value:()=>{this.state.location},
+    onChange:()=>{this.onChange},
+    error:()=>{this.state.errors.location}
+  }
+];
+
+const changePasswordFields = [
+  {
+    id:"oldPassword",
+    type:"text",
+    placeholder:"Old password*",
+    name:"oldPassword",
+    value:()=>{this.state.oldPassword},
+    onChange:()=>{this.onChange},
+    error:()=>{this.state.errors.oldPassword},
+  },
+  {
+    id:"password",
+    type:"text",
+    placeholder:"New password*",
+    name:"password",
+    value:()=>{this.state.password},
+    onChange:()=>{this.onChange},
+    error:()=>{this.state.errors.password}
+  },
+  {
+    id:"repeatPassword",
+    type:"text",
+    placeholder:"New password again*",
+    name:"repeatPassword",
+    value:()=>{this.state.repeatPassword},
+    onChange:()=>{this.onChange},
+    error:()=>{this.state.errors.repeatPassword}
+  }
+];
+
+const Fields_ = (props) => {
+  return (
+  props.list.map((item)=> (
+      <Field
+        id={item.id}
+        type={item.type}
+        placeholder={item.placeholder}
+        name={item.name}
+        value={item.value}
+        onChange={item.onChange}
+        error={item.error}
+      />)
+  ))
+  };
+
+
 export default class ProfilePage extends Component {
   constructor(props) {
     super(props);
@@ -123,7 +220,6 @@ export default class ProfilePage extends Component {
       this.setState({
         errors: {}
       });
-
       fetch('https://httpbin.org/post', {
         method: 'POST',
         headers: {
@@ -145,17 +241,6 @@ export default class ProfilePage extends Component {
   };
 
   render() {
-    const {
-      username,
-      userSurname,
-      email,
-      phone,
-      location,
-      oldPassword,
-      password,
-      repeatPassword,
-      errors
-    } = this.state;
     return (
       <div className="profilePageWrapper">
         <Helmet>
@@ -183,84 +268,15 @@ export default class ProfilePage extends Component {
         <div className="profileInputWrapper">
           <div className="inputBlock">
             <h3>General Information</h3>
-            <Field
-              id="username"
-              type="text"
-              placeholder="First Name*"
-              name="username"
-              value={username}
-              onChange={this.onChange}
-              error={errors.username}
-            />
-            <Field
-              id="userSurname"
-              type="text"
-              placeholder="Last Name*"
-              name="userSurname"
-              value={userSurname}
-              onChange={this.onChange}
-              error={errors.userSurname}
-            />
-            <Field
-              id="email"
-              type="text"
-              placeholder="Email*"
-              name="email"
-              value={email}
-              onChange={this.onChange}
-              error={email}
-            />
+            <Fields_ list={generalIfoFields} />
           </div>
           <div className="inputBlock">
             <h3>Contact Information</h3>
-            <Field
-              id="phone"
-              type="text"
-              placeholder="Phone XXXXXXX"
-              name="phone"
-              value={phone}
-              onChange={this.onChange}
-              error={errors.phone}
-            />
-            <Field
-              id="location"
-              type="text"
-              placeholder="Location"
-              name="location"
-              value={location}
-              onChange={this.onChange}
-              error={errors.location}
-            />
+            <Fields_ list={contactInfoFields} />
           </div>
           <div className="inputBlock">
             <h3>Change Password</h3>
-            <Field
-              id="oldPassword"
-              type="text"
-              placeholder="Old password*"
-              name="oldPassword"
-              value={oldPassword}
-              onChange={this.onChange}
-              error={errors.oldPassword}
-            />
-            <Field
-              id="password"
-              type="text"
-              placeholder="New password*"
-              name="password"
-              value={password}
-              onChange={this.onChange}
-              error={errors.password}
-            />
-            <Field
-              id="repeatPassword"
-              type="text"
-              placeholder="New password again*"
-              name="repeatPassword"
-              value={repeatPassword}
-              onChange={this.onChange}
-              error={errors.repeatPassword}
-            />
+            <Fields_ list={changePasswordFields} />
           </div>
           <div className="btnFormWrapper">
             <Button text="Edit" active="active" />
