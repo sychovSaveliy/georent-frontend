@@ -23,12 +23,15 @@ class LoginPopup extends Component {
       [event.target.name]: event.target.value
     });
   };
-  onResponse(resp) {
-    if (resp && resp.token) {
-      window.localStorage.setItem("jwt", resp.token);
-      this.props.history.push('/lots')
-    }
-  };
+/*  onResponse(resp) {
+.then(data => {
+          console.log('DATA',data);
+          this.setState({
+            [target]: data
+          });
+      });
+    console.log(resp)
+  };*/
   onSubmit = (event) => {
     event.preventDefault();
     const errors = {};
@@ -53,17 +56,20 @@ class LoginPopup extends Component {
 
       console.log('submit', this.state);
       const { email, password } = this.state;
-      fetch('http://ec2-52-206-69-68.compute-1.amazonaws.com:8080/auth/login', {
+      fetch('http://ec2-52-206-69-68.compute-1.amazonaws.com:8080/login', {
         method: "POST",
-        body: {
-          email: this.email,
-          password: this.password
-        },
+        body: JSON.stringify({
+          email, password
+        }),
         headers: {
-          'Access-Control-Allow-Headers': 'authorization'
+          'Access-Control-Allow-Headers': 'authorization',
+          'Content-Type': 'application/json'
         }
       })
-      .then(this.onResponse);
+      .then(resp => resp.json())
+      .then(data => {
+          console.log('DATA',data);
+      });
     }
   };
 

@@ -32,7 +32,7 @@ class HomePage extends Component {
 
   setData = (url, target) => {
     getData(url).then(data => {
-          console.log(data);
+          console.log('DATA',data);
           this.setState({
             [target]: data
           });
