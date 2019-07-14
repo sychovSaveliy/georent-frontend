@@ -35,5 +35,7 @@ const App = () => (
     </Switch>
   </div>
 );
-
+/*  mounted() {
+    window.localStorage.removeItem("jwt");
+  }*/
 export default App;

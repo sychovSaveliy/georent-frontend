@@ -35,7 +35,12 @@ class Header extends Component { // eslint-disable-line react/prefer-stateless-f
               <Link to="/lots" className={styles.navItem}>
                 Lots
               </Link>
-              <Button text="Sign in" />
+              <Link to="/signup" className={styles.navItem}>
+                Sign up
+              </Link>
+              <Link to="/login" className={styles.navItem}>
+                Sign in
+              </Link>
             </li>
           </ul>
         </div>

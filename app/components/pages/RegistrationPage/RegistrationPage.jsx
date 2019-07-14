@@ -48,7 +48,7 @@ export default class RegistrationPage extends Component {
 	  });
 	};
   onResponse = () => {
-    this.props.history.push('/lots')
+    this.props.history.push('/')
   }
 	onSubmit = (event) => {
 	  event.preventDefault();
