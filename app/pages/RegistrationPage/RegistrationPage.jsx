@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
-import Field from '../../elements/Field';
-import Check from '../../elements/Check';
-import signup from '../../../images/signup.jpg';
-import Header from '../../containers/Header';
+import Field from 'components/common/Field';
+import Check from 'components/common/Check';
+import signup from '../../images/signup.jpg';
 /*import { validateName, validateEmail, validatePassword, validatePhone } from 'utils/formValidator.js';*/
 export default class RegistrationPage extends Component {
   static propTypes = {

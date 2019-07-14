@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import Button from 'components/elements/Button/index';
+import Button from 'components/common/Button';
 
 // <div className="header">
 //   <img src="https://www.freelogodesign.org/Content/img/logo-ex-7.png" alt="" />
@@ -22,7 +22,7 @@ class Header extends Component { // eslint-disable-line react/prefer-stateless-f
 
   render() {
     const {
-      styles
+      styles, isLogged
     } = this.props;
     return (
       <nav className={styles.nav}>
@@ -38,9 +38,14 @@ class Header extends Component { // eslint-disable-line react/prefer-stateless-f
               <Link to="/signup" className={styles.navItem}>
                 Sign up
               </Link>
-              <Link to="/login" className={styles.navItem}>
-                Sign in
-              </Link>
+              {  !isLogged && 
+                <Link to="/login" className={styles.navItem}>
+                  Sign in
+                </Link>
+              }
+              {  isLogged && 
+                  <button onClick={this.props.onExit}>Exit</button>
+              }
             </li>
           </ul>
         </div>

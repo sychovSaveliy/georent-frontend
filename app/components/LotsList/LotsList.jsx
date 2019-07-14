@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from '../../elements/Button';
+import Button from 'components/common/Button';
 
 const LotsList = ({ styles, lots }) => (
   <div className={styles.lotsListContainer}>

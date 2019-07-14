@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Field from '../../elements/Field';
+import Field from 'components/common/Field';
 
-class LoginPopup extends Component {
+class LoginPage extends Component {
   constructor() {
     super();
 
@@ -109,8 +109,10 @@ class LoginPopup extends Component {
           console.log('DATA', data);
           if (data) {
             if (data.accessToken) {
+              console.log(this.props)
               window.localStorage.setItem("jwt", data.accessToken);
-              this.props.history.goBack()
+              this.props.onLogin();
+              //this.props.history.goBack()
             } else if (data.message) {
               this.setState({
                 responseStatusVisible: true,
@@ -208,4 +210,4 @@ class LoginPopup extends Component {
   }
 }
 
-export default LoginPopup;
+export default LoginPage;

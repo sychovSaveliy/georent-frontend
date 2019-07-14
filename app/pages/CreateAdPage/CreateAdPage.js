@@ -1,7 +1,6 @@
-
 import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
-import Header from '../../containers/Header';
+import Header from 'containers/Header';
 // import './style.scss';
 
 export default class CreateAdPage extends Component {
