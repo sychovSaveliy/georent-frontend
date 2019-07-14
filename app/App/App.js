@@ -6,7 +6,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 // import NotFoundPage from '../components/pages/NotFoundPage';
 import Header from 'components/containers/Header';
 import HomePage from 'components/pages/HomePage/index';
-// import FeaturePage from 'components/pages/FeaturePage';
+import FeaturePage from 'components/pages/FeaturePage';
 import RegistrationPage from 'components/pages/RegistrationPage';
 // import './style.scss';
 import LoginPopup from 'components/pages/LoginPopup';
@@ -26,7 +26,7 @@ const App = () => (
     <Switch>
       <Route exact path="/lots" component={HomePage} />
       <Route exact path="/lots/:lotId" component={DetailsPage} />
-      {/* <Route path="/features" component={FeaturePage} /> */}
+      <Route path="/features" component={FeaturePage} />
       <Route path="/signup" component={RegistrationPage} />
       <Route path="/login" component={LoginPopup} />
       <Route path="/profile" component={ProfilePage} />

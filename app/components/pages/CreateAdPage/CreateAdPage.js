@@ -15,7 +15,6 @@ export default class CreateAdPage extends Component {
             content="Create Ad Page"
           />
         </Helmet>
-        <Header />
           Create Ad Page
       </div>
     );

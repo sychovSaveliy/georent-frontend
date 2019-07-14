@@ -16,7 +16,6 @@ export default class ProfilePage extends Component {
             content="Profile Page"
           />
         </Helmet>
-        <Header />
         <h2>General Information</h2>
         <Input />
         <Input />

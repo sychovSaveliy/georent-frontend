@@ -112,7 +112,8 @@ class LoginPopup extends Component {
       .then(data => 
         {
           console.log('DATA',data);
-          if (data.status === 200) {
+          if (data && data.status && data.status === 200) {
+            window.localStorage.setItem("jwt", data.token);
             this.props.history.push('/')
           } else {
             this.setState({
@@ -129,8 +130,6 @@ class LoginPopup extends Component {
       <div>
         <h2>Login Form</h2>
         <div className="form-container card">
-          <form className="form card-body">
-
             { this.state.responceStatusVisible && 
               <div>
                 <h2>
@@ -238,7 +237,6 @@ class LoginPopup extends Component {
                 </button>              
               </div>
             }
-          </form>
         </div>
       </div>
     );

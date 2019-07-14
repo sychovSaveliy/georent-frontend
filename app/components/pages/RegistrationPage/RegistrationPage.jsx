@@ -31,7 +31,9 @@ export default class RegistrationPage extends Component {
         repeatPassword: false,
         agreeTerms: false,
         agreeConfidential: false,
-      }
+      },
+      responceStatusVisible: false,
+      responceText: ""
     };
   }
 
@@ -47,8 +49,17 @@ export default class RegistrationPage extends Component {
 	    [event.target.name]: event.target.checked
 	  });
 	};
-  onResponse = () => {
-    this.props.history.push('/')
+  onResponse = (data) => {
+    console.log('onResponse', data)
+    if (data.status === 200) {
+      this.props.history.push('/')
+    } else {
+      this.setState({
+        responceStatusVisible: true,
+        responceText: data.message
+      });
+    }
+    
   }
 	onSubmit = (event) => {
 	  event.preventDefault();
@@ -59,7 +70,7 @@ export default class RegistrationPage extends Component {
 	  const emailRegExp = /^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/i;
 
 
-	  const phoneRegExp = /^[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-/\s.]?[0-9]{4}$/;
+	  //const phoneRegExp = /^[+38(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-/\s.]?[0-9]{4}$/;
 
 	  if (this.state.firstName.length < 3 && !nameRegExp.test(this.state.firstName)) {
 	    errors.firstName = 'Must be 3 characters or more, only letters';
@@ -73,9 +84,9 @@ export default class RegistrationPage extends Component {
 	    errors.email = 'Must be symbol @';
 	  }
 
-	  if (!phoneRegExp.test(this.state.phoneNumber)) {
+/*	  if (!phoneRegExp.test(this.state.phoneNumber)) {
 	    errors.phoneNumber = 'Must be only digitals and +';
-	  }
+	  }*/
 
 	  if (this.state.password < 3) {
 	    errors.password = 'Must be 3 characters or more';
@@ -113,7 +124,8 @@ export default class RegistrationPage extends Component {
 	      body: JSON.stringify({
 	        firstName, lastName, email, phoneNumber, password
 	      })
-	    }).then(this.onResponse);
+	    }).then(resp => resp.json())
+      .then(data => this.onResponse(data));
 	  }
 	};
 
@@ -138,68 +150,81 @@ export default class RegistrationPage extends Component {
       <div className={styles.registrationPageRight}>
         <h2>Sign Up</h2>
         <div className="form-container card">
+        { this.state.responceStatusVisible && 
+          <div>
+            <h2>
+              { this.state.responceText }
+            </h2>
+          </div>
+        }
         <form className="form card-body">
-      <Field
-            id="firstName"
-            labelText="firstName"
-            type="text"
-            placeholder="Enter firstName"
-            name="firstName"
-            value={this.state.firstName}
-            onChange={this.onChange}
-            error={this.state.errors.firstName}
-          />
-      <Field
-            id="lastName"
-            labelText="User lastName"
-            type="text"
-            placeholder="Enter user lastName"
-            name="lastName"
-            value={this.state.lastName}
-            onChange={this.onChange}
-            error={this.state.errors.lastName}
-          />
-      <Field
-            id="email"
-            labelText="Email"
-            type="text"
-            placeholder="Enter email"
-            name="email"
-            value={this.state.email}
-            onChange={this.onChange}
-            error={this.state.errors.email}
-          />
-      <Field
-            id="phoneNumber"
-            labelText="phoneNumber"
-            type="text"
-            placeholder="Enter phone (000)-000-0000"
-            name="phoneNumber"
-            value={this.state.phoneNumber}
-            onChange={this.onChange}
-            error={this.state.errors.phoneNumber}
-          />
-      <Field
-            id="password"
-            labelText="Password"
+          <Field
+                id="firstName"
+                labelText="firstName"
+                type="text"
+                placeholder="Enter firstName"
+                name="firstName"
+                value={this.state.firstName}
+                onChange={this.onChange}
+                error={this.state.errors.firstName}
+              />
+          <Field
+                id="lastName"
+                labelText="User lastName"
+                type="text"
+                placeholder="Enter user lastName"
+                name="lastName"
+                value={this.state.lastName}
+                onChange={this.onChange}
+                error={this.state.errors.lastName}
+              />
+          <Field
+                id="email"
+                labelText="Email"
+                type="text"
+                placeholder="Enter email"
+                name="email"
+                value={this.state.email}
+                onChange={this.onChange}
+                error={this.state.errors.email}
+              />
+          <Field
+                id="phoneNumber"
+                labelText="phoneNumber"
+                type="text"
+                placeholder="Enter phone (000)-000-0000"
+                name="phoneNumber"
+                value={this.state.phoneNumber}
+                onChange={this.onChange}
+                error={this.state.errors.phoneNumber}
+              />
+          <Field
+                id="password"
+                labelText="Password"
+                type="password"
+                placeholder="Enter password"
+                name="password"
+                value={this.state.password}
+                onChange={this.onChange}
+                error={this.state.errors.password}
+              />
+          <Field
+            id="repeatPassword"
+            labelText="Repeat password"
             type="password"
-            placeholder="Enter password"
-            name="password"
-            value={this.state.password}
+            placeholder="Repeat password"
+            name="repeatPassword"
+            value={this.state.repeatPassword}
             onChange={this.onChange}
-            error={this.state.errors.password}
+            error={this.state.errors.repeatPassword}
           />
-      <Field
-        id="repeatPassword"
-        labelText="Repeat password"
-        type="password"
-        placeholder="Repeat password"
-        name="repeatPassword"
-        value={this.state.repeatPassword}
-        onChange={this.onChange}
-        error={this.state.errors.repeatPassword}
-      />
-
+          <button
+            type="submit"
+            className="btn"
+            onClick={this.onSubmit}
+          >
+            Submit
+          </button>
 {/*      <Check
             className="form-check-input"
             type="checkbox"
@@ -212,14 +237,6 @@ export default class RegistrationPage extends Component {
             checked={this.state.agreeConfidential}
             error={this.state.errors.agreeConfidential}
           />*/}
-
-      <button
-            type="submit"
-            className="btn"
-            onClick={this.onSubmit}
-          >
-						Submit
-          </button>
       </form>
       </div>
       </div>
