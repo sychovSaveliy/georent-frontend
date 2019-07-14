@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
-// import './style.scss';
 import Field from '../../elements/Field';
 
-
-// eslint-disable-next-line react/prefer-stateless-function
 class LoginPopup extends Component {
   constructor() {
     super();
 
     this.state = {
-      email: '',
-      password: '',
+      email: 'user1@gmail.com.ua',
+      password: 'password1',
       repeatPassword: '',
       errors: {
         email: false,
@@ -18,9 +15,8 @@ class LoginPopup extends Component {
         repeatPassword: false
       },
       forgotPassVisible: false,
-      restorePassVisible: false,
-      responceStatusVisible: false,
-      responceText: ""
+      responseStatusVisible: false,
+      responseText: ""
     };
   };
   onChange = (event) => {
@@ -37,42 +33,38 @@ class LoginPopup extends Component {
   onForgotBack = (event) => {
     this.setState({
       forgotPassVisible: false,
-      responceStatusVisible: false
-
+      responseStatusVisible: false
     });
   };
   onForgotSubmit = (event) => {
     event.preventDefault();
-    console.log('onForgotSubmit')
-      const { email } = this.state;
-      fetch('http://ec2-52-206-69-68.compute-1.amazonaws.com:8080/forgotpassword', {
-        method: "POST",
-        body: JSON.stringify({
-          email
-        }),
-        headers: {
-          'Access-Control-Allow-Headers': 'authorization',
-          'Content-Type': 'application/json'
-        }
-      })
-      .then(resp => resp.json())
-      .then(data => {
-        if (data.status === 200) {
+    const { email } = this.state;
+    fetch('http://ec2-52-206-69-68.compute-1.amazonaws.com:8080/forgotpassword', {
+      method: "POST",
+      body: JSON.stringify({
+        email
+      }),
+      headers: {
+        'Access-Control-Allow-Headers': 'authorization',
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(resp => resp.json())
+    .then(data => {
+      console.log('onForgotSubmit', data)
+      this.props.history.push('/')
+/*      if (data.status === 200) {
+        this.setState({
+          forgotPassVisible: false
+        }); 
+        this.props.history.push('/')        
+      } else {
           this.setState({
-            forgotPassVisible: false,
-            restorePassVisible: true
-          });         
-        } else {
-            this.setState({
-              responceStatusVisible: true,
-              responceText: data.message
-            });
-        }
-      });
-  };
-  onRestoreSubmit = (event) => {
-    event.preventDefault();
-    console.log('onRestoreSubmit')
+            responseStatusVisible: true,
+            responseText: data.message
+          });
+      }*/
+    });
   };
   onSubmit = (event) => {
     event.preventDefault();
@@ -108,18 +100,23 @@ class LoginPopup extends Component {
           'Content-Type': 'application/json'
         }
       })
-      .then(resp => resp.json())
+      .then(resp => {
+        console.log('resp', resp);
+        return resp.json()
+      })
       .then(data => 
         {
-          console.log('DATA',data);
-          if (data && data.status && data.status === 200) {
-            window.localStorage.setItem("jwt", data.token);
-            this.props.history.push('/')
-          } else {
-            this.setState({
-              responceStatusVisible: true,
-              responceText: data.message
-            });        
+          console.log('DATA', data);
+          if (data) {
+            if (data.accessToken) {
+              window.localStorage.setItem("jwt", data.accessToken);
+              this.props.history.goBack()
+            } else if (data.message) {
+              this.setState({
+                responseStatusVisible: true,
+                responseText: data.message
+              });        
+            }
           }
       });
     }
@@ -130,10 +127,10 @@ class LoginPopup extends Component {
       <div>
         <h2>Login Form</h2>
         <div className="form-container card">
-            { this.state.responceStatusVisible && 
+            { this.state.responseStatusVisible && 
               <div>
                 <h2>
-                  { this.state.responceText }
+                  { this.state.responseText }
                 </h2>
               </div>
             }
@@ -166,40 +163,8 @@ class LoginPopup extends Component {
                 </button>
               </div>    
             }
-            
-            { this.state.restorePassVisible && 
-              <div>
-                <Field
-                      id="password"
-                      labelText="Password"
-                      type="password"
-                      placeholder="Enter password"
-                      name="password"
-                      value={this.state.password}
-                      onChange={this.onChange}
-                      error={this.state.errors.password}
-                    />
-                <Field
-                      id="repeatPassword"
-                      labelText="repeatPassword"
-                      type="password"
-                      placeholder="repeatPassword"
-                      name="repeatPassword"
-                      value={this.state.repeatPassword}
-                      onChange={this.onChange}
-                      error={this.state.errors.repeatPassword}
-                    />
-                <button
-                      type="submit"
-                      className="btn"
-                      onClick={this.onRestoreSubmit}
-                    >
-                    Submit
-                </button>
-              </div>    
-            }
-            
-            { !this.state.forgotPassVisible && !this.state.restorePassVisible &&
+           
+            { !this.state.forgotPassVisible && 
               <div>
                 <Field
                       id="email"

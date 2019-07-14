@@ -32,8 +32,8 @@ export default class RegistrationPage extends Component {
         agreeTerms: false,
         agreeConfidential: false,
       },
-      responceStatusVisible: false,
-      responceText: ""
+      responseStatusVisible: false,
+      responseText: ""
     };
   }
 
@@ -50,13 +50,13 @@ export default class RegistrationPage extends Component {
 	  });
 	};
   onResponse = (data) => {
-    console.log('onResponse', data)
+    console.log('DATA', data)
     if (data.status === 200) {
       this.props.history.push('/')
     } else {
       this.setState({
-        responceStatusVisible: true,
-        responceText: data.message
+        responseStatusVisible: true,
+        responseText: data.message
       });
     }
     
@@ -124,7 +124,10 @@ export default class RegistrationPage extends Component {
 	      body: JSON.stringify({
 	        firstName, lastName, email, phoneNumber, password
 	      })
-	    }).then(resp => resp.json())
+	    }).then(resp => {
+        console.log('resp', resp);
+        return resp.json()
+      })
       .then(data => this.onResponse(data));
 	  }
 	};
@@ -150,10 +153,10 @@ export default class RegistrationPage extends Component {
       <div className={styles.registrationPageRight}>
         <h2>Sign Up</h2>
         <div className="form-container card">
-        { this.state.responceStatusVisible && 
+        { this.state.responseStatusVisible && 
           <div>
             <h2>
-              { this.state.responceText }
+              { this.state.responseText }
             </h2>
           </div>
         }
@@ -225,24 +228,10 @@ export default class RegistrationPage extends Component {
           >
             Submit
           </button>
-{/*      <Check
-            className="form-check-input"
-            type="checkbox"
-            id="agreeConfidential"
-            labelText="Confirm the processing of data"
-            name="agreeConfidential"
-            value={this.state.agreeConfidential}
-            defaultChecked={this.state.agreeConfidential}
-            onChange={this.onCheck}
-            checked={this.state.agreeConfidential}
-            error={this.state.errors.agreeConfidential}
-          />*/}
       </form>
       </div>
       </div>
   </div>
-
-
 	  );
 	}
 }

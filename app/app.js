@@ -18,7 +18,7 @@ import createHistory from 'history/createBrowserHistory';
 import 'sanitize.css/sanitize.css';
 
 // Import root app
-import App from './App/App';
+import App from './App/index';
 
 
 // Import CSS reset and Global Styles
