@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet';
 import Field from 'components/common/Field';
 import Check from 'components/common/Check';
 import signup from '../../images/signup.jpg';
+import { baseUrl } from 'utils/api';
 /*import { validateName, validateEmail, validatePassword, validatePhone } from 'utils/formValidator.js';*/
 export default class RegistrationPage extends Component {
   static propTypes = {
@@ -90,7 +91,7 @@ export default class RegistrationPage extends Component {
 
 	    console.log('submit', this.state);
 	    const { firstName, lastName, email, phoneNumber, password } = this.state;
-	    fetch('http://ec2-52-206-69-68.compute-1.amazonaws.com:8080/register', {
+	    fetch(`${baseUrl}register`, {
 	      method: 'POST',
 	      headers: {
 	        Accept: 'application/json',

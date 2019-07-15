@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Field from 'components/common/Field';
+import { baseUrl } from 'utils/api';
 
 class LoginPage extends Component {
   constructor() {
@@ -20,7 +21,6 @@ class LoginPage extends Component {
     };
   };
   onChange = (event) => {
-    console.log(event.target.value)
     this.setState({
       [event.target.name]: event.target.value
     });
@@ -39,7 +39,7 @@ class LoginPage extends Component {
   onForgotSubmit = (event) => {
     event.preventDefault();
     const { email } = this.state;
-    fetch('http://ec2-52-206-69-68.compute-1.amazonaws.com:8080/forgotpassword', {
+    fetch(`${baseUrl}forgotpassword`, {
       method: "POST",
       body: JSON.stringify({
         email
@@ -76,7 +76,7 @@ class LoginPage extends Component {
     }
 
     if (this.state.password < 8) {
-      errors.password = 'Must be 3 characters or more';
+      errors.password = 'Must be 8 characters or more';
     }
 
     if (Object.keys(errors).length > 0) {
@@ -88,9 +88,8 @@ class LoginPage extends Component {
         errors: {}
       });
 
-      console.log('submit', this.state);
       const { email, password } = this.state;
-      fetch('http://ec2-52-206-69-68.compute-1.amazonaws.com:8080/login', {
+      fetch(`${baseUrl}login`, {
         method: "POST",
         body: JSON.stringify({
           email, password
@@ -109,7 +108,6 @@ class LoginPage extends Component {
           console.log('DATA', data);
           if (data) {
             if (data.accessToken) {
-              console.log(this.props)
               window.localStorage.setItem("jwt", data.accessToken);
               this.props.onLogin();
               this.props.history.goBack()
