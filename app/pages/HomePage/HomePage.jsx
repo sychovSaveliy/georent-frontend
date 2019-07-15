@@ -20,6 +20,7 @@ class HomePage extends Component {
   };
 
   componentDidMount = () => {
+    console.log('jwt', window.localStorage.getItem("jwt"));
     this.setData(this.getPageUrl(), 'currentPageLots');
     this.setData(baseUrl + 'lot/', 'lotsAll');
   }

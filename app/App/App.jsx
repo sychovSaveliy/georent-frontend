@@ -32,26 +32,23 @@ export default class App extends Component {
     }
   };
   login = () => {
-      console.log('login', window.localStorage.getItem("jwt"))
       this.setState({
         isLogged : true
       });
   };
   exit = () => {
+      window.localStorage.removeItem("jwt")
       this.setState({
         isLogged : false
       });
-      window.localStorage.removeItem("jwt");
-      console.log('exit', window.localStorage.getItem("jwt"))
   };
   componentDidMount() {
-    window.localStorage.removeItem("jwt");
-    //this.isLoggedCheck()
+    this.isLoggedCheck()
   };
 /*  componentWillUnmount() {
     window.localStorage.removeItem("jwt");
     this.setState({
-      isLogged : true
+      isLogged : false
     });
   };*/
   render() {
@@ -62,19 +59,29 @@ export default class App extends Component {
         <Helmet titleTemplate="%s" defaultTitle="Geo Rent">
           <meta name="description" content="Geo Rent" />
         </Helmet>
-        <Header isLogged={isLogged}  onExit={this.exit} />
+        <Header isLogged={isLogged} onExit={this.exit} />
         <Switch>
-          <Route exact path="/" component={HomePage} isLogged={isLogged} />
-          <Route exact path="/lots" component={HomePage} isLogged={isLogged} />
-          <Route exact path="/lots/:lotId" component={DetailsPage} isLogged={isLogged} />
-          <Route path="/features" component={FeaturePage} isLogged={isLogged} />
-          <Route path="/signup" component={RegistrationPage} isLogged={isLogged} />
-          <Route path="/login" component={() => <LoginPage  isLogged={isLogged} onLogin={this.login}/>}/>
-          <Route path="/profile" component={ProfilePage} isLogged={isLogged} />
-          <Route path="/create-ad" component={CreateAdPage} isLogged={isLogged} />
-          <Route path="*" component={NotFoundPage} isLogged={isLogged} />
+          <Route exact path="/" render={props => {return <HomePage {...props} isLogged={isLogged} />}} />
+          <Route exact path="/lots" render={props => {return <HomePage {...props} isLogged={isLogged} />}} />
+          <Route exact path="/lots/:lotId" render={props => {return <DetailsPage {...props} isLogged={isLogged} />}} />
+          <Route path="/features" render={props => {return <FeaturePage {...props} isLogged={isLogged} />}} />
+          <Route path="/signup" render={props => {return <RegistrationPage {...props} isLogged={isLogged} />}} />
+          <Route render={props => {return <LoginPage {...props} isLogged={isLogged} onLogin={this.login} />}} />
+          <Route path="/profile" render={props => {
+              if (!isLogged) {
+                  return <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
+              }
+              return <ProfilePage {...props} isLogged={isLogged} />
+          }} />
+          <Route path="/create-ad" render={props => {
+              if (!isLogged) {
+                  return <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
+              }
+              return <CreateAdPage {...props} isLogged={isLogged} />
+          }} />
+          <Route path="*" render={props => {return <NotFoundPage {...props} isLogged={isLogged} />}} />
         </Switch>
-        <Footer />
+        <Footer isLogged={isLogged} />
       </div>
     );
   }

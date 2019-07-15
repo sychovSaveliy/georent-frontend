@@ -112,7 +112,7 @@ class LoginPage extends Component {
               console.log(this.props)
               window.localStorage.setItem("jwt", data.accessToken);
               this.props.onLogin();
-              //this.props.history.goBack()
+              this.props.history.goBack()
             } else if (data.message) {
               this.setState({
                 responseStatusVisible: true,
