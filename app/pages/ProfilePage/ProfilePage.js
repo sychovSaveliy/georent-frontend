@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
-import Input from 'components/common/Field';
+import Field from 'components/common/Field';
 // import './style.scss';
 
 export default class ProfilePage extends Component {

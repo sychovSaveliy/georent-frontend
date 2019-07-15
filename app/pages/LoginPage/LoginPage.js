@@ -41,10 +41,13 @@ class LoginPage extends Component {
     const { email } = this.state;
     fetch(`${baseUrl}forgotpassword/?email=${email}&api=${baseUrl}`)
     .then(resp => {
-      if (resp.statusCode === 301) { return resp.json() }
+      if (resp.statusCode === 301) { 
+        console.log('Resp onForgotSubmit', resp);
+        return resp.json() 
+      }
     })
     .then(data => {
-      console.log('onForgotSubmit', data)
+      console.log('Data onForgotSubmit', data)
       if (data && data.cause) {
           this.setState({
             forgotPassVisible: false,
@@ -98,7 +101,8 @@ class LoginPage extends Component {
             if (data.accessToken) {
               window.localStorage.setItem("jwt", data.accessToken);
               this.props.onLogin();
-              location.reload(true);
+              this.props.history.goBack()
+              //location.reload(true);
             } else if (data.message) {
               this.setState({
                 responseStatusVisible: true,
