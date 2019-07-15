@@ -39,31 +39,19 @@ class LoginPage extends Component {
   onForgotSubmit = (event) => {
     event.preventDefault();
     const { email } = this.state;
-    fetch(`${baseUrl}forgotpassword`, {
-      method: "POST",
-      body: JSON.stringify({
-        email
-      }),
-      headers: {
-        'Access-Control-Allow-Headers': 'authorization',
-        'Content-Type': 'application/json'
-      }
+    fetch(`${baseUrl}forgotpassword/?email=${email}&api=${baseUrl}`)
+    .then(resp => {
+      if (resp.statusCode === 301) { return resp.json() }
     })
-    .then(resp => resp.json())
     .then(data => {
       console.log('onForgotSubmit', data)
-      this.props.history.push('/')
-/*      if (data.status === 200) {
-        this.setState({
-          forgotPassVisible: false
-        }); 
-        this.props.history.push('/')        
-      } else {
+      if (data && data.cause) {
           this.setState({
+            forgotPassVisible: false,
             responseStatusVisible: true,
-            responseText: data.message
-          });
-      }*/
+            responseText: data.cause
+          });        
+      }
     });
   };
   onSubmit = (event) => {
@@ -110,7 +98,7 @@ class LoginPage extends Component {
             if (data.accessToken) {
               window.localStorage.setItem("jwt", data.accessToken);
               this.props.onLogin();
-              this.props.history.goBack()
+              location.reload(true);
             } else if (data.message) {
               this.setState({
                 responseStatusVisible: true,

@@ -60,6 +60,7 @@ export default class App extends Component {
           <meta name="description" content="Geo Rent" />
         </Helmet>
         <Header isLogged={isLogged} onExit={this.exit} />
+        { `isLogged - ${isLogged}` }
         <Switch>
           <Route exact path="/" render={props => {return <HomePage {...props} isLogged={isLogged} />}} />
           <Route exact path="/lots" render={props => {return <HomePage {...props} isLogged={isLogged} />}} />
