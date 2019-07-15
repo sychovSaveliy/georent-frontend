@@ -19,8 +19,6 @@ export default class RegistrationPage extends Component {
       phoneNumber: '',
       password: '',
       repeatPassword: '',
-      agreeTerms: true,
-      agreeConfidential: true,
       errors: {
         firstName: false,
         lastName: false,
@@ -28,8 +26,6 @@ export default class RegistrationPage extends Component {
         phoneNumber: false,
         password: false,
         repeatPassword: false,
-        agreeTerms: false,
-        agreeConfidential: false,
       },
       responseStatusVisible: false,
       responseText: ""
@@ -37,7 +33,6 @@ export default class RegistrationPage extends Component {
   }
 
 	onChange = (event) => {
-    console.log(event.target.value)
 	  this.setState({
 	    [event.target.name]: event.target.value
 	  });
@@ -48,18 +43,7 @@ export default class RegistrationPage extends Component {
 	    [event.target.name]: event.target.checked
 	  });
 	};
-  onResponse = (data) => {
-    console.log('DATA', data)
-    if (data.status === 200) {
-      this.props.history.push('/')
-    } else {
-      this.setState({
-        responseStatusVisible: true,
-        responseText: data.message
-      });
-    }
-    
-  }
+
 	onSubmit = (event) => {
 	  event.preventDefault();
 	  const errors = {};
@@ -87,21 +71,13 @@ export default class RegistrationPage extends Component {
 	    errors.phoneNumber = 'Must be only digitals and +';
 	  }*/
 
-	  if (this.state.password < 3) {
-	    errors.password = 'Must be 3 characters or more';
+	  if (this.state.password < 8) {
+	    errors.password = 'Must be 8 characters or more';
 	  }
 
 	  if (this.state.password !== this.state.repeatPassword) {
 	    errors.repeatPassword = 'Must be equal password';
 	  }
-
-/*	  if (!this.state.agreeTerms) {
-	    errors.agreeTerms = 'You should agree';
-	  }
-
-	  if (!this.state.agreeConfidential) {
-	    errors.agreeConfidential = 'You should agree';
-	  }*/
 
 	  if (Object.keys(errors).length > 0) {
 	    this.setState({
@@ -125,112 +101,134 @@ export default class RegistrationPage extends Component {
 	      })
 	    }).then(resp => {
         console.log('resp', resp);
+        if (resp.status === 201) {
+          this.setState({
+            firstName: '',
+            lastName: '',
+            email: '',
+            phoneNumber: '',
+            password: '',
+            repeatPassword: ''
+          });
+        }
         return resp.json()
       })
-      .then(data => this.onResponse(data));
+      .then(data => {
+          console.log('DATA', data)
+          if (data.message) {
+            this.setState({
+                responseStatusVisible: true,
+                responseText: data.message
+            });
+          } else {
+            this.setState({
+                responseStatusVisible: true,
+                responseText: data.cause
+            });
+          }
+      });
 	  }
 	};
 
 	render() {
     const { styles } = this.props;
+    const { responseStatusVisible } = this.state;
 	  return (
-    <div className={styles.registrationPage}>
-      <Helmet>
-        <title>Registration Page</title>
-        <meta
-        name="description"
-        content="Feature page of React.js Boilerplate application"
-      />
-      </Helmet>
+      <div className={styles.registrationPage}>
 
-      <div className={styles.registrationPageLeft}>
-        <p>Have some stuff to share?</p>
-        <p>Easy way to earn money from stuff that is not in use</p>
-        <img src={signup} />
-        <p>Sign up and start to share</p>
-      </div>
-      <div className={styles.registrationPageRight}>
-        <h2>Sign Up</h2>
-        <div className="form-container card">
-        { this.state.responseStatusVisible && 
-          <div>
-            <h2>
-              { this.state.responseText }
-            </h2>
+        <div className={styles.registrationPageLeft}>
+          <p>Have some stuff to share?</p>
+          <p>Easy way to earn money from stuff that is not in use</p>
+          <img src={signup} />
+          <p>Sign up and start to share</p>
+        </div>
+
+        <div className={styles.registrationPageRight}>
+          <h2>Sign Up</h2>
+          <div className="form-container card">
+
+            { responseStatusVisible && 
+              <div>
+                <h2>
+                  { this.state.responseText }
+                </h2>
+              </div>
+            }
+
+            { !responseStatusVisible &&
+              <form className="form card-body">
+                <Field
+                      id="firstName"
+                      labelText="firstName"
+                      type="text"
+                      placeholder="Enter firstName"
+                      name="firstName"
+                      value={this.state.firstName}
+                      onChange={this.onChange}
+                      error={this.state.errors.firstName}
+                    />
+                <Field
+                      id="lastName"
+                      labelText="User lastName"
+                      type="text"
+                      placeholder="Enter user lastName"
+                      name="lastName"
+                      value={this.state.lastName}
+                      onChange={this.onChange}
+                      error={this.state.errors.lastName}
+                    />
+                <Field
+                      id="email"
+                      labelText="Email"
+                      type="text"
+                      placeholder="Enter email"
+                      name="email"
+                      value={this.state.email}
+                      onChange={this.onChange}
+                      error={this.state.errors.email}
+                    />
+                <Field
+                      id="phoneNumber"
+                      labelText="phoneNumber"
+                      type="text"
+                      placeholder="Enter phone (000)-000-0000"
+                      name="phoneNumber"
+                      value={this.state.phoneNumber}
+                      onChange={this.onChange}
+                      error={this.state.errors.phoneNumber}
+                    />
+                <Field
+                      id="password"
+                      labelText="Password"
+                      type="password"
+                      placeholder="Enter password"
+                      name="password"
+                      value={this.state.password}
+                      onChange={this.onChange}
+                      error={this.state.errors.password}
+                    />
+                <Field
+                  id="repeatPassword"
+                  labelText="Repeat password"
+                  type="password"
+                  placeholder="Repeat password"
+                  name="repeatPassword"
+                  value={this.state.repeatPassword}
+                  onChange={this.onChange}
+                  error={this.state.errors.repeatPassword}
+                />
+                <button
+                  type="submit"
+                  className="btn"
+                  onClick={this.onSubmit}
+                >
+                  Submit
+                </button>
+              </form>
+            }
           </div>
-        }
-        <form className="form card-body">
-          <Field
-                id="firstName"
-                labelText="firstName"
-                type="text"
-                placeholder="Enter firstName"
-                name="firstName"
-                value={this.state.firstName}
-                onChange={this.onChange}
-                error={this.state.errors.firstName}
-              />
-          <Field
-                id="lastName"
-                labelText="User lastName"
-                type="text"
-                placeholder="Enter user lastName"
-                name="lastName"
-                value={this.state.lastName}
-                onChange={this.onChange}
-                error={this.state.errors.lastName}
-              />
-          <Field
-                id="email"
-                labelText="Email"
-                type="text"
-                placeholder="Enter email"
-                name="email"
-                value={this.state.email}
-                onChange={this.onChange}
-                error={this.state.errors.email}
-              />
-          <Field
-                id="phoneNumber"
-                labelText="phoneNumber"
-                type="text"
-                placeholder="Enter phone (000)-000-0000"
-                name="phoneNumber"
-                value={this.state.phoneNumber}
-                onChange={this.onChange}
-                error={this.state.errors.phoneNumber}
-              />
-          <Field
-                id="password"
-                labelText="Password"
-                type="password"
-                placeholder="Enter password"
-                name="password"
-                value={this.state.password}
-                onChange={this.onChange}
-                error={this.state.errors.password}
-              />
-          <Field
-            id="repeatPassword"
-            labelText="Repeat password"
-            type="password"
-            placeholder="Repeat password"
-            name="repeatPassword"
-            value={this.state.repeatPassword}
-            onChange={this.onChange}
-            error={this.state.errors.repeatPassword}
-          />
-          <button
-            type="submit"
-            className="btn"
-            onClick={this.onSubmit}
-          >
-            Submit
-          </button>
-      </form>
+        </div>
       </div>
-      </div>
-  </div>
 	  );
 	}
 }
