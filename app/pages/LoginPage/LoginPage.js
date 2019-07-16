@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import Field from '../../elements/Field';
+import Field from 'components/common/Field';
+import { baseUrl } from 'utils/api';
 
-class LoginPopup extends Component {
+class LoginPage extends Component {
   constructor() {
     super();
 
@@ -20,7 +21,6 @@ class LoginPopup extends Component {
     };
   };
   onChange = (event) => {
-    console.log(event.target.value)
     this.setState({
       [event.target.name]: event.target.value
     });
@@ -39,31 +39,22 @@ class LoginPopup extends Component {
   onForgotSubmit = (event) => {
     event.preventDefault();
     const { email } = this.state;
-    fetch('http://ec2-52-206-69-68.compute-1.amazonaws.com:8080/forgotpassword', {
-      method: "POST",
-      body: JSON.stringify({
-        email
-      }),
-      headers: {
-        'Access-Control-Allow-Headers': 'authorization',
-        'Content-Type': 'application/json'
+    fetch(`${baseUrl}forgotpassword/?email=${email}&api=${baseUrl}`)
+    .then(resp => {
+      if (resp.statusCode === 301) { 
+        console.log('Resp onForgotSubmit', resp);
+        return resp.json() 
       }
     })
-    .then(resp => resp.json())
     .then(data => {
-      console.log('onForgotSubmit', data)
-      this.props.history.push('/')
-/*      if (data.status === 200) {
-        this.setState({
-          forgotPassVisible: false
-        }); 
-        this.props.history.push('/')        
-      } else {
+      console.log('Data onForgotSubmit', data)
+      if (data && data.cause) {
           this.setState({
+            forgotPassVisible: false,
             responseStatusVisible: true,
-            responseText: data.message
-          });
-      }*/
+            responseText: data.cause
+          });        
+      }
     });
   };
   onSubmit = (event) => {
@@ -76,7 +67,7 @@ class LoginPopup extends Component {
     }
 
     if (this.state.password < 8) {
-      errors.password = 'Must be 3 characters or more';
+      errors.password = 'Must be 8 characters or more';
     }
 
     if (Object.keys(errors).length > 0) {
@@ -88,9 +79,8 @@ class LoginPopup extends Component {
         errors: {}
       });
 
-      console.log('submit', this.state);
       const { email, password } = this.state;
-      fetch('http://ec2-52-206-69-68.compute-1.amazonaws.com:8080/login', {
+      fetch(`${baseUrl}login`, {
         method: "POST",
         body: JSON.stringify({
           email, password
@@ -110,7 +100,9 @@ class LoginPopup extends Component {
           if (data) {
             if (data.accessToken) {
               window.localStorage.setItem("jwt", data.accessToken);
+              this.props.onLogin();
               this.props.history.goBack()
+              //location.reload(true);
             } else if (data.message) {
               this.setState({
                 responseStatusVisible: true,
@@ -208,4 +200,4 @@ class LoginPopup extends Component {
   }
 }
 
-export default LoginPopup;
+export default LoginPage;

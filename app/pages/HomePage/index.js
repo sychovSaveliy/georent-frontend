@@ -10,8 +10,8 @@ import {
   makeSelectRepos,
   makeSelectLoading,
   makeSelectError
-} from '../../../App/selectors';
-import { loadRepos } from '../../../App/actions';
+} from 'App/selectors';
+import { loadRepos } from 'App/actions';
 import { changeUsername } from './actions';
 import { makeSelectUsername } from './selectors';
 import reducer from './reducer';

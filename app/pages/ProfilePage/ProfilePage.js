@@ -1,9 +1,7 @@
-
 import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
-import Header from '../../containers/Header';
-import Input from '../../elements/Input';
-// import './style.scss';
+import Field from 'components/common/Field';
+import { Link } from 'react-router-dom';
 
 export default class ProfilePage extends Component {
   render() {
@@ -17,17 +15,19 @@ export default class ProfilePage extends Component {
           />
         </Helmet>
         <h2>General Information</h2>
-        <Input />
-        <Input />
-        <Input />
+        <Link to="/lots">My staff</Link>
+        <Link to="/create-ad">New staff</Link>
+        <Field />
+        <Field />
+        <Field />
         <h2>Contact Information</h2>
-        <Input />
-        <Input />
-        <Input />
+        <Field />
+        <Field />
+        <Field />
         <h2>Change Password</h2>
-        <Input />
-        <Input />
-        <Input />
+        <Field />
+        <Field />
+        <Field />
           This is Profile Page
       </div>
     );

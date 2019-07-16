@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import Button from 'components/elements/Button/index';
+import Button from 'components/common/Button';
 
 // <div className="header">
 //   <img src="https://www.freelogodesign.org/Content/img/logo-ex-7.png" alt="" />
@@ -15,32 +15,32 @@ import Button from 'components/elements/Button/index';
 //   </div>
 // </div>
 
-class Header extends Component { // eslint-disable-line react/prefer-stateless-function
+class Header extends Component {
   static propTypes = {
     styles: PropTypes.object.isRequired
   }
 
   render() {
     const {
-      styles
+      styles, isLogged
     } = this.props;
     return (
       <nav className={styles.nav}>
         <div className={styles.container}>
-          <Link to="/" className={styles.logo}>
-            Geo - Rent
-          </Link>
+          <Link to="/" className={styles.logo}>Geo - Rent</Link>
           <ul className={styles.navList}>
             <li>
-              <Link to="/lots" className={styles.navItem}>
-                Lots
-              </Link>
-              <Link to="/signup" className={styles.navItem}>
-                Sign up
-              </Link>
-              <Link to="/login" className={styles.navItem}>
-                Sign in
-              </Link>
+              <Link to="/lots" className={styles.navItem}>Lots</Link>
+              <Link to="/signup" className={styles.navItem}>Sign up</Link>
+              {  !isLogged && 
+                <Link to="/login" className={styles.navItem}>Sign in</Link>
+              }
+              {  isLogged && 
+                  <>
+                    <Link to="/profile" className={styles.navItem}>Profile</Link>
+                    <button onClick={this.props.onExit}>Exit</button>
+                  </>  
+              }
             </li>
           </ul>
         </div>

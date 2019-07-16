@@ -6,8 +6,8 @@ import {
   call, put, select, takeLatest
 } from 'redux-saga/effects';
 import request from 'utils/request';
-import { LOAD_REPOS } from '../../../App/constants';
-import { reposLoaded, repoLoadingError } from '../../../App/constants';
+import { LOAD_REPOS } from 'App/constants';
+import { reposLoaded, repoLoadingError } from 'App/constants';
 
 import { makeSelectUsername } from './selectors';
 

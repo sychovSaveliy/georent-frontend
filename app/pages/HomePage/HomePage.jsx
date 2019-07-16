@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import LotsList from 'components/containers/LotsList';
-import Footer from 'components/containers/Footer';
-import RentMap from 'components/containers/RentMap';
-import Pagination from 'components/containers/Pagination';
+import LotsList from 'components/LotsList';
+import RentMap from 'components/RentMap';
+import Pagination from 'components/Pagination';
 import { Helmet } from 'react-helmet';
 import { baseUrl, getData} from 'utils/api';
 class HomePage extends Component {
@@ -21,6 +20,7 @@ class HomePage extends Component {
   };
 
   componentDidMount = () => {
+    console.log('jwt', window.localStorage.getItem("jwt"));
     this.setData(this.getPageUrl(), 'currentPageLots');
     this.setData(baseUrl + 'lot/', 'lotsAll');
   }
@@ -63,7 +63,6 @@ class HomePage extends Component {
         <div>
           <Pagination getCurrentPage={this.setCurrentPage} currentPage={pageNumber} pagesList={totalPages} />
         </div>
-        <Footer />
       </div>
     );
   }
