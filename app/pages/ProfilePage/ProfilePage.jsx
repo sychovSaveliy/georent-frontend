@@ -20,7 +20,7 @@ export default class ProfilePage extends Component {
           />
         </Helmet>
         <h2>General Information</h2>
-        <Link to="/lots">My staff</Link>
+        <Link to="/user/lots">My staff</Link>
         <br />
         <Link to="/create-ad">New staff</Link>
         <Field />

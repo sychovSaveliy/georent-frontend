@@ -13,6 +13,8 @@ import LoginPage from 'pages/LoginPage';
 import ProfilePage from 'pages/ProfilePage';
 import CreateAdPage from 'pages/CreateAdPage';
 import DetailsPage from 'pages/DetailsPage';
+import UserLotsPage from 'pages/UserLotsPage';
+import ForgotPassPage from 'pages/ForgotPassPage';
 
 export default class App extends Component {
   static propTypes = {
@@ -50,6 +52,7 @@ export default class App extends Component {
           <Route exact path="/lots/:lotId" render={props => {return <DetailsPage {...props} isLogged={isLogged} onExit={this.exit} />}} />
           <Route path="/features" render={props => {return <FeaturePage {...props} isLogged={isLogged} onExit={this.exit} />}} />
           <Route path="/signup" render={props => {return <RegistrationPage {...props} isLogged={isLogged} />}} />
+          <Route path="/forgot" render={props => {return <ForgotPassPage {...props} isLogged={isLogged} />}} />
           <Route path="/login" render={props => {return <LoginPage {...props} isLogged={isLogged} onLogin={this.login} />}} />
           <Route path="/profile" render={props => {
               if (!window.localStorage.getItem("jwt")) {
@@ -60,6 +63,11 @@ export default class App extends Component {
               if (!window.localStorage.getItem("jwt")) {
                   return <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
               } else return <CreateAdPage {...props} isLogged={isLogged} onExit={this.exit} />
+          }} />
+          <Route path="/user/lots" render={props => {
+              if (!window.localStorage.getItem("jwt")) {
+                  return <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
+              } else return <UserLotsPage {...props} isLogged={isLogged} onExit={this.exit} />
           }} />
           <Route path="*" render={props => {return <NotFoundPage {...props} isLogged={isLogged} />}} />
         </Switch>
