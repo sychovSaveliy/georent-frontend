@@ -45,21 +45,21 @@ export default class App extends Component {
         </Helmet>
         <Header isLogged={isLogged} onExit={this.exit} />
         <Switch>
-          <Route exact path="/" render={props => {return <HomePage {...props} isLogged={isLogged} />}} />
-          <Route exact path="/lots" render={props => {return <HomePage {...props} isLogged={isLogged} />}} />
-          <Route exact path="/lots/:lotId" render={props => {return <DetailsPage {...props} isLogged={isLogged} />}} />
-          <Route path="/features" render={props => {return <FeaturePage {...props} isLogged={isLogged} />}} />
+          <Route exact path="/" render={props => {return <HomePage {...props} isLogged={isLogged} onExit={this.exit} />}} />
+          <Route exact path="/lots" render={props => {return <HomePage {...props} isLogged={isLogged} onExit={this.exit} />}} />
+          <Route exact path="/lots/:lotId" render={props => {return <DetailsPage {...props} isLogged={isLogged} onExit={this.exit} />}} />
+          <Route path="/features" render={props => {return <FeaturePage {...props} isLogged={isLogged} onExit={this.exit} />}} />
           <Route path="/signup" render={props => {return <RegistrationPage {...props} isLogged={isLogged} />}} />
           <Route path="/login" render={props => {return <LoginPage {...props} isLogged={isLogged} onLogin={this.login} />}} />
           <Route path="/profile" render={props => {
               if (!window.localStorage.getItem("jwt")) {
                   return <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
-              } else return <ProfilePage {...props} isLogged={isLogged} />
+              } else return <ProfilePage {...props} isLogged={isLogged} onExit={this.exit} />
           }} />
           <Route path="/create-ad" render={props => {
               if (!window.localStorage.getItem("jwt")) {
                   return <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
-              } else return <CreateAdPage {...props} isLogged={isLogged} />
+              } else return <CreateAdPage {...props} isLogged={isLogged} onExit={this.exit} />
           }} />
           <Route path="*" render={props => {return <NotFoundPage {...props} isLogged={isLogged} />}} />
         </Switch>
