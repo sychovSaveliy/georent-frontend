@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import Field from 'components/common/Field';
 import { baseUrl } from 'utils/api';
+import PropTypes from 'prop-types';
 
 class LoginPage extends Component {
+  static propTypes = {
+    styles: PropTypes.object.isRequired
+  };
   constructor() {
     super();
 
@@ -115,10 +119,11 @@ class LoginPage extends Component {
   };
 
   render() {
+    const { styles } = this.props;
     return (
       <div>
         <h2>Login Form</h2>
-        <div className="form-container card">
+        <div className={styles.form}>
             { this.state.responseStatusVisible && 
               <div>
                 <h2>

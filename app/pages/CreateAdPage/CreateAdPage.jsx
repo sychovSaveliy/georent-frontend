@@ -1,22 +1,21 @@
 import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
 import Field from 'components/common/Field';
-import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 export default class ProfilePage extends Component {
+  static propTypes = {
+    styles: PropTypes.object.isRequired
+  };
   render() {
+    const { styles } = this.props;
     return (
-      <div className="feature-page">
+      <div className={styles.feature}>
         <Helmet>
-          <title>Profile Page</title>
-          <meta
-            name="description"
-            content="Profile Page"
-          />
+          <title>Create Ad Page</title>
+          <meta name="description" content="Create Ad Page" />
         </Helmet>
-        <h2>General Information</h2>
-        <Link to="/lots">My staff</Link>
-        <Link to="/create-ad">New staff</Link>
+        <h2>Create Ad Page</h2>
         <Field />
         <Field />
         <Field />
@@ -28,7 +27,6 @@ export default class ProfilePage extends Component {
         <Field />
         <Field />
         <Field />
-          This is Profile Page
       </div>
     );
   }

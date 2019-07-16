@@ -3,18 +3,6 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Button from 'components/common/Button';
 
-// <div className="header">
-//   <img src="https://www.freelogodesign.org/Content/img/logo-ex-7.png" alt="" />
-//   <h4>
-//     Best servise to rent or share your stuff in the neighbourhood
-//   </h4>
-//   <div>
-//     <Button text={'Contact info'} />
-//     <Button text={'Sign in'} />
-//     <Button text={'Share my staff'} active={'active'} />
-//   </div>
-// </div>
-
 class Header extends Component {
   static propTypes = {
     styles: PropTypes.object.isRequired
@@ -31,9 +19,11 @@ class Header extends Component {
           <ul className={styles.navList}>
             <li>
               <Link to="/lots" className={styles.navItem}>Lots</Link>
-              <Link to="/signup" className={styles.navItem}>Sign up</Link>
-              {  !isLogged && 
-                <Link to="/login" className={styles.navItem}>Sign in</Link>
+              {  !isLogged &&
+                <>
+                  <Link to="/signup" className={styles.navItem}>Sign up</Link>
+                  <Link to="/login" className={styles.navItem}>Sign in</Link>
+                </>
               }
               {  isLogged && 
                   <>

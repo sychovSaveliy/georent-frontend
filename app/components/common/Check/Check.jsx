@@ -1,6 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import cs from 'classnames';
 
-const Check = (props) => {
+const Check = ({ styles }) => {
   const {
     id,
     labelText,
@@ -13,20 +15,24 @@ const Check = (props) => {
     error
   } = props;
   return (
-    <div className="form-group">
+    <div className={styles.form-group}>
       <label htmlFor={id}>{labelText}</label>
       <input
         id={id}
         type={type}
-        className="form-control"
+        className={styles.form-control}
         name={name}
         value={value}
         checked={checked}
         onClick={onCheck}
       />
-      {error ? <div className="invalid-feedback">{error}</div> : null}
+      {error ? <div className={styles.invalid-feedback} className="invalid-feedback">{error}</div> : null}
     </div>
   );
+};
+
+Check.propTypes = {
+  styles: PropTypes.object.isRequired
 };
 
 export default Check;
