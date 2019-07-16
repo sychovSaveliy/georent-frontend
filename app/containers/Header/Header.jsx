@@ -15,7 +15,7 @@ import Button from 'components/common/Button';
 //   </div>
 // </div>
 
-class Header extends Component { // eslint-disable-line react/prefer-stateless-function
+class Header extends Component {
   static propTypes = {
     styles: PropTypes.object.isRequired
   }
@@ -27,24 +27,19 @@ class Header extends Component { // eslint-disable-line react/prefer-stateless-f
     return (
       <nav className={styles.nav}>
         <div className={styles.container}>
-          <Link to="/" className={styles.logo}>
-            Geo - Rent
-          </Link>
+          <Link to="/" className={styles.logo}>Geo - Rent</Link>
           <ul className={styles.navList}>
             <li>
-              <Link to="/lots" className={styles.navItem}>
-                Lots
-              </Link>
-              <Link to="/signup" className={styles.navItem}>
-                Sign up
-              </Link>
+              <Link to="/lots" className={styles.navItem}>Lots</Link>
+              <Link to="/signup" className={styles.navItem}>Sign up</Link>
               {  !isLogged && 
-                <Link to="/login" className={styles.navItem}>
-                  Sign in
-                </Link>
+                <Link to="/login" className={styles.navItem}>Sign in</Link>
               }
               {  isLogged && 
-                  <button onClick={this.props.onExit}>Exit</button>
+                  <>
+                    <Link to="/profile" className={styles.navItem}>Profile</Link>
+                    <button onClick={this.props.onExit}>Exit</button>
+                  </>  
               }
             </li>
           </ul>

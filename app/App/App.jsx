@@ -21,15 +21,8 @@ export default class App extends Component {
   constructor() {
     super();
     this.state = {
-      isLogged: false,
+      isLogged: window.localStorage.getItem("jwt") ? 1 : 0,
     };
-  };
-  isLoggedCheck = () => {
-    if (window.localStorage.getItem("jwt")) {
-      this.setState({
-        isLogged : true
-      });
-    }
   };
   login = () => {
       this.setState({
@@ -42,9 +35,6 @@ export default class App extends Component {
         isLogged : false
       });
   };
-  componentDidMount() {
-    this.isLoggedCheck()
-  };
   render() {
     const { styles } = this.props;
     const { isLogged } = this.state;
@@ -54,7 +44,6 @@ export default class App extends Component {
           <meta name="description" content="Geo Rent" />
         </Helmet>
         <Header isLogged={isLogged} onExit={this.exit} />
-        { window.localStorage.getItem("jwt") }
         <Switch>
           <Route exact path="/" render={props => {return <HomePage {...props} isLogged={isLogged} />}} />
           <Route exact path="/lots" render={props => {return <HomePage {...props} isLogged={isLogged} />}} />
