@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/common/Button';
+import { Link } from 'react-router-dom';
 
 const LotsList = ({ styles, lots }) => (
   <div className={styles.lotsListContainer}>
@@ -11,7 +12,7 @@ const LotsList = ({ styles, lots }) => (
           <img src={item.imageUrl} alt="" />
         </div>
         <div className={styles.ItemInfoWrapper}>
-          <h2 className={styles.CardHeader}><span>{item.id}. </span><span>{item.lotName}</span></h2>
+          <h2 className={styles.CardHeader}><span>{item.id}. </span><Link to={`user/lot/${item.id}`}>{item.lotName}</Link></h2>
           <div className={styles.CardFooter}>
             <div className={styles.LocatIcon}></div>
             <div className={styles.AdressWrapper}>{item.address}</div>

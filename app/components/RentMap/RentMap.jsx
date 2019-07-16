@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import {
   Map as LeafletMap, TileLayer, Marker, Popup
 } from 'react-leaflet';
@@ -24,7 +25,7 @@ const RentMap = ({ styles, lots }) => {
         {lots.map((item) => (
           <Marker key={item.id} position={[item.coordinates.latitude, item.coordinates.longitude]}>
             <Popup>
-              {item.id} {item.lotName}
+              {item.id} <Link to={`/lots/${item.id}`}>{item.lotName}</Link>
             </Popup>
           </Marker>
 /*          <Marker key={item.id} position={[50.436795, 30.5305163]}>
