@@ -49,7 +49,7 @@ export default class App extends Component {
         <Switch>
           <Route exact path="/" render={props => {return <HomePage {...props} isLogged={isLogged} onExit={this.exit} />}} />
           <Route exact path="/lots" render={props => {return <HomePage {...props} isLogged={isLogged} onExit={this.exit} />}} />
-          <Route exact path="/lots/:lotId" render={props => {return <DetailsPage {...props} isLogged={isLogged} onExit={this.exit} />}} />
+          <Route exact path="/user/lot/:lotId" render={props => {return <DetailsPage {...props} isLogged={isLogged} onExit={this.exit} />}} />
           <Route path="/features" render={props => {return <FeaturePage {...props} isLogged={isLogged} onExit={this.exit} />}} />
           <Route path="/signup" render={props => {return <RegistrationPage {...props} isLogged={isLogged} />}} />
           <Route path="/forgot" render={props => {return <ForgotPassPage {...props} isLogged={isLogged} />}} />
@@ -65,9 +65,7 @@ export default class App extends Component {
               } else return <CreateAdPage {...props} isLogged={isLogged} onExit={this.exit} />
           }} />
           <Route path="/user/lots" render={props => {
-              if (!window.localStorage.getItem("jwt")) {
-                  return <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
-              } else return <UserLotsPage {...props} isLogged={isLogged} onExit={this.exit} />
+              return <UserLotsPage {...props} isLogged={isLogged} onExit={this.exit} />
           }} />
           <Route path="*" render={props => {return <NotFoundPage {...props} isLogged={isLogged} />}} />
         </Switch>
