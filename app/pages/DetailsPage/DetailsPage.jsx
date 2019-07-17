@@ -10,7 +10,21 @@ export default class DetailsPage extends Component {
   constructor() {
     super();
     this.state = {
-      lot: {}
+      lot: {
+        id: 0,
+        price: 0,
+        coordinates: {
+          address: '',
+          longitude: 0,
+          latitude: 0
+        },
+        description: {
+          lotName: '',
+          lotDescription: '',
+          pictureIds: [],
+          urls: []
+        }
+      }
     };
   };
 
@@ -23,22 +37,48 @@ export default class DetailsPage extends Component {
       .then(data => 
         {
           console.log('DATA', data);
-          this.setState({
-            lot: data
-          });
+          this.setState(prevState => ({
+              ...prevState,
+              lot: {
+                  ...prevState.lot,
+                  id: data.id,
+                  price: data.price,
+                  coordinates: {
+                      ...prevState.lot.coordinates,
+                      address: data.coordinates.address,
+                      longitude: data.coordinates.longitude,
+                      latitude: data.coordinates.latitude
+                  },
+                  description: {
+                      ...prevState.lot.description,
+                      lotName: data.description.lotName,
+                      lotDescription: data.description.lotDescription,
+                      pictureIds: data.description.pictureIds,
+                      urls: data.description.urls
+                  }
+              }
+          }));
+          console.log(this.state)
       });
   }
 
   render() {
     const { styles } = this.props;
-    const { lot : {
-    	id,
-    	price,
-    } } = this.state;
+    const { lot : {	id,	price, coordinates : { address, longitude, latitude }, description : { lotName, lotDescription, pictureIds, urls } } } = this.state;
     return (
       <div>
-      		<h1>id {id}</h1>
-      		<h1>price {price}</h1>
+      		<h1>{id} . {lotName}</h1>
+      		<div>{price} грн.</div>
+          <h2>Адрес лота:</h2>
+          <div>address {address}</div>
+          <div>longitude {longitude}</div>
+          <div>latitude {latitude}</div>
+          <h2>Описание лота:</h2>
+          <div>{lotDescription}</div>
+          <h2>pictureIds</h2>
+          <div>pictureIds {pictureIds.map(item => <div key={item}>picture id {item} </div>)}</div>
+          <h2>urls</h2>
+          <div>{urls.map(item => <div key={item}><b>url</b> {item}  </div>)}</div>
       </div>
     );
   }
