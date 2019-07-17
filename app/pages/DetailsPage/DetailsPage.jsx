@@ -68,7 +68,9 @@ export default class DetailsPage extends Component {
     return (
       <div>
       		<h1>{id} . {lotName}</h1>
-      		<div>{price} грн.</div>
+          <div>{urls.map(item => <div key={item}><img src={item} /></div>)}</div>
+      		<h2>Цена:</h2>
+          <div>{price} грн.</div>
           <h2>Адрес лота:</h2>
           <div>address {address}</div>
           <div>longitude {longitude}</div>
@@ -77,8 +79,6 @@ export default class DetailsPage extends Component {
           <div>{lotDescription}</div>
           <h2>pictureIds</h2>
           <div>pictureIds {pictureIds.map(item => <div key={item}>picture id {item} </div>)}</div>
-          <h2>urls</h2>
-          <div>{urls.map(item => <div key={item}><b>url</b> {item}  </div>)}</div>
       </div>
     );
   }

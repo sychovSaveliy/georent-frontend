@@ -9,10 +9,10 @@ const LotsList = ({ styles, lots }) => (
     {lots.map((item) => (
       <div key={item.id} className={styles.CardWrapper}>
         <div className={styles.CardIMGStyle}>
-          <img src={item.imageUrl} alt="" />
+          <img src={item.imageUrl || item.description.urls[0]} alt="" />
         </div>
         <div className={styles.ItemInfoWrapper}>
-          <h2 className={styles.CardHeader}><span>{item.id}. </span><Link to={`user/lot/${item.id}`}>{item.lotName}</Link></h2>
+          <h2 className={styles.CardHeader}><span>{item.id}. </span><Link to={`/user/lot/${item.id}` }>{item.lotName || item.description.lotName}</Link></h2>
           <div className={styles.CardFooter}>
             <div className={styles.LocatIcon}></div>
             <div className={styles.AdressWrapper}>{item.address}</div>
