@@ -1,0 +1,30 @@
+.forgotPage {  
+    display: flex;
+    text-align: center;
+    white-space: nowrap;    
+    box-shadow: 5px 5px 10px rgba(black, 0.5);
+    &_left{
+      flex: 0 1 50%;
+      padding: 40px;
+    }
+    &_right{
+      flex: 0 1 50%;
+      background-color: #ebccf5;
+    //   padding: 60px;
+    //   margin: 100px;
+      min-width: 200px;
+    //   text-align: left;
+      white-space: normal;
+      color: #000; 
+      &_but{
+        flex: 0 1 50%;
+        text-align: center;
+        padding: 5px;
+        margin: 200px; 
+        background-color: #abccf5;
+        // height: 25px;
+        // width: 100px;
+        // margin: percent(50);
+      }
+    }
+}

@@ -4,7 +4,9 @@ import PropTypes from 'prop-types';
 const Field = ({ styles, id, labelText, type, placeholder, name, value, onChange, error }) => {
   return (
     <div className={styles.form}>
-      <label htmlFor={id}>{labelText}</label>
+      <div>
+        <label htmlFor={id}>{labelText}</label>
+      </div>
       <input
         id={id}
         type={type}
@@ -15,7 +17,7 @@ const Field = ({ styles, id, labelText, type, placeholder, name, value, onChange
         onChange={onChange}
       />
       {error ? <div className={styles.invalid}>{error}</div> : null}
-    </div>
+    </div >
   );
 };
 
