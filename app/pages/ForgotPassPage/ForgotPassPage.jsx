@@ -77,6 +77,7 @@ class ForgotPassPage extends Component {
 
       console.log('submit', this.state);
       const values = queryString.parse(this.props.location.search); 
+      debugger
       const { password } = this.state;
       fetch(`${baseUrl}user/forgotpassword/save`, {
         method: 'POST',
@@ -85,7 +86,7 @@ class ForgotPassPage extends Component {
           'Content-Type': 'application/json',
           'Access-Control-Allow-Headers': 'authorization',
           'Content-Type': 'application/json',
-          'Authorization': `${values.tokenType || ''} ${values.accessToken || ''}`
+          'Authorization': `${values.tokentype || ''} ${values.accesstoken || ''}`
         },
         body: JSON.stringify({
           password
@@ -120,6 +121,17 @@ class ForgotPassPage extends Component {
 
 
   render() {
+    // const MOUNT_NODE = document.getElementById('app');
+    // ReactDOM.render(
+    //   <Provider store={store}>
+    //     {/* <LanguageProvider messages={messages}> */}
+    //     <ConnectedRouter history={history}>
+    //       <App />
+    //     </ConnectedRouter>
+    //     {/* </LanguageProvider> */}
+    //   </Provider>,
+    //   MOUNT_NODE
+    // );
     const { styles } = this.props;
     const { responseStatusVisible } = this.state;
     return (
