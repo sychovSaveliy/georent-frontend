@@ -10,12 +10,19 @@ import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 
+import { Paginator } from 'primereact/paginator';
+import { baseUrl, getData } from 'utils/api';
+import 'primereact/resources/themes/nova-light/theme.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
+
 class HomePage extends Component {
   static propTypes = {
     styles: PropTypes.object.isRequired
   }
 
     state = {
+      first: 0,
       itemsPerPage: 3,
       currentPageLots: {
         pageNumber: 1,
@@ -47,8 +54,7 @@ class HomePage extends Component {
   setCurrentPage = (currentPage) => {
     const { currentPageLots } = this.state;
     currentPageLots.pageNumber = currentPage;
-    this.setState({ currentPageLots });
-    this.setData(this.getPageUrl(), 'currentPageLots');
+    this.setState({ currentPageLots }, () => this.setData(this.getPageUrl(), 'currentPageLots'));
   }
 
   searchData = (data) => {
@@ -64,8 +70,10 @@ class HomePage extends Component {
   render() {
     const { styles } = this.props;
     const {
-      currentPageLots: { pageNumber, totalPages, lots },
-      lotsAll
+      currentPageLots: { totalPages, lots },
+      lotsAll,
+      first,
+      itemsPerPage
     } = this.state;
     return (
       <div>
@@ -73,13 +81,24 @@ class HomePage extends Component {
           <SearchLot searchData={this.searchData} searchAddress={this.searchAddress} />
         </div>
         <div className={styles.content}>
-          <LotsList lots={lots} />
+          <div>
+            <LotsList lots={lots} />
+            <Paginator
+              className={styles.paginator}
+              first={first}
+              rows={itemsPerPage}
+              totalRecords={totalPages * itemsPerPage}
+              rowsPerPageOptions={[3, 5, 7]}
+              onPageChange={(e) => {
+                this.setCurrentPage(e.page + 1);
+                this.setState({ first: e.first, itemsPerPage: e.rows });
+              }}
+            >
+            </Paginator>
+          </div>
           <div>
             <RentMap lots={lotsAll} />
           </div>
-        </div>
-        <div>
-          <Pagination getCurrentPage={this.setCurrentPage} currentPage={pageNumber} pagesList={totalPages} />
         </div>
       </div>
     );
