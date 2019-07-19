@@ -3,26 +3,32 @@ import PropTypes from 'prop-types';
 import LotsList from 'components/containers/LotsList';
 import Footer from 'components/containers/Footer';
 import RentMap from 'components/containers/RentMap';
-import Pagination from 'components/containers/Pagination';
 import { Helmet } from 'react-helmet';
-import { baseUrl, getData} from 'utils/api';
+import { Paginator } from 'primereact/paginator';
+import { baseUrl, getData } from 'utils/api';
+import 'primereact/resources/themes/nova-light/theme.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
+
 class HomePage extends Component {
   static propTypes = {
     styles: PropTypes.object.isRequired
   }
+
     state = {
-    itemsPerPage: 3,
-    currentPageLots: {
-      pageNumber: 1,
-      lots: [],
-      totalPages: 0
-    },
-    lotsAll: [],
-  };
+      first: 0,
+      itemsPerPage: 3,
+      currentPageLots: {
+        pageNumber: 1,
+        lots: [],
+        totalPages: 0
+      },
+      lotsAll: [],
+    };
 
   componentDidMount = () => {
     this.setData(this.getPageUrl(), 'currentPageLots');
-    this.setData(baseUrl + 'lot/', 'lotsAll');
+    this.setData(`${baseUrl}lot/`, 'lotsAll');
   }
 
   getPageUrl = () => {
@@ -31,37 +37,48 @@ class HomePage extends Component {
   }
 
   setData = (url, target) => {
-    getData(url).then(data => {
-          console.log(data);
-          this.setState({
-            [target]: data
-          });
+    getData(url).then((data) => {
+      this.setState({
+        [target]: data
       });
+    });
   }
 
   setCurrentPage = (currentPage) => {
     const { currentPageLots } = this.state;
     currentPageLots.pageNumber = currentPage;
-    this.setState({ currentPageLots });
-    this.setData(this.getPageUrl(), 'currentPageLots');
+    this.setState({ currentPageLots }, () => this.setData(this.getPageUrl(), 'currentPageLots'));
   }
 
   render() {
     const { styles } = this.props;
     const {
-      currentPageLots: { pageNumber, totalPages, lots },
-      lotsAll
+      currentPageLots: { totalPages, lots },
+      lotsAll,
+      first,
+      itemsPerPage
     } = this.state;
     return (
       <div>
         <div className={styles.content}>
-          <LotsList lots={lots} />
           <div>
-           <RentMap lots={lotsAll} />
+            <LotsList lots={lots} />
+            <Paginator
+              className={styles.paginator}
+              first={first}
+              rows={itemsPerPage}
+              totalRecords={totalPages * itemsPerPage}
+              rowsPerPageOptions={[3, 5, 7]}
+              onPageChange={(e) => {
+                this.setCurrentPage(e.page + 1);
+                this.setState({ first: e.first, itemsPerPage: e.rows });
+              }}
+            >
+            </Paginator>
           </div>
-        </div>
-        <div>
-          <Pagination getCurrentPage={this.setCurrentPage} currentPage={pageNumber} pagesList={totalPages} />
+          <div>
+            <RentMap lots={lotsAll} />
+          </div>
         </div>
         <Footer />
       </div>
