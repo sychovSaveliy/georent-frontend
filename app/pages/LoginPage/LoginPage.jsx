@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Field from 'components/common/Field';
+import Button from 'components/common/Button';
 import { baseUrl } from 'utils/api';
 import PropTypes from 'prop-types';
 
@@ -31,7 +32,8 @@ class LoginPage extends Component {
   };
   onForgot = (event) => {
     this.setState({
-      forgotPassVisible: true
+      forgotPassVisible: true,
+      responseStatusVisible: false
     });
   };
   onForgotBack = (event) => {
@@ -43,24 +45,53 @@ class LoginPage extends Component {
   onForgotSubmit = (event) => {
     event.preventDefault();
     const { email } = this.state;
-    fetch(`${baseUrl}forgotpassword/?email=${email}&api=${baseUrl}`)
-    .then(resp => {
-      if (resp.statusCode === 301) { 
-        console.log('Resp onForgotSubmit', resp);
-        return resp.json() 
+    const api = window.location.origin;
+    // fetch(`${baseUrl}forgotpassword/?email=${email}&api=${window.location.origin}`,
+    fetch(`${baseUrl}forgotpassword`,
+      {
+        method: "POST",
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email,
+          api
+        })
       }
-    })
-    .then(data => {
-      console.log('Data onForgotSubmit', data)
-      if (data && data.cause) {
+    )
+      .then(resp => {
+        console.log('resp onForgot', resp);
+        if (resp.status === 301) {
           this.setState({
-            forgotPassVisible: false,
-            responseStatusVisible: true,
-            responseText: data.cause
-          });        
-      }
-    });
+            tokenType: '',
+            accessToken: '',
+            password: '',
+            repeatPassword: ''
+          });
+          this.setState({ forgotPassVisible: false });
+        }
+        return resp.json()
+      })
+      .then(data => {
+        console.log('DATA', data)
+        if (data) {
+          if (data.message) {
+            this.setState({
+              responseStatusVisible: true,
+              responseText: data.message
+            });
+          } else {
+            this.setState({
+              responseStatusVisible: true,
+              responseText: data.cause
+            });
+          }
+        }
+      });
   };
+
   onSubmit = (event) => {
     event.preventDefault();
     const errors = {};
@@ -94,12 +125,11 @@ class LoginPage extends Component {
           'Content-Type': 'application/json'
         }
       })
-      .then(resp => {
-        console.log('resp', resp);
-        return resp.json()
-      })
-      .then(data => 
-        {
+        .then(resp => {
+          console.log('resp', resp);
+          return resp.json()
+        })
+        .then(data => {
           console.log('DATA', data);
           if (data) {
             if (data.accessToken) {
@@ -111,10 +141,10 @@ class LoginPage extends Component {
               this.setState({
                 responseStatusVisible: true,
                 responseText: data.message
-              });        
+              });
             }
           }
-      });
+        });
     }
   };
 
@@ -124,81 +154,86 @@ class LoginPage extends Component {
       <div>
         <h2>Login Form</h2>
         <div className={styles.form}>
-            { this.state.responseStatusVisible && 
-              <div>
-                <h2>
-                  { this.state.responseText }
-                </h2>
-              </div>
-            }
+          {this.state.responseStatusVisible &&
+            <div>
+              <h2>
+                {this.state.responseText}
+              </h2>
+            </div>
+          }
 
-            { this.state.forgotPassVisible && 
-              <div>
+          {this.state.forgotPassVisible &&
+            <div style={{ backgroundColor: "#6cc0e5", width: "600px", minHeight: "400px" }}>
+              <h2 style={{ padding: "10px 20px", textAlign: "center", color: "white" }}>Input  your email and start the password recovery procedure</h2>
+              <div style={{ textAlign: "center", backgroundColor: "#fcc0e5", width: "600px", minHeight: "400px" }}>
                 <Field
-                      id="email"
-                      labelText="Email"
-                      type="text"
-                      placeholder="Enter email"
-                      name="email"
-                      value={this.state.email}
-                      onChange={this.onChange}
-                      error={this.state.errors.email}
-                    />
-                <button
-                      type="submit"
-                      className="btn"
-                      onClick={this.onForgotSubmit}
-                    >
-                  Submit
-                </button>
-                <button
-                      type="button"
-                      className="btn"
-                      onClick={this.onForgotBack}
-                    >
-                  Назад
-                </button>
-              </div>    
-            }
-           
-            { !this.state.forgotPassVisible && 
-              <div>
-                <Field
-                      id="email"
-                      labelText="Email"
-                      type="text"
-                      placeholder="Enter email"
-                      name="email"
-                      value={this.state.email}
-                      onChange={this.onChange}
-                      error={this.state.errors.email}
-                    />
-                <Field
-                      id="password"
-                      labelText="Password"
-                      type="password"
-                      placeholder="Enter password"
-                      name="password"
-                      value={this.state.password}
-                      onChange={this.onChange}
-                      error={this.state.errors.password}
-                    />
-                <button
-                      type="submit"
-                      className="btn"
-                      onClick={this.onSubmit}
-                    >
-                  Submit
-                </button>
-                <button
-                  type="button"
-                  className="btn"
-                  onClick={this.onForgot}
-                >
-                  Забыл пароль
-                </button>              
+                  id="email"
+                  labelText="Email"
+                  type="text"
+                  placeholder="Enter email"
+                  name="email"
+                  value={this.state.email}
+                  onChange={this.onChange}
+                  error={this.state.errors.email}
+                />
               </div>
-            }
+              <div style={{ textAlign: "center" }}>
+              <button
+                type="submit"
+                className="btn"
+                onClick={this.onForgotSubmit}
+              >
+                Start the password recovery procedure
+              </button>
+              <button
+                name="button"
+                className="btn"
+                onClick={this.onForgotBack}
+              >
+                Back
+              </button>
+              </div>
+            </div>
+          }
+
+          {!this.state.forgotPassVisible &&
+            <div>
+              <Field
+                id="email"
+                labelText="Email"
+                type="text"
+                placeholder="Enter email"
+                name="email"
+                value={this.state.email}
+                onChange={this.onChange}
+                error={this.state.errors.email}
+              />
+              <Field
+                id="password"
+                labelText="Password"
+                type="password"
+                placeholder="Enter password"
+                name="password"
+                value={this.state.password}
+                onChange={this.onChange}
+                error={this.state.errors.password}
+              />
+              <button
+                type="submit"
+                className="btn"
+                onClick={this.onSubmit}
+              >
+                Submit
+              </button>
+              <button
+                type="button"
+                className="btn"
+                onClick={this.onForgot}
+              >
+                Forgot password
+              </button>
+            </div>
+          }
         </div>
       </div>
     );
