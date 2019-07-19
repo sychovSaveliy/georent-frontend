@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 

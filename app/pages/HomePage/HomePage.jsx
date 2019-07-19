@@ -2,20 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import LotsList from 'components/LotsList';
 import RentMap from 'components/RentMap';
-import Pagination from 'components/Pagination';
 import { Helmet } from 'react-helmet';
 import { baseUrl, getData } from 'utils/api';
 import SearchLot from '../../components/SearchLot';
 import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
-
 import { Paginator } from 'primereact/paginator';
-import { baseUrl, getData } from 'utils/api';
-import 'primereact/resources/themes/nova-light/theme.css';
-import 'primereact/resources/primereact.min.css';
-import 'primeicons/primeicons.css';
-
 class HomePage extends Component {
   static propTypes = {
     styles: PropTypes.object.isRequired
