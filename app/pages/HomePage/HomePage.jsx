@@ -4,25 +4,31 @@ import LotsList from 'components/LotsList';
 import RentMap from 'components/RentMap';
 import Pagination from 'components/Pagination';
 import { Helmet } from 'react-helmet';
-import { baseUrl, getData} from 'utils/api';
+import { baseUrl, getData } from 'utils/api';
+import SearchLot from '../../components/SearchLot';
+import 'primereact/resources/themes/nova-light/theme.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
+
 class HomePage extends Component {
   static propTypes = {
     styles: PropTypes.object.isRequired
   }
+
     state = {
-    itemsPerPage: 3,
-    currentPageLots: {
-      pageNumber: 1,
-      lots: [],
-      totalPages: 0
-    },
-    lotsAll: [],
-  };
+      itemsPerPage: 3,
+      currentPageLots: {
+        pageNumber: 1,
+        lots: [],
+        totalPages: 0
+      },
+      lotsAll: [],
+    };
 
   componentDidMount = () => {
-    console.log('jwt', window.localStorage.getItem("jwt"));
+    console.log('jwt', window.localStorage.getItem('jwt'));
     this.setData(this.getPageUrl(), 'currentPageLots');
-    this.setData(baseUrl + 'lot/', 'lotsAll');
+    this.setData(`${baseUrl}lot/`, 'lotsAll');
   }
 
   getPageUrl = () => {
@@ -31,12 +37,11 @@ class HomePage extends Component {
   }
 
   setData = (url, target) => {
-    getData(url).then(data => {
-          console.log('DATA',data);
-          this.setState({
-            [target]: data
-          });
+    getData(url).then((data) => {
+      this.setState({
+        [target]: data
       });
+    });
   }
 
   setCurrentPage = (currentPage) => {
@@ -46,6 +51,16 @@ class HomePage extends Component {
     this.setData(this.getPageUrl(), 'currentPageLots');
   }
 
+  searchData = (data) => {
+    const url = `${baseUrl}search/filters/?address=&lotname=${data}`;
+    this.setData(url, 'currentPageLots');
+  };
+
+  searchAddress = (address) => {
+    const url = `${baseUrl}search/filters/?address=${address}&lotname=`;
+    this.setData(url, 'currentPageLots');
+  };
+
   render() {
     const { styles } = this.props;
     const {
@@ -54,10 +69,13 @@ class HomePage extends Component {
     } = this.state;
     return (
       <div>
+        <div>
+          <SearchLot searchData={this.searchData} searchAddress={this.searchAddress} />
+        </div>
         <div className={styles.content}>
           <LotsList lots={lots} />
           <div>
-           <RentMap lots={lotsAll} />
+            <RentMap lots={lotsAll} />
           </div>
         </div>
         <div>

@@ -33,3 +33,17 @@ label {
 .sidebar{
   width: 400px;
 }
+div.p-inputgroup >  .p-button {
+  background-color: darkviolet !important;
+  border: none !important;
+  &:hover {
+    background-color: rgba(148, 0, 211, 0.79) !important;
+  }
+}
+.p-inputgroup.search-input--margin {
+  margin: 20px 40px !important;
+}
+.p-inputtext:enabled:focus {
+  box-shadow: none !important;
+  border-color: #212121 !important;
+}
