@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet';
 import Field from 'components/common/Field';
 import Textarea from 'components/common/Textarea';
 import PropTypes from 'prop-types';
+import { baseUrl, getData } from 'utils/api';
 
 export default class ProfilePage extends Component {
   static propTypes = {
@@ -17,7 +18,8 @@ export default class ProfilePage extends Component {
         address: "address",
         longitude: "30.520000",
         latitude: "50.350000",
-        lotDescription: "lotDescription lotDescription lotDescription lotDescription"
+        lotDescription: "lotDescription lotDescription lotDescription lotDescription",
+        avatar: ""
       },
       errors: {
         lotName: false,
@@ -25,7 +27,8 @@ export default class ProfilePage extends Component {
         address: false,
         longitude: false,
         latitude: false,
-        lotDescription: false
+        lotDescription: false,
+        avatar: false
       },
       responseStatusVisible: false,
       responseText: ""
@@ -42,7 +45,7 @@ export default class ProfilePage extends Component {
     });
   };
 
-  onChangeAvatar = event => {
+  onChangeImg = event => {
     const reader = new FileReader();
     reader.onload = event => {
       const newValues = {
@@ -101,7 +104,7 @@ export default class ProfilePage extends Component {
 
   onSubmit = event => {
     event.preventDefault();
-    let errors = formValidator(this.state.values);
+    let errors = this.formValidator(this.state.values);
       if (Object.keys(errors).length > 0) {
       // fail  
         this.setState({
@@ -113,45 +116,56 @@ export default class ProfilePage extends Component {
           errors: {}
       });
       console.log("submit", this.state);
-      const { lotName, price, address, longitude, latitude, lotDescription } = this.state;
-      fetch(`${baseUrl}user/lot`, {
-        method: 'POST',
-        headers: {
-          'Access-Control-Allow-Headers': 'authorization',
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${window.localStorage.getItem("jwt") || ''}`
-        },
-        body: JSON.stringify({
-          lotName, price, address, longitude, latitude, lotDescription
-        })
-      }).then(resp => {
-        console.log('resp', resp);
-        if (resp.status === 201) {
-          this.setState({
-            lotName: '',
-            price: '',
-            address: '',
-            longitude: '',
-            latitude: '',
-            lotDescription: ''
-          });
-        }
-        return resp.json()
-      })
-      .then(data => {
-          console.log('DATA', data)
-          if (data.message) {
+      const { lotName, price, address, longitude, latitude, lotDescription, avatar } = this.state;
+        let form = new FormData();
+        let lot = {
+          'lotName': lotName,
+          'price': price,
+          'address': address,
+          'longitude': longitude,
+          'latitude': latitude,
+          'lotDescription': lotDescription,
+        };
+        lot = JSON.stringify(lot);
+        form.append('lot',lot);
+        let imagedata = document.querySelector('input[type="file"]').files[0];
+        form.append('files',imagedata);
+        console.log('form data', form);
+        fetch(`${baseUrl}user/lot/upload-picture`, {
+          method: 'POST',
+          headers: {
+            'Access-Control-Allow-Headers': 'authorization',
+             'Authorization': `Bearer ${window.localStorage.getItem("jwt") || ''}`,
+          },
+          body: form
+        }).then(resp => {
+          console.log('resp', resp);
+          if (resp.status === 201) {
             this.setState({
-                responseStatusVisible: true,
-                responseText: data.message
-            });
-          } else {
-            this.setState({
-                responseStatusVisible: true,
-                responseText: data.cause
+              lotName: '',
+              price: '',
+              address: '',
+              longitude: '',
+              latitude: '',
+              lotDescription: ''
             });
           }
-      });
+          return resp.json()
+        })
+        .then(data => {
+            console.log('DATA', data)
+            if (data.message) {
+              this.setState({
+                  responseStatusVisible: true,
+                  responseText: data.message
+              });
+            } else {
+              this.setState({
+                  responseStatusVisible: true,
+                  responseText: data.cause
+              });
+            }
+        });
     }
   };
 
@@ -231,6 +245,22 @@ export default class ProfilePage extends Component {
           onChange={this.onChange}
           error={errors.lotDescription}
         />
+        <div className='avatar'>
+          {!(values.avatar) ? <img src='./images/default-avatar.59337bae.png' alt='' /> : <img src={values.avatar} alt='' />}
+        </div>
+        <div className="form-group">
+          <div className="custom-file">
+            <input
+              type="file"
+              className="custom-file-input"
+              id="avatar"
+              name="avatar"
+              onChange={this.onChangeImg}
+            />
+            <label className="custom-file-label" htmlFor="avatar">Choose file</label>
+            {errors.avatar ? <div className="invalid-feedback">{errors.avatar}</div> : null}
+          </div>
+        </div>
         <button
           type="button"
           className="btn btn-primary w-100"
