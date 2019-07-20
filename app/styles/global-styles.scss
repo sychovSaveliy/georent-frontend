@@ -33,3 +33,74 @@ label {
 .sidebar{
   width: 400px;
 }
+div.p-inputgroup >  .p-button {
+  background-color: darkviolet !important;
+  border: none !important;
+  &:hover {
+    background-color: rgba(148, 0, 211, 0.79) !important;
+  }
+}
+.p-inputgroup.search-input--margin {
+  margin: 20px 40px !important;
+}
+.p-inputtext:enabled:focus {
+  box-shadow: none !important;
+  border-color: #212121 !important;
+}
+
+.p-paginator {
+  background-color: transparent !important;
+  border: none !important;
+  margin: 15px !important;
+  .p-highlight {
+    background-color: #ebccf5 !important;
+  }
+  .p-link {
+    height: 40px !important;
+    font-size: 16px !important;
+    padding: 5px 10px !important;
+    line-height: 30px !important;
+    color: darkviolet !important;
+  }
+  .p-dropdown {
+    background-color: transparent !important;
+    height: 40px !important;
+    border: 1px solid #e0e0e0 !important;
+    border-radius: 0 !important;
+    outline: none !important;
+    &:hover {
+      background-color: #e0e0e0 !important;
+    }
+    .p-dropdown-trigger {
+      color: darkviolet !important;
+      background-color: transparent !important;
+
+    }
+    .p-dropdown-item {
+      color: darkviolet !important;
+    }
+    .p-dropdown-panel {
+      box-shadow: none !important;
+
+    }
+    .p-inputtext {
+    line-height: 20px !important;
+    font-family: "Open Sans", "Helvetica Neue", sans-serif !important;
+      font-size: 16px !important;
+      color: darkviolet !important;
+      background-color: transparent !important;
+
+    }
+    &:not(.p-disabled).p-focus {
+      -webkit-box-shadow: none !important;
+      -moz-box-shadow: none !important;
+      box-shadow: none !important;
+    }
+    .p-input-overlay {
+      box-shadow: none !important;
+    }
+    .p-focus {
+      box-shadow: none !important;
+    }
+  }
+}
