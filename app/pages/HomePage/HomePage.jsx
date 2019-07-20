@@ -4,7 +4,7 @@ import LotsList from 'components/LotsList';
 import RentMap from 'components/RentMap';
 import { Helmet } from 'react-helmet';
 import { baseUrl, getData } from 'utils/api';
-import SearchLot from '../../components/SearchLot';
+import SearchLot from 'components/SearchLot';
 import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
@@ -38,9 +38,16 @@ class HomePage extends Component {
 
   setData = (url, target) => {
     getData(url).then((data) => {
-      this.setState({
-        [target]: data
-      });
+      if (data) {
+        this.setState({
+          [target]: data
+        });        
+      } else {
+        this.setState({
+          [target]: null
+        });     
+      }
+
     });
   }
 
@@ -75,19 +82,23 @@ class HomePage extends Component {
         </div>
         <div className={styles.content}>
           <div>
-            <LotsList lots={lots} />
-            <Paginator
-              className={styles.paginator}
-              first={first}
-              rows={itemsPerPage}
-              totalRecords={totalPages * itemsPerPage}
-              rowsPerPageOptions={[3, 5, 7]}
-              onPageChange={(e) => {
-                this.setCurrentPage(e.page + 1);
-                this.setState({ first: e.first, itemsPerPage: e.rows });
-              }}
-            >
-            </Paginator>
+            {lots && 
+              <div>
+              <LotsList lots={lots} />
+              <Paginator
+                className={styles.paginator}
+                first={first}
+                rows={itemsPerPage}
+                totalRecords={totalPages * itemsPerPage}
+                rowsPerPageOptions={[3, 5, 7]}
+                onPageChange={(e) => {
+                  this.setCurrentPage(e.page + 1);
+                  this.setState({ first: e.first, itemsPerPage: e.rows });
+                }}
+              >
+              </Paginator>
+              </div>
+            }}
           </div>
           <div>
             <RentMap lots={lotsAll} />
