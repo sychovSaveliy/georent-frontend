@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
+import PrivateRoute from 'components/PrivateRoute';
 import Header from 'containers/Header';
 import Footer from 'containers/Footer';
 import NotFoundPage from 'pages/NotFoundPage';
@@ -54,15 +55,12 @@ export default class App extends Component {
           <Route path="/signup" render={props => {return <RegistrationPage {...props} isLogged={isLogged} />}} />
           <Route path="/forgot" render={props => {return <ForgotPassPage {...props} isLogged={isLogged} />}} />
           <Route path="/login" render={props => {return <LoginPage {...props} isLogged={isLogged} onLogin={this.login} />}} />
-          <Route path="/profile" render={props => {
-              if (!window.localStorage.getItem("jwt")) {
-                  return <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
-              } else return <ProfilePage {...props} isLogged={isLogged} onExit={this.exit} />
-          }} />
+          <PrivateRoute path="/profile" component={ProfilePage} isLogged={isLogged} onExit={this.exit} />
           <Route path="/create-ad" render={props => {
-              if (!window.localStorage.getItem("jwt")) {
+              {/*if (!window.localStorage.getItem("jwt")) {
                   return <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
-              } else return <CreateAdPage {...props} isLogged={isLogged} onExit={this.exit} />
+              } else */}
+              return <CreateAdPage {...props} isLogged={isLogged} onExit={this.exit} />
           }} />
           <Route path="/user/lots" render={props => {
               return <UserLotsPage {...props} isLogged={isLogged} onExit={this.exit} />

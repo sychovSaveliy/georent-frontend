@@ -56,7 +56,7 @@ export default class UserLotsPage extends Component {
     const { lotsAll } = this.state;
     return (
       <div>
-        { console.log(this.props.location, document.location.host) }
+        { console.log(this.props.isLogged) }
         <div className={styles.content}>
         { this.props.isLogged &&
           <LotsList lots={lotsAll} />
