@@ -119,13 +119,14 @@ export default class ProfilePage extends Component {
       const { lotName, price, address, longitude, latitude, lotDescription, avatar } = this.state;
         let form = new FormData();
         let lot = {
-          'lotName': lotName,
-          'price': price,
-          'address': address,
-          'longitude': longitude,
-          'latitude': latitude,
-          'lotDescription': lotDescription,
+          "lotName": JSON.stringify(lotName),
+          "price": JSON.stringify(price),
+          "address": JSON.stringify(address),
+          "longitude": JSON.stringify(longitude),
+          "latitude": JSON.stringify(latitude),
+          "lotDescription": JSON.stringify(lotDescription),
         };
+/*        lot = {"price":"5000","longitude":"30.6000000","latitude":"50.4365056","address":"205 Киев 14","lotName":"lotName14 Відрадний","lotDescription":" Відрадний lotDescription lotDescription"};*/
         lot = JSON.stringify(lot);
         form.append('lot',lot);
         let imagedata = document.querySelector('input[type="file"]').files[0];
