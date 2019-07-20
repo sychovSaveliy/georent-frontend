@@ -22,18 +22,25 @@ const RentMap = ({ styles, lots }) => {
         <TileLayer
           url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
         />
-        {lots.map((item) => (
+        {lots.map((item) => {
+            if (!(item && item.lotName && item.address && item.price && item.id && item.description && item.coordinates.latitude && item.coordinates.longitude)) {
+              item.lotName = 'Default name';
+              item.coordinates.latitude = 50.436795;
+              item.coordinates.longitude = 30.5305163;
+            }
+          return (
           <Marker key={item.id} position={[item.coordinates.latitude, item.coordinates.longitude]}>
             <Popup>
               {item.id} <Link to={`user/lot/${item.id}`}>{item.lotName}</Link>
             </Popup>
           </Marker>
+          )}
 /*          <Marker key={item.id} position={[50.436795, 30.5305163]}>
             <Popup>
               {item.id} {item.lotName}
             </Popup>
           </Marker> */
-        ))}
+        )}
       </LeafletMap>
 );
 };

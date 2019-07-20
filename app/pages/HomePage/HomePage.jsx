@@ -23,6 +23,7 @@ class HomePage extends Component {
       lots: [],
       totalPages: 0
     },
+    searchLots: {},
     lotsAll: [],
   };
 
@@ -55,12 +56,12 @@ class HomePage extends Component {
 
   searchData = (data) => {
     const url = `${baseUrl}search/filters/?address=&lotname=${data}`;
-    this.setData(url, 'currentPageLots');
+    this.setData(url, 'searchLots');
   };
 
   searchAddress = (address) => {
     const url = `${baseUrl}search/filters/?address=${address}&lotname=`;
-    this.setData(url, 'currentPageLots');
+    this.setData(url, 'searchLots');
   };
 
   render() {
@@ -69,7 +70,8 @@ class HomePage extends Component {
       currentPageLots: { totalPages, lots },
       lotsAll,
       first,
-      itemsPerPage
+      itemsPerPage,
+      searchLots
     } = this.state;
     return (
       <div>
@@ -79,12 +81,14 @@ class HomePage extends Component {
         <div className={styles.content}>
           <div>
             <div>
-              <LotsList lots={lots} />
+              {
+                searchLots.length ? <LotsList lots={searchLots} /> : <LotsList lots={lots} />
+              }
               <Paginator
                 className={styles.paginator}
                 first={first}
                 rows={itemsPerPage}
-                totalRecords={totalPages * itemsPerPage}
+                totalRecords={searchLots.length ? searchLots.length : totalPages * itemsPerPage}
                 rowsPerPageOptions={[3, 5, 7]}
                 onPageChange={(e) => {
                   this.setCurrentPage(e.page + 1);
