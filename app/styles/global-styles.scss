@@ -61,6 +61,9 @@ div.p-inputgroup >  .p-button {
     padding: 5px 10px !important;
     line-height: 30px !important;
     color: darkviolet !important;
+    &:focus {
+      box-shadow: none !important;
+    }
   }
   .p-dropdown {
     background-color: transparent !important;

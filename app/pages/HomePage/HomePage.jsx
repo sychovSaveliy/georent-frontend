@@ -9,53 +9,49 @@ import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import { Paginator } from 'primereact/paginator';
+
 class HomePage extends Component {
   static propTypes = {
     styles: PropTypes.object.isRequired
-  }
+  };
 
-    state = {
-      first: 0,
-      itemsPerPage: 3,
-      currentPageLots: {
-        pageNumber: 1,
-        lots: [],
-        totalPages: 0
-      },
-      lotsAll: [],
-    };
+  state = {
+    first: 0,
+    itemsPerPage: 3,
+    currentPageLots: {
+      pageNumber: 1,
+      lots: [],
+      totalPages: 0
+    },
+    lotsAll: [],
+  };
 
   componentDidMount = () => {
     console.log('jwt', window.localStorage.getItem('jwt'));
     this.setData(this.getPageUrl(), 'currentPageLots');
     this.setData(`${baseUrl}lot/`, 'lotsAll');
-  }
+  };
 
   getPageUrl = () => {
     const { currentPageLots: { pageNumber }, itemsPerPage } = this.state;
     return `${baseUrl}lot/page/${pageNumber}/${itemsPerPage}/current`;
-  }
+  };
 
   setData = (url, target) => {
     getData(url).then((data) => {
       if (data) {
         this.setState({
           [target]: data
-        });        
-      } else {
-        this.setState({
-          [target]: null
-        });     
+        });
       }
-
     });
-  }
+  };
 
   setCurrentPage = (currentPage) => {
     const { currentPageLots } = this.state;
     currentPageLots.pageNumber = currentPage;
     this.setState({ currentPageLots }, () => this.setData(this.getPageUrl(), 'currentPageLots'));
-  }
+  };
 
   searchData = (data) => {
     const url = `${baseUrl}search/filters/?address=&lotname=${data}`;
@@ -82,8 +78,7 @@ class HomePage extends Component {
         </div>
         <div className={styles.content}>
           <div>
-            {lots && 
-              <div>
+            <div>
               <LotsList lots={lots} />
               <Paginator
                 className={styles.paginator}
@@ -93,12 +88,11 @@ class HomePage extends Component {
                 rowsPerPageOptions={[3, 5, 7]}
                 onPageChange={(e) => {
                   this.setCurrentPage(e.page + 1);
-                  this.setState({ first: e.first, itemsPerPage: e.rows });
+                  this.setState({first: e.first, itemsPerPage: e.rows});
                 }}
               >
               </Paginator>
-              </div>
-            }}
+            </div>
           </div>
           <div>
             <RentMap lots={lotsAll} />
