@@ -20,10 +20,17 @@ class LoginPage extends Component {
         repeatPassword: false
       },
       forgotPassVisible: false,
+      newPassVisible: false,
       responseStatusVisible: false,
       responseText: ""
     };
   };
+
+  componentDidMount = () => {
+    this.setState({
+      newPassVisible: this.props.location.pathname === "/login/newpass"
+    });
+  }
   onChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value
@@ -120,19 +127,41 @@ class LoginPage extends Component {
 
   render() {
     const { styles } = this.props;
+    const { responseStatusVisible, responseText, forgotPassVisible, newPassVisible } = this.state;
     return (
       <div>
         <h2>Login Form</h2>
         <div className={styles.form}>
-            { this.state.responseStatusVisible && 
+            { responseStatusVisible && 
               <div>
                 <h2>
-                  { this.state.responseText }
+                  { responseText }
                 </h2>
               </div>
             }
+            { newPassVisible && !forgotPassVisible && 
+              <div>
+                <Field
+                      id="email"
+                      labelText="Email"
+                      type="text"
+                      placeholder="Enter email"
+                      name="email"
+                      value={this.state.email}
+                      onChange={this.onChange}
+                      error={this.state.errors.email}
+                    />
+                <button
+                      type="submit"
+                      className="btn"
+                      onClick={this.onForgotSubmit}
+                    >
+                  Submit
+                </button>
+              </div>    
+            }
 
-            { this.state.forgotPassVisible && 
+            { forgotPassVisible && !newPassVisible && 
               <div>
                 <Field
                       id="email"
@@ -161,7 +190,7 @@ class LoginPage extends Component {
               </div>    
             }
            
-            { !this.state.forgotPassVisible && 
+            { !forgotPassVisible && !newPassVisible && 
               <div>
                 <Field
                       id="email"

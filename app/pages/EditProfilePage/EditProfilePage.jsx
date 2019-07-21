@@ -21,20 +21,14 @@ export default class ProfilePage extends Component {
         phoneNumber: ""
       },
       values: {
-        firstName: '',
-        lastName: '',
-        email: '',
-        phoneNumber: '',
-        password: '',
-        repeatPassword: ''
+        firstName: "",
+        lastName: "",
+        phoneNumber: ""
       },
       errors: {
         firstName: false,
         lastName: false,
-        email: false,
-        phoneNumber: false,
-        password: false,
-        repeatPassword: false,
+        phoneNumber: false
       },
       responseStatusVisible: false,
       responseText: ""
@@ -71,13 +65,98 @@ export default class ProfilePage extends Component {
                 ...prevState.values,
                 firstName: data.firstName,
                 lastName: data.lastName,
-                email: data.email,
                 phoneNumber: data.phoneNumber
               }
           }));
           console.log(this.state)
       });
   }
+  onChange = event => {
+    const newValues = {
+      ...this.state.values,
+      [event.target.name]: event.target.value
+    };
+    this.setState({
+      values: newValues
+    });
+  };
+
+  onReset = () => {
+    this.setState({
+      values: {
+        firstName: "",
+        lastName: "",
+        phoneNumber: ""
+      },
+      errors: {}
+    });
+  };
+
+  formValidator = (values) => {
+    let errors = {};
+    let textRegExp = /^[a-zа-яієїґ'\s]{2,30}$/i,
+      numberRegExp = /^[0-9]{1,10}$/i;
+    if (values.firstName.length < 3 && !textRegExp.test(values.firstName)) {
+      errors.firstName = "Must be 3 characters or more, only letters";
+    }
+    if (values.lastName.length < 3 && !textRegExp.test(values.lastName)) {
+      errors.lastName = "Must be 3 characters or more, only letters";
+    }
+    if (values.phoneNumber.length < 3 && !numberRegExp.test(price.phoneNumber)) {
+      errors.phoneNumber = "Must be only numbers";
+    }
+    return errors;
+  };
+
+  onSubmit = event => {
+    event.preventDefault();
+    let errors = this.formValidator(this.state.values);
+    if (Object.keys(errors).length > 0) {
+      this.setState({
+        errors: errors
+      });
+    } else {
+      this.setState({
+        errors: {}
+      });
+      console.log("submit", this.state);
+      const { firstName, lastName, phoneNumber } = this.state.values;
+      fetch(`${baseUrl}user`, {
+        method: 'PATCH',
+        headers: {
+          'Access-Control-Allow-Headers': 'authorization',
+          'Authorization': `Bearer ${window.localStorage.getItem("jwt") || ''}`,
+        },
+        body: JSON.stringify({
+          firstName, lastName, phoneNumber
+        }),
+      }).then(resp => {
+        console.log('resp', resp);
+        if (resp.status === 201) {
+          this.setState({
+            firstName: '',
+            lastName: '',
+            phoneNumber: ''
+          });
+        }
+        return resp.json();
+      })
+        .then(data => {
+          console.log('DATA', data)
+          if (data.message) {
+            this.setState({
+              responseStatusVisible: true,
+              responseText: data.message
+            });
+          } else {
+            this.setState({
+              responseStatusVisible: true,
+              responseText: data.cause
+            });
+          }
+        });
+    }
+};
   render() {
     const { styles } = this.props;
     const { user, values, errors, responseStatusVisible } = this.state;
@@ -120,52 +199,30 @@ export default class ProfilePage extends Component {
                       id="lastName"
                       labelText="User lastName"
                       type="text"
-                      placeholder={this.state.lastName}
+                      placeholder={values.lastName}
                       name="lastName"
                       value={values.lastName}
                       onChange={this.onChange}
                       error={errors.lastName}
                     />
                 <Field
-                      id="email"
-                      labelText="Email"
-                      type="text"
-                      placeholder={this.state.email}
-                      name="email"
-                      value={values.email}
-                      onChange={this.onChange}
-                      error={errors.email}
-                    />
-                <Field
                       id="phoneNumber"
                       labelText="phoneNumber"
                       type="text"
-                      placeholder={this.state.phoneNumber}
+                      placeholder={values.phoneNumber}
                       name="phoneNumber"
                       value={values.phoneNumber}
                       onChange={this.onChange}
                       error={errors.phoneNumber}
                     />
-                <Field
-                      id="password"
-                      labelText="Password"
-                      type="password"
-                      placeholder="Enter password"
-                      name="password"
-                      value={values.password}
-                      onChange={this.onChange}
-                      error={errors.password}
-                    />
-                <Field
-                  id="repeatPassword"
-                  labelText="Repeat password"
-                  type="password"
-                  placeholder="Repeat password"
-                  name="repeatPassword"
-                  value={values.repeatPassword}
-                  onChange={this.onChange}
-                  error={errors.repeatPassword}
-                />
+                <Link to="/login/newpass">Сменить пароль</Link>
+                <button
+                  type="submit"
+                  className="btn"
+                  onClick={this.onReset}
+                >
+                  Reset
+                </button>
                 <button
                   type="submit"
                   className="btn"
