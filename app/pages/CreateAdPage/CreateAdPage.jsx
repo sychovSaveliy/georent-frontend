@@ -236,7 +236,7 @@ export default class ProfilePage extends Component {
           onChange={this.onChange}
           error={errors.latitude}
         />
-        <Field
+        <Textarea
           id="lotDescription"
           labelText="lotDescription"
           type="text"

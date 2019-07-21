@@ -98,7 +98,7 @@ class HomePage extends Component {
               >
               </Paginator>
               </div>
-            }}
+            }
           </div>
           <div>
             <RentMap lots={lotsAll} />
