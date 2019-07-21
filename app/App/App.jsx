@@ -12,6 +12,7 @@ import FeaturePage from 'pages/FeaturePage';
 import RegistrationPage from 'pages/RegistrationPage';
 import LoginPage from 'pages/LoginPage';
 import ProfilePage from 'pages/ProfilePage';
+import EditProfilePage from 'pages/EditProfilePage';
 import CreateAdPage from 'pages/CreateAdPage';
 import DetailsPage from 'pages/DetailsPage';
 import UserLotsPage from 'pages/UserLotsPage';
@@ -55,7 +56,8 @@ export default class App extends Component {
           <Route path="/signup" render={props => {return <RegistrationPage {...props} isLogged={isLogged} />}} />
           <Route path="/forgot" render={props => {return <ForgotPassPage {...props} isLogged={isLogged} />}} />
           <Route path="/login" render={props => {return <LoginPage {...props} isLogged={isLogged} onLogin={this.login} />}} />
-          <PrivateRoute path="/profile" component={ProfilePage} isLogged={isLogged} onExit={this.exit} />
+          <PrivateRoute exact path="/profile" component={ProfilePage} isLogged={isLogged} onExit={this.exit} />
+          <PrivateRoute path="/profile/edit" component={EditProfilePage} isLogged={isLogged} onExit={this.exit} />
           <Route path="/create-ad" render={props => {
               {/*if (!window.localStorage.getItem("jwt")) {
                   return <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
