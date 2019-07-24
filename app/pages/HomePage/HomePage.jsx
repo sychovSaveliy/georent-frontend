@@ -15,12 +15,13 @@ class HomePage extends Component {
   state = {
     first: 0,
     itemsPerPage: 3,
+    searchAddress: '',
+    searchName: '',
     currentPageLots: {
       pageNumber: 1,
       lots: [],
       totalPages: 0
     },
-    searchLots: {},
     lotsAll: [],
   };
 
@@ -31,8 +32,13 @@ class HomePage extends Component {
   };
 
   getPageUrl = () => {
-    const { currentPageLots: { pageNumber }, itemsPerPage } = this.state;
-    return `${baseUrl}lot/page/${pageNumber}/${itemsPerPage}/current`;
+    const {
+      currentPageLots: { pageNumber },
+      itemsPerPage,
+      searchAddress,
+      searchName
+    } = this.state;
+    return `${baseUrl}search/page/${pageNumber}/${itemsPerPage}/cur/?address=${searchAddress}&lotname=${searchName}`;
   };
 
   setData = (url, target) => {
@@ -59,15 +65,11 @@ class HomePage extends Component {
   };
 
   searchData = (data) => {
-    const { currentPageLots: { pageNumber }, itemsPerPage } = this.state;
-    const url = `${baseUrl}search/page/${pageNumber}/${itemsPerPage}/cur/?address=&lotname=${data}`;
-    this.setData(url, 'currentPageLots');
+    this.setState({ searchName: data }, this.setData(this.getPageUrl(), 'currentPageLots'));
   };
 
   searchAddress = (address) => {
-    const { currentPageLots: { pageNumber }, itemsPerPage } = this.state;
-    const url = `${baseUrl}search/page/${pageNumber}/${itemsPerPage}/cur/?address=${address}&lotname=`;
-    this.setData(url, 'currentPageLots');
+    this.setState({ searchAddress: address }, () => this.setData(this.getPageUrl(), 'currentPageLots'));
   };
 
   render() {
@@ -77,16 +79,15 @@ class HomePage extends Component {
       lotsAll,
       first,
       itemsPerPage,
-      searchLots
     } = this.state;
     return (
       <div>
-        <div>
-          <SearchLot searchData={this.searchData} searchAddress={this.searchAddress} />
-        </div>
         <div className={styles.content}>
           <div>
             <div>
+              <div>
+                <SearchLot searchData={this.searchData} searchAddress={this.searchAddress} />
+              </div>
               <LotsList lots={lots} />
               <Paginator
                 className={styles.paginator}
@@ -96,7 +97,7 @@ class HomePage extends Component {
                 rowsPerPageOptions={[3, 5, 7]}
                 onPageChange={(e) => {
                   this.setCurrentPage(e.page + 1);
-                  this.setState({first: e.first, itemsPerPage: e.rows});
+                  this.setState({ first: e.first, itemsPerPage: e.rows });
                 }}
               >
               </Paginator>

@@ -25,7 +25,7 @@ label {
 }
 .leaflet-container {
   height: 400px;
-  width: 800px;
+  width: 100%;
 }
 .content{
   display: flex;
@@ -41,7 +41,8 @@ label {
   }
 }
 .p-inputgroup.search-input--margin {
-  margin: 20px 40px !important;
+  margin: 20px 0px !important;
+  width: 400px !important;
 }
 .p-inputtext:enabled:focus {
   box-shadow: none !important;

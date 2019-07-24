@@ -37,8 +37,7 @@
   max-width: 1140px;
   margin: 0 auto;
   &>div {
-    flex: 1;
-    max-width: 50%;
+    width: 100%;
   }
 }
 //.paginator {
