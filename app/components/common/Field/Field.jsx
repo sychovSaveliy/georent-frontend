@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cs from 'classnames';
+import {InputText} from 'primereact/inputtext';
 
 const Field = ({ styles, id, labelText, type, placeholder, name, value, onChange, error }) => {
   return (
-    <div className={styles.form}>
+    <div className={cs(styles.form, 'form-group')}>
       <label htmlFor={id}>{labelText}</label>
-      <input
+      <InputText
         id={id}
         type={type}
-        className={styles.form}
+        className={cs(styles.form, 'form-control')}
         placeholder={placeholder}
         name={name}
         value={value}

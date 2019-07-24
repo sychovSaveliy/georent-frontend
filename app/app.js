@@ -23,6 +23,9 @@ import App from './App/index';
 
 // Import CSS reset and Global Styles
 import 'styles/theme.scss';
+import 'primereact/resources/themes/nova-light/theme.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
 
 import configureStore from './configureStore';
 

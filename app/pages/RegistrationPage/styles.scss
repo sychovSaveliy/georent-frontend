@@ -1,12 +1,12 @@
 .registrationPage {
   display: flex;
   box-shadow: 1px 1px 3px rgba(black, 0.5);
-  &_left{
+  .registrationPageLeft{
     flex: 0 1 60%;
   }
-  &_right{
+  .registrationPageRight{
     flex: 0 1 40%;
     background-color: #ebccf5;
-    padding: 60px;
+    padding: 20px 30px;
   }
 }

@@ -6,14 +6,7 @@ import { Link } from 'react-router-dom';
 const LotsList = ({ styles, lots }) => (
   <div className={styles.lotsListContainer}>
     <h1>Lots list</h1>
-    {lots.map((item) => {
-      if (!item.lotName) {
-        item.lotName = 'Default name';
-        item.address = 'Kyiv';
-        item.price = 350;
-        item.description = 'Default description';
-      }
-      return (
+    {lots.map((item) => (
         <div key={item.id} className={styles.CardWrapper}>
           <div className={styles.CardIMGStyle}>
             <img src={item.imageUrl || item.description.urls[0]} alt=""/>
@@ -30,7 +23,7 @@ const LotsList = ({ styles, lots }) => (
           </div>
         </div>
       )
-    })
+    )
     }
   </div>
 );

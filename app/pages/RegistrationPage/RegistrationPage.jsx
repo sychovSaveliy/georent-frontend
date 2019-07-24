@@ -5,6 +5,9 @@ import Field from 'components/common/Field';
 import Check from 'components/common/Check';
 import signup from '../../images/signup.jpg';
 import { baseUrl } from 'utils/api';
+import { Button } from 'primereact/button';
+import cs from 'classnames';
+
 /*import { validateName, validateEmail, validatePassword, validatePhone } from 'utils/formValidator.js';*/
 export default class RegistrationPage extends Component {
   static propTypes = {
@@ -148,7 +151,7 @@ export default class RegistrationPage extends Component {
           <h2>Sign Up</h2>
           <div className="form-container card">
 
-            { responseStatusVisible && 
+            { responseStatusVisible &&
               <div>
                 <h2>
                   { this.state.responseText }
@@ -218,13 +221,12 @@ export default class RegistrationPage extends Component {
                   onChange={this.onChange}
                   error={this.state.errors.repeatPassword}
                 />
-                <button
+                <Button
+                  label='Submit'
                   type="submit"
                   className="btn"
                   onClick={this.onSubmit}
-                >
-                  Submit
-                </button>
+                />
               </form>
             }
           </div>

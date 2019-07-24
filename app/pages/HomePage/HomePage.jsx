@@ -5,9 +5,6 @@ import RentMap from 'components/RentMap';
 import { Helmet } from 'react-helmet';
 import { baseUrl, getData } from 'utils/api';
 import SearchLot from 'components/SearchLot';
-import 'primereact/resources/themes/nova-light/theme.css';
-import 'primereact/resources/primereact.min.css';
-import 'primeicons/primeicons.css';
 import { Paginator } from 'primereact/paginator';
 
 class HomePage extends Component {
@@ -40,7 +37,14 @@ class HomePage extends Component {
 
   setData = (url, target) => {
     getData(url).then((data) => {
-      if (data) {
+      if (data.lots) {
+        data.lots = data.lots.filter(el => el.lotName);
+        this.setState({
+          [target]: data
+        });
+      }
+      if (data && !data.lots) {
+        data = data.filter(el => el.lotName)
         this.setState({
           [target]: data
         });
@@ -55,13 +59,15 @@ class HomePage extends Component {
   };
 
   searchData = (data) => {
-    const url = `${baseUrl}search/filters/?address=&lotname=${data}`;
-    this.setData(url, 'searchLots');
+    const { currentPageLots: { pageNumber }, itemsPerPage } = this.state;
+    const url = `${baseUrl}search/page/${pageNumber}/${itemsPerPage}/cur/?address=&lotname=${data}`;
+    this.setData(url, 'currentPageLots');
   };
 
   searchAddress = (address) => {
-    const url = `${baseUrl}search/filters/?address=${address}&lotname=`;
-    this.setData(url, 'searchLots');
+    const { currentPageLots: { pageNumber }, itemsPerPage } = this.state;
+    const url = `${baseUrl}search/page/${pageNumber}/${itemsPerPage}/cur/?address=${address}&lotname=`;
+    this.setData(url, 'currentPageLots');
   };
 
   render() {
@@ -81,14 +87,12 @@ class HomePage extends Component {
         <div className={styles.content}>
           <div>
             <div>
-              {
-                searchLots.length ? <LotsList lots={searchLots} /> : <LotsList lots={lots} />
-              }
+              <LotsList lots={lots} />
               <Paginator
                 className={styles.paginator}
                 first={first}
                 rows={itemsPerPage}
-                totalRecords={searchLots.length ? searchLots.length : totalPages * itemsPerPage}
+                totalRecords={totalPages * itemsPerPage}
                 rowsPerPageOptions={[3, 5, 7]}
                 onPageChange={(e) => {
                   this.setCurrentPage(e.page + 1);

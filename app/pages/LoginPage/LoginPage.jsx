@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Field from 'components/common/Field';
 import { baseUrl } from 'utils/api';
 import PropTypes from 'prop-types';
+import cs from 'classnames';
+import { Button } from 'primereact/button';
 
 class LoginPage extends Component {
   static propTypes = {
@@ -52,9 +54,9 @@ class LoginPage extends Component {
     const { email } = this.state;
     fetch(`${baseUrl}forgotpassword/?email=${email}&api=${baseUrl}`)
     .then(resp => {
-      if (resp.statusCode === 301) { 
+      if (resp.statusCode === 301) {
         console.log('Resp onForgotSubmit', resp);
-        return resp.json() 
+        return resp.json()
       }
     })
     .then(data => {
@@ -64,7 +66,7 @@ class LoginPage extends Component {
             forgotPassVisible: false,
             responseStatusVisible: true,
             responseText: data.cause
-          });        
+          });
       }
     });
   };
@@ -105,7 +107,7 @@ class LoginPage extends Component {
         console.log('resp', resp);
         return resp.json()
       })
-      .then(data => 
+      .then(data =>
         {
           console.log('DATA', data);
           if (data) {
@@ -118,7 +120,7 @@ class LoginPage extends Component {
               this.setState({
                 responseStatusVisible: true,
                 responseText: data.message
-              });        
+              });
             }
           }
       });
@@ -132,14 +134,14 @@ class LoginPage extends Component {
       <div>
         <h2>Login Form</h2>
         <div className={styles.form}>
-            { responseStatusVisible && 
+            { responseStatusVisible &&
               <div>
                 <h2>
                   { responseText }
                 </h2>
               </div>
             }
-            { newPassVisible && !forgotPassVisible && 
+            { newPassVisible && !forgotPassVisible &&
               <div>
                 <Field
                       id="email"
@@ -158,10 +160,10 @@ class LoginPage extends Component {
                     >
                   Submit
                 </button>
-              </div>    
+              </div>
             }
 
-            { forgotPassVisible && !newPassVisible && 
+            { forgotPassVisible && !newPassVisible &&
               <div>
                 <Field
                       id="email"
@@ -187,10 +189,10 @@ class LoginPage extends Component {
                     >
                   Назад
                 </button>
-              </div>    
+              </div>
             }
-           
-            { !forgotPassVisible && !newPassVisible && 
+
+            { !forgotPassVisible && !newPassVisible &&
               <div>
                 <Field
                       id="email"
@@ -212,20 +214,18 @@ class LoginPage extends Component {
                       onChange={this.onChange}
                       error={this.state.errors.password}
                     />
-                <button
+                <Button
+                      label='Submit'
                       type="submit"
                       className="btn"
                       onClick={this.onSubmit}
-                    >
-                  Submit
-                </button>
-                <button
+                    />
+                <Button
+                  label='Забыл пароль'
                   type="button"
                   className="btn"
                   onClick={this.onForgot}
-                >
-                  Забыл пароль
-                </button>              
+                />
               </div>
             }
         </div>
