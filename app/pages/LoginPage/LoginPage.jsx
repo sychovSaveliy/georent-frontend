@@ -49,27 +49,67 @@ class LoginPage extends Component {
       responseStatusVisible: false
     });
   };
-  onForgotSubmit = (event) => {
+
+   onForgotSubmit = (event) => {
     event.preventDefault();
-    const { email } = this.state;
-    fetch(`${baseUrl}forgotpassword/?email=${email}&api=${baseUrl}`)
-    .then(resp => {
-      if (resp.statusCode === 301) {
-        console.log('Resp onForgotSubmit', resp);
-        return resp.json()
-      }
-    })
-    .then(data => {
-      console.log('Data onForgotSubmit', data)
-      if (data && data.cause) {
-          this.setState({
-            forgotPassVisible: false,
-            responseStatusVisible: true,
-            responseText: data.cause
-          });
-      }
+    const errors = {};
+    const emailRegExp = /^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/i;
+    this.setState({
+      responseStatusVisible: false,
+      responseText: ""
     });
+    if (!emailRegExp.test(this.state.email)) {
+      errors.email = 'Error email...';
+    }
+    if (Object.keys(errors).length > 0) {
+      this.setState({
+        errors
+      });
+    } else {
+      this.setState({
+        errors: {}
+      });
+
+    const { email } = this.state;
+    const api = window.location.origin;
+    fetch(`${baseUrl}forgotpassword`,
+      {
+        method: "POST",
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email,
+          api
+        })
+      }
+    )
+      .then(resp => {
+        console.log('resp onForgot', resp);
+        return resp.json()
+      })
+      .then(data => {
+        console.log('DATA', data)
+        if (data) {
+          if (data.message) {
+            this.setState({
+              responseStatusVisible: true,
+              responseText: data.message
+            });
+          } else {
+            this.setState({
+              responseStatusVisible: true,
+              responseText: data.cause
+            });
+          }
+        }
+      });
+    }
   };
+
+
   onSubmit = (event) => {
     event.preventDefault();
     const errors = {};
@@ -103,12 +143,11 @@ class LoginPage extends Component {
           'Content-Type': 'application/json'
         }
       })
-      .then(resp => {
-        console.log('resp', resp);
-        return resp.json()
-      })
-      .then(data =>
-        {
+        .then(resp => {
+          console.log('resp', resp);
+          return resp.json()
+        })
+        .then(data => {
           console.log('DATA', data);
           if (data) {
             if (data.accessToken) {
@@ -123,7 +162,7 @@ class LoginPage extends Component {
               });
             }
           }
-      });
+        });
     }
   };
 
@@ -134,100 +173,98 @@ class LoginPage extends Component {
       <div>
         <h2>Login Form</h2>
         <div className={styles.form}>
-            { responseStatusVisible &&
-              <div>
-                <h2>
-                  { responseText }
-                </h2>
-              </div>
-            }
-            { newPassVisible && !forgotPassVisible &&
-              <div>
-                <Field
-                      id="email"
-                      labelText="Email"
-                      type="text"
-                      placeholder="Enter email"
-                      name="email"
-                      value={this.state.email}
-                      onChange={this.onChange}
-                      error={this.state.errors.email}
-                    />
-                <button
-                      type="submit"
-                      className="btn"
-                      onClick={this.onForgotSubmit}
-                    >
-                  Submit
+          {responseStatusVisible &&
+            <div>
+              <h2>
+                {responseText}
+              </h2>
+            </div>
+          }
+          {newPassVisible && !forgotPassVisible &&
+            <div>
+              <Field
+                id="email"
+                labelText="Email"
+                type="text"
+                placeholder="Enter email"
+                name="email"
+                value={this.state.email}
+                onChange={this.onChange}
+                error={this.state.errors.email}
+              />
+              <button
+                type="submit"
+                className="btn"
+                onClick={this.onForgotSubmit}
+              >
+                Submit
                 </button>
-              </div>
-            }
+            </div>
+          }
 
-            { forgotPassVisible && !newPassVisible &&
-              <div>
-                <Field
-                      id="email"
-                      labelText="Email"
-                      type="text"
-                      placeholder="Enter email"
-                      name="email"
-                      value={this.state.email}
-                      onChange={this.onChange}
-                      error={this.state.errors.email}
-                    />
-                <button
-                      type="submit"
-                      className="btn"
-                      onClick={this.onForgotSubmit}
-                    >
-                  Submit
-                </button>
-                <button
-                      type="button"
-                      className="btn"
-                      onClick={this.onForgotBack}
-                    >
-                  Назад
-                </button>
-              </div>
-            }
+          {forgotPassVisible && !newPassVisible &&
+            <div>
+              <Field
+                id="email"
+                labelText="Email"
+                type="text"
+                placeholder="Enter email"
+                name="email"
+                value={this.state.email}
+                onChange={this.onChange}
+                error={this.state.errors.email}
+              />
+              <Button
+                label='Submit'
+                type="submit"
+                className="btn"
+                onClick={this.onForgotSubmit}
+              />
+              <Button
+                label='Back'
+                type="submit"
+                className="btn"
+                onClick={this.onForgotBack}
+              />
+            </div>
+          }
 
-            { !forgotPassVisible && !newPassVisible &&
-              <div>
-                <Field
-                      id="email"
-                      labelText="Email"
-                      type="text"
-                      placeholder="Enter email"
-                      name="email"
-                      value={this.state.email}
-                      onChange={this.onChange}
-                      error={this.state.errors.email}
-                    />
-                <Field
-                      id="password"
-                      labelText="Password"
-                      type="password"
-                      placeholder="Enter password"
-                      name="password"
-                      value={this.state.password}
-                      onChange={this.onChange}
-                      error={this.state.errors.password}
-                    />
-                <Button
-                      label='Submit'
-                      type="submit"
-                      className="btn"
-                      onClick={this.onSubmit}
-                    />
-                <Button
-                  label='Забыл пароль'
-                  type="button"
-                  className="btn"
-                  onClick={this.onForgot}
-                />
-              </div>
-            }
+          {!forgotPassVisible && !newPassVisible &&
+            <div>
+              <Field
+                id="email"
+                labelText="Email"
+                type="text"
+                placeholder="Enter email"
+                name="email"
+                value={this.state.email}
+                onChange={this.onChange}
+                error={this.state.errors.email}
+              />
+              <Field
+                id="password"
+                labelText="Password"
+                type="password"
+                placeholder="Enter password"
+                name="password"
+                value={this.state.password}
+                onChange={this.onChange}
+                error={this.state.errors.password}
+              />
+              <Button
+                label='Submit'
+                type="submit"
+                className="btn"
+                onClick={this.onSubmit}
+              />
+              <Button
+                label='Forgot password'
+                type="button"
+                className="btn"
+                onClick={this.onForgot}
+              />
+            </div>
+          }
         </div>
       </div>
     );
