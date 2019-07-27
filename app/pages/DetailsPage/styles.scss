@@ -1,0 +1,9 @@
+.detailsPage {
+  display: flex;
+  justify-content: space-between;
+  max-width: 1140px;
+  margin: 0 auto;
+  &>div {
+    width: 100%;
+  }
+}

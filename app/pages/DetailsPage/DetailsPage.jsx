@@ -6,7 +6,7 @@ export default class DetailsPage extends Component {
   static propTypes = {
     styles: PropTypes.object.isRequired
   }
-  
+
   constructor() {
     super();
     this.state = {
@@ -33,8 +33,8 @@ export default class DetailsPage extends Component {
       .then(resp => {
         console.log('resp', resp);
         return resp.json()
-     	})   
-      .then(data => 
+     	})
+      .then(data =>
         {
           console.log('DATA', data);
           this.setState(prevState => ({
@@ -66,7 +66,7 @@ export default class DetailsPage extends Component {
     const { styles } = this.props;
     const { lot : {	id,	price, coordinates : { address, longitude, latitude }, description : { lotName, lotDescription, pictureIds, urls } } } = this.state;
     return (
-      <div>
+      <div className={styles.detailsPage}>
       		<h1>{id} . {lotName}</h1>
           <div>{urls.map(item => <div key={item}><img src={item} /></div>)}</div>
       		<h2>Цена:</h2>

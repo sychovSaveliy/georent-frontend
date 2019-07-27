@@ -131,7 +131,7 @@ class LoginPage extends Component {
     const { styles } = this.props;
     const { responseStatusVisible, responseText, forgotPassVisible, newPassVisible } = this.state;
     return (
-      <div>
+      <div className={styles.loginPage}>
         <h2>Login Form</h2>
         <div className={styles.form}>
             { responseStatusVisible &&

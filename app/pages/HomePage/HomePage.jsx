@@ -38,19 +38,18 @@ class HomePage extends Component {
       searchAddress,
       searchName
     } = this.state;
-    return `${baseUrl}search/page/${pageNumber}/${itemsPerPage}/cur/?address=${searchAddress}&lotname=${searchName}`;
+    return `${baseUrl}lot/page/${pageNumber}/${itemsPerPage}/cur`;
   };
 
   setData = (url, target) => {
     getData(url).then((data) => {
+      console.log('DATA', data)
       if (data.lots) {
-        data.lots = data.lots.filter(el => el.lotName);
         this.setState({
           [target]: data
         });
       }
-      if (data && !data.lots) {
-        data = data.filter(el => el.lotName)
+      if (data) {
         this.setState({
           [target]: data
         });
@@ -65,11 +64,21 @@ class HomePage extends Component {
   };
 
   searchData = (data) => {
-    this.setState({ searchName: data }, this.setData(this.getPageUrl(), 'currentPageLots'));
+    const {
+      currentPageLots: { pageNumber },
+      itemsPerPage
+    } = this.state;
+    const url = `${baseUrl}search/page/${pageNumber}/${itemsPerPage}/cur/?address=&lotname=${data}`;
+    this.setData(url, 'currentPageLots');
   };
 
   searchAddress = (address) => {
-    this.setState({ searchAddress: address }, () => this.setData(this.getPageUrl(), 'currentPageLots'));
+    const {
+      currentPageLots: { pageNumber },
+      itemsPerPage
+    } = this.state;
+    const url = `${baseUrl}search/page/${pageNumber}/${itemsPerPage}/cur/?address=${address}&lotname=`;
+    this.setData(url, 'currentPageLots');
   };
 
   render() {
