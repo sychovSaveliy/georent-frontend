@@ -5,7 +5,8 @@ import PropTypes from 'prop-types';
 import signup from '../../images/signup.jpg';
 import queryString from 'query-string'
 import { Helmet } from 'react-helmet';
-import Button from '../../components/common/Button';
+import { Button } from 'primereact/button';
+
 
 class ForgotPassPage extends Component {
   static propTypes = {
@@ -176,16 +177,14 @@ class ForgotPassPage extends Component {
                       error={this.state.errors.repeatPassword}
                     />
 
-                    <div className={styles.forgotPage_right_button}>
+                    <div>
                     {/* <div > */}
-                      <button
+                      <Button
+                        label="Click after entering a new password"
                         type="revers"
-                        background-color = "#4CAF50"
                         className="btn"
                         onClick={this.onSubmit}
-                      >
-                        Click after entering a new password
-                    </button>
+                      />
                     </div>
                   </form>
               </div>
