@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import LotsList from 'components/LotsList';
 import RentMap from 'components/RentMap';
@@ -23,12 +24,26 @@ class HomePage extends Component {
       totalPages: 0
     },
     lotsAll: [],
+    myRef: React.createRef()
   };
 
   componentDidMount = () => {
     console.log('jwt', window.localStorage.getItem('jwt'));
     this.setData(this.getPageUrl(), 'currentPageLots');
     this.setData(`${baseUrl}lot/`, 'lotsAll');
+    this.toFixMap();
+  };
+
+  toFixMap = () => {
+    const myRef = this.state.myRef.current;
+    window.addEventListener('scroll', () => {
+      let scrolled = window.pageYOffset || document.documentElement.scrollTop;
+      if (scrolled >= 67) {
+        myRef.classList.add('fixedMap');
+      } else {
+        myRef.classList.remove('fixedMap');
+      }
+    });
   };
 
   getPageUrl = () => {
@@ -89,6 +104,8 @@ class HomePage extends Component {
       first,
       itemsPerPage,
     } = this.state;
+    const myRef = React.createRef();
+    console.log(this.state.myRef)
     return (
       <div>
         <div className={styles.content}>
@@ -111,7 +128,9 @@ class HomePage extends Component {
             </div>
           </div>
           <div className={styles.homePageRight}>
-            <RentMap lots={lotsAll} />
+            <div ref={this.state.myRef} id="rentMap">
+              <RentMap lots={lotsAll} />
+            </div>
           </div>
         </div>
       </div>
