@@ -9,9 +9,9 @@ export default class SearchLot extends Component {
   }
 
   render() {
-    const { searchData, searchAddress } = this.props;
+    const { searchData, searchAddress, styles } = this.props;
     return (
-      <div>
+      <div className={styles.searchInputs}>
         <div className="p-inputgroup search-input--margin">
           <InputText
             placeholder="Item Name"

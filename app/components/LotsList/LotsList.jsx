@@ -9,7 +9,7 @@ const LotsList = ({ styles, lots }) => (
     {lots.map((item) => (
         <div key={item.id} className={styles.CardWrapper}>
           <div className={styles.CardIMGStyle}>
-            <img src={item.imageUrl || item.description.urls[0]} alt=""/>
+            {item.imageUrl ? <img src={item.imageUrl || item.description.urls[0]} alt=""/> : ''}
           </div>
           <div className={styles.ItemInfoWrapper}>
             <h2 className={styles.CardHeader}><span>{item.id}. </span><Link

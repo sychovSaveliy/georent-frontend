@@ -92,11 +92,9 @@ class HomePage extends Component {
     return (
       <div>
         <div className={styles.content}>
-          <div>
+          <div className={styles.homePageLeft}>
             <div>
-              <div>
-                <SearchLot searchData={this.searchData} searchAddress={this.searchAddress} />
-              </div>
+              <SearchLot searchData={this.searchData} searchAddress={this.searchAddress} />
               <LotsList lots={lots} />
               <Paginator
                 className={styles.paginator}
@@ -112,7 +110,7 @@ class HomePage extends Component {
               </Paginator>
             </div>
           </div>
-          <div>
+          <div className={styles.homePageRight}>
             <RentMap lots={lotsAll} />
           </div>
         </div>

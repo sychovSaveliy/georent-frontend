@@ -25,7 +25,7 @@ const RentMap = ({ styles, lots }) => {
         {lots.map((item) => (
           <Marker key={item.id} position={[item.coordinates.latitude, item.coordinates.longitude]}>
             <Popup>
-              {item.id} <Link to={`user/lot/${item.id}`}>{item.lotName}</Link>
+              <Link to={`user/lot/${item.id}`}>{item.lotName}</Link>
             </Popup>
           </Marker>
           )

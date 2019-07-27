@@ -34,8 +34,8 @@ export default class ProfilePage extends Component {
       .then(resp => {
         console.log('resp', resp);
         return resp.json()
-      })   
-      .then(data => 
+      })
+      .then(data =>
         {
           console.log('DATA', data);
           this.setState(prevState => ({
@@ -56,7 +56,7 @@ export default class ProfilePage extends Component {
     const { styles, isLogged } = this.props;
     const { id, firstName, lastName, email, phoneNumber } = this.state.user;
     return (
-      <div className={styles.feature}>
+      <div className={styles.featurePage}>
         <Helmet>
           <title>Profile Page</title>
           <meta

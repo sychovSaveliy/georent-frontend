@@ -1,8 +1,8 @@
-.forgotPage {  
+.forgotPage {
     display: flex;
     text-align: center;
-    white-space: nowrap;    
-    box-shadow: 5px 5px 10px rgba(black, 0.5);
+    white-space: nowrap;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
     &_left{
       flex: 0 1 50%;
       padding: 40px;
@@ -15,12 +15,12 @@
       min-width: 200px;
     //   text-align: left;
       white-space: normal;
-      color: #000; 
+      color: #000;
       &_but{
         flex: 0 1 50%;
         text-align: center;
         padding: 5px;
-        margin: 200px; 
+        margin: 200px;
         background-color: #abccf5;
         // height: 25px;
         // width: 100px;

@@ -1,6 +1,6 @@
 html,
 body {
-  height: calc(100vh - 64px);
+  height: 100vh;
   width: 100%;
 }
 
@@ -24,8 +24,10 @@ label {
   line-height: 1.5em;
 }
 .leaflet-container {
+  position: fixed;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
   height: 400px;
-  width: 100%;
+  width: 684px;
 }
 .content{
   display: flex;
@@ -35,14 +37,17 @@ label {
 }
 .p-button {
   background-color: darkviolet !important;
+  margin-right: 10px !important;
   border: none !important;
   &:hover {
     background-color: rgba(148, 0, 211, 0.79) !important;
   }
 }
 .p-inputgroup.search-input--margin {
-  margin: 20px 0px !important;
-  width: 400px !important;
+  margin: 20px 10px !important;
+  & input {
+    width: 300px;
+  }
 }
 .p-inputtext:enabled:focus {
   box-shadow: none !important;

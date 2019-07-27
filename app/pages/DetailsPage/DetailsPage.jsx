@@ -68,7 +68,7 @@ export default class DetailsPage extends Component {
     return (
       <div className={styles.detailsPage}>
       		<h1>{id} . {lotName}</h1>
-          <div>{urls.map(item => <div key={item}><img src={item} /></div>)}</div>
+          <div className={styles.imagesWrapper}>{urls.map(item => <div key={item}><img src={item} /></div>)}</div>
       		<h2>Цена:</h2>
           <div>{price} грн.</div>
           <h2>Адрес лота:</h2>
