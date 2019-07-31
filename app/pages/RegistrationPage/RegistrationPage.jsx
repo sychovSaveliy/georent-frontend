@@ -97,8 +97,8 @@ export default class RegistrationPage extends Component {
 	    fetch(`${baseUrl}register`, {
 	      method: 'POST',
 	      headers: {
-	        Accept: 'application/json',
-	        'Content-Type': 'application/json'
+          'Accept': 'application/json;charset=UTF-8',
+          'Content-Type': 'application/json;charset=UTF-8'
 	      },
 	      body: JSON.stringify({
 	        firstName, lastName, email, phoneNumber, password

@@ -15,24 +15,22 @@ class LoginPage extends Component {
     this.state = {
       email: 'user1@gmail.com.ua',
       password: 'password1',
-      repeatPassword: '',
       errors: {
         email: false,
         password: false,
         repeatPassword: false
       },
       forgotPassVisible: false,
-      newPassVisible: false,
       responseStatusVisible: false,
       responseText: ""
     };
   };
 
-  componentDidMount = () => {
-    this.setState({
-      newPassVisible: this.props.location.pathname === "/login/newpass"
-    });
-  }
+  // componentDidMount = () => {
+  //   this.setState({
+  //     newPassVisible: this.props.location.pathname === "/login/newpass"
+  //   });
+  // }
   onChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value
@@ -40,37 +38,73 @@ class LoginPage extends Component {
   };
   onForgot = (event) => {
     this.setState({
-      forgotPassVisible: true
+      forgotPassVisible: true,
+      responseStatusVisible: false,
+      responseText: ""
     });
   };
   onForgotBack = (event) => {
     this.setState({
       forgotPassVisible: false,
-      responseStatusVisible: false
+      responseStatusVisible: false,
+      responseText: ""
     });
   };
   onForgotSubmit = (event) => {
     event.preventDefault();
     const { email } = this.state;
-    fetch(`${baseUrl}forgotpassword/?email=${email}&api=${baseUrl}`)
-    .then(resp => {
-      if (resp.statusCode === 301) {
-        console.log('Resp onForgotSubmit', resp);
-        return resp.json()
+    const api = window.location.origin;
+    fetch(`${baseUrl}forgotpassword`,
+      {
+        method: "POST",
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email,
+          api
+        })
       }
-    })
-    .then(data => {
-      console.log('Data onForgotSubmit', data)
-      if (data && data.cause) {
+    )
+      .then(resp => {
+        console.log('resp onForgot', resp);
+        if (resp.status === 301) {
           this.setState({
-            forgotPassVisible: false,
-            responseStatusVisible: true,
-            responseText: data.cause
+            tokenType: '',
+            accessToken: '',
+            password: ''
+            // repeatPassword: ''
           });
-      }
-    });
+          this.setState({ forgotPassVisible: false });
+        }
+        return resp.json()
+      })
+      .then(data => {
+        console.log('DATA', data)
+        if (data) {
+          if (data.message) {
+            this.setState({
+              responseStatusVisible: true,
+              responseText: data.message
+            });
+          } else {
+            this.setState({
+              responseStatusVisible: true,
+              responseText: data.cause
+            });
+          }
+        }
+      });
   };
+
   onSubmit = (event) => {
+    this.setState({
+      forgotPassVisible: false,
+      responseStatusVisible: false,
+      responseText: ""
+    });
     event.preventDefault();
     const errors = {};
     const emailRegExp = /^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/i;
@@ -103,19 +137,17 @@ class LoginPage extends Component {
           'Content-Type': 'application/json'
         }
       })
-      .then(resp => {
-        console.log('resp', resp);
-        return resp.json()
-      })
-      .then(data =>
-        {
+        .then(resp => {
+          console.log('resp', resp);
+          return resp.json()
+        })
+        .then(data => {
           console.log('DATA', data);
           if (data) {
             if (data.accessToken) {
               window.localStorage.setItem("jwt", data.accessToken);
               this.props.onLogin();
-              this.props.history.goBack()
-              //location.reload(true);
+              window.location.assign('/profile');
             } else if (data.message) {
               this.setState({
                 responseStatusVisible: true,
@@ -123,7 +155,7 @@ class LoginPage extends Component {
               });
             }
           }
-      });
+        });
     }
   };
 
@@ -134,100 +166,79 @@ class LoginPage extends Component {
       <div className={styles.loginPage}>
         <h2>Login Form</h2>
         <div className={styles.form}>
-            { responseStatusVisible &&
-              <div>
-                <h2>
-                  { responseText }
-                </h2>
-              </div>
-            }
-            { newPassVisible && !forgotPassVisible &&
-              <div>
-                <Field
-                      id="email"
-                      labelText="Email"
-                      type="text"
-                      placeholder="Enter email"
-                      name="email"
-                      value={this.state.email}
-                      onChange={this.onChange}
-                      error={this.state.errors.email}
-                    />
-                <button
-                      type="submit"
-                      className="btn"
-                      onClick={this.onForgotSubmit}
-                    >
-                  Submit
-                </button>
-              </div>
-            }
+          {responseStatusVisible &&
+            <div className={styles.loginPage_message}>
+              <h2>
+                {responseText}
+              </h2>
+            </div>
+          }
 
-            { forgotPassVisible && !newPassVisible &&
-              <div>
-                <Field
-                      id="email"
-                      labelText="Email"
-                      type="text"
-                      placeholder="Enter email"
-                      name="email"
-                      value={this.state.email}
-                      onChange={this.onChange}
-                      error={this.state.errors.email}
-                    />
-                <button
-                      type="submit"
-                      className="btn"
-                      onClick={this.onForgotSubmit}
-                    >
-                  Submit
-                </button>
-                <button
-                      type="button"
-                      className="btn"
-                      onClick={this.onForgotBack}
-                    >
-                  Назад
-                </button>
-              </div>
-            }
+          {forgotPassVisible &&
+            <div>
+              <Field
+                id="email"
+                labelText="Email"
+                type="text"
+                placeholder="Enter email"
+                name="email"
+                value={this.state.email}
+                onChange={this.onChange}
+                error={this.state.errors.email}
+              />
+              <Button
+                label='Submit'
+                type="submit"
+                className="btn"
+                onClick={this.onForgotSubmit}
+              >
+              </Button>
+              <Button
+                label='Back'
+                type="button"
+                className="btn"
+                onClick={this.onForgotBack}
+              >
+              </Button>
+            </div>
+          }
 
-            { !forgotPassVisible && !newPassVisible &&
-              <div>
-                <Field
-                      id="email"
-                      labelText="Email"
-                      type="text"
-                      placeholder="Enter email"
-                      name="email"
-                      value={this.state.email}
-                      onChange={this.onChange}
-                      error={this.state.errors.email}
-                    />
-                <Field
-                      id="password"
-                      labelText="Password"
-                      type="password"
-                      placeholder="Enter password"
-                      name="password"
-                      value={this.state.password}
-                      onChange={this.onChange}
-                      error={this.state.errors.password}
-                    />
-                <Button
-                      label='Submit'
-                      type="submit"
-                      className="btn"
-                      onClick={this.onSubmit}
-                    />
-                <Button
-                  label='Забыл пароль'
-                  type="button"
-                  className="btn"
-                  onClick={this.onForgot}
-                />
-              </div>
-            }
+          {!forgotPassVisible &&
+            <div>
+              <Field
+                id="email"
+                labelText="Email"
+                type="text"
+                placeholder="Enter email"
+                name="email"
+                value={this.state.email}
+                onChange={this.onChange}
+                error={this.state.errors.email}
+              />
+              <Field
+                id="password"
+                labelText="Password"
+                type="password"
+                placeholder="Enter password"
+                name="password"
+                value={this.state.password}
+                onChange={this.onChange}
+                error={this.state.errors.password}
+              />
+              <Button
+                label='Submit'
+                type="submit"
+                className="btn"
+                onClick={this.onSubmit}
+              />
+              <Button
+                label='Forgot password'
+                type="button"
+                className="btn"
+                onClick={this.onForgot}
+              />
+            </div>
+          }
         </div>
       </div>
     );

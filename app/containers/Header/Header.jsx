@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import Button from 'components/common/Button';
+import { Button } from 'primereact/button';
 
 class Header extends Component {
   static propTypes = {
@@ -28,7 +28,7 @@ class Header extends Component {
               {  isLogged && 
                   <>
                     <Link to="/profile" className={styles.navItem}>Profile</Link>
-                    <button onClick={this.props.onExit}>Exit</button>
+                    <Button label='Exit' onClick={this.props.onExit}></Button>
                   </>  
               }
             </li>

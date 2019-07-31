@@ -5,13 +5,13 @@ import PropTypes from 'prop-types';
 import signup from '../../images/signup.jpg';
 import queryString from 'query-string'
 import { Helmet } from 'react-helmet';
-import Button from '../../components/common/Button';
+import { Button } from 'primereact/button';
 
 class ForgotPassPage extends Component {
   static propTypes = {
     styles: PropTypes.object.isRequired
   };
-  
+
   constructor() {
     super();
 
@@ -76,14 +76,13 @@ class ForgotPassPage extends Component {
       });
 
       console.log('submit', this.state);
-      const values = queryString.parse(this.props.location.search); 
-      debugger
+      const values = queryString.parse(this.props.location.search);
       const { password } = this.state;
-      fetch(`${baseUrl}user/forgotpassword/save`, {
+      fetch(`${baseUrl}forgotpassword/save`, {
         method: 'POST',
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
+          'Accept': 'application/json;charset=UTF-8',
+          'Content-Type': 'application/json;charset=UTF-8',
           'Access-Control-Allow-Headers': 'authorization',
           'Content-Type': 'application/json',
           'Authorization': `${values.tokentype || ''} ${values.accesstoken || ''}`
@@ -92,17 +91,17 @@ class ForgotPassPage extends Component {
           password
         })
       })
-      .then(resp => {
-        console.log('resp', resp);
-        if (resp.status === 301) {
-          this.setState({
-            password: '',
-            repeatPassword: ''
-          });
-        }
-        return resp.json()
-      })
-      .then(data => {
+        .then(resp => {
+          console.log('resp', resp);
+          if (resp.status === 301) {
+            this.setState({
+              password: '',
+              repeatPassword: ''
+            });
+          }
+          return resp.json()
+        })
+        .then(data => {
           console.log('DATA', data)
           if (data.message) {
             this.setState({
@@ -121,38 +120,27 @@ class ForgotPassPage extends Component {
 
 
   render() {
-    // const MOUNT_NODE = document.getElementById('app');
-    // ReactDOM.render(
-    //   <Provider store={store}>
-    //     {/* <LanguageProvider messages={messages}> */}
-    //     <ConnectedRouter history={history}>
-    //       <App />
-    //     </ConnectedRouter>
-    //     {/* </LanguageProvider> */}
-    //   </Provider>,
-    //   MOUNT_NODE
-    // );
     const { styles } = this.props;
     const { responseStatusVisible } = this.state;
     return (
       <div>
-          <Helmet>
-        <title>Forgot Page</title>
-        <meta
-          name="description"
-          content="Forgot Page"
-        />
-      </Helmet>      
+        <Helmet>
+          <title>Forgot Page</title>
+          <meta
+            name="description"
+            content="Forgot Page"
+          />
+        </Helmet>
         <div className={styles.forgotPage}>
           <title>Registration Page</title>
-          <div className={styles.forgotPage_left}>
+          <div className={styles.forgotPageLeft}>
             <p>Have some stuff to share?</p>
             <p>Easy way to earn money from stuff that is not in use</p>
             <img src={signup} />
             <p>Recover password and start sharing</p>
           </div>
 
-          <div className={styles.forgotPage_right}>
+          <div className={styles.forgotPageRight}>
             <h2>Change password</h2>
             <div className="form-container card">
               {responseStatusVisible &&
@@ -185,15 +173,14 @@ class ForgotPassPage extends Component {
                     onChange={this.onChange}
                     error={this.state.errors.repeatPassword}
                   />
-
-                  <div className={styles.forgotPage_right_but}>
-                    <button
+                  <div>
+                    <Button
+                      label='Click after entering a new passwordt'
                       type="revers"
                       className="btn"
                       onClick={this.onSubmit}
-                      >
-                      Click after entering a new password
-                    </button>
+                    >
+                    </Button>
                   </div>
                 </form>
               }
