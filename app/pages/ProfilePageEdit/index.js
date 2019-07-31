@@ -1,5 +1,5 @@
 import { withStyles } from 'utils/styling';
 import styles from './styles.scss';
-import EditProfilePage from './EditProfilePage';
+import EditProfilePage from './ProfilePageEdit';
 
 export default withStyles(styles)(EditProfilePage);

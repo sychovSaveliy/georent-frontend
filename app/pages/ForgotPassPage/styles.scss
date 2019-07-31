@@ -1,30 +1,22 @@
 .forgotPage {
-    display: flex;
-    text-align: center;
-    white-space: nowrap;
+  display: flex;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
-    &_left{
-      flex: 0 1 50%;
-      padding: 40px;
-    }
-    &_right{
-      flex: 0 1 50%;
-      background-color: #ebccf5;
-    //   padding: 60px;
-    //   margin: 100px;
-      min-width: 200px;
-    //   text-align: left;
-      white-space: normal;
-      color: #000;
-      &_but{
-        flex: 0 1 50%;
-        text-align: center;
-        padding: 5px;
-        margin: 200px;
-        background-color: #abccf5;
-        // height: 25px;
-        // width: 100px;
-        // margin: percent(50);
-      }
-    }
+  max-width: 1140px;
+  margin: 0 auto;
+  background-color: white;
+  overflow: hidden;
+  .forgotPageLeft{
+    padding: 20px 30px;
+    flex: 0 1 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .forgotPageRight{
+    flex: 0 1 40%;
+    background-color: rgba(202, 32, 245, 0.06);
+    box-shadow: -1px 0px 2px 0px rgba(0, 0, 0, 0.31);
+    padding: 20px 30px;
+  }
 }
