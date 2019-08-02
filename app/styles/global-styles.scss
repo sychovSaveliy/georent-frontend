@@ -116,3 +116,21 @@ label {
     }
   }
 }
+
+.p-checkbox {
+  box-shadow: none !important;
+  border-color: #e0e0e0 !important;
+  .p-focus {
+    box-shadow: none !important;
+    border-color: black !important;
+  }
+  &:hover {
+    border-color: black !important;
+  }
+}
+
+.p-checkbox .p-checkbox-box.p-highlight {
+  border-color: #e0e0e0 !important;
+  background-color: white !important;
+  color: darkviolet !important;
+}

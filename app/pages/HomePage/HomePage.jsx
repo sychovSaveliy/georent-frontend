@@ -24,6 +24,7 @@ class HomePage extends Component {
       totalPages: 0
     },
     lotsAll: [],
+    andOr: false,
     myRef: React.createRef()
   };
 
@@ -51,14 +52,14 @@ class HomePage extends Component {
       currentPageLots: { pageNumber },
       itemsPerPage,
       searchAddress,
-      searchName
+      searchName,
+      andOr
     } = this.state;
-    return `${baseUrl}lot/page/${pageNumber}/${itemsPerPage}/cur`;
+    return `${baseUrl}search/page/andor/${pageNumber}/${itemsPerPage}/cur/?address=${searchAddress}&lotname=${searchName}&andor=${andOr}`;
   };
 
   setData = (url, target) => {
     getData(url).then((data) => {
-      console.log('DATA', data)
       if (data.lots) {
         this.setState({
           [target]: data
@@ -78,22 +79,16 @@ class HomePage extends Component {
     this.setState({ currentPageLots }, () => this.setData(this.getPageUrl(), 'currentPageLots'));
   };
 
-  searchData = (data) => {
-    const {
-      currentPageLots: { pageNumber },
-      itemsPerPage
-    } = this.state;
-    const url = `${baseUrl}search/page/${pageNumber}/${itemsPerPage}/cur/?address=&lotname=${data}`;
-    this.setData(url, 'currentPageLots');
+  setSearchFlag = (value) => {
+    this.setState({andOr: value});
+  }
+
+  searchData = (name, address) => {
+    this.setState({searchName: name, searchAddress: address}, () => this.setData(this.getPageUrl(), 'currentPageLots'));
   };
 
   searchAddress = (address) => {
-    const {
-      currentPageLots: { pageNumber },
-      itemsPerPage
-    } = this.state;
-    const url = `${baseUrl}search/page/${pageNumber}/${itemsPerPage}/cur/?address=${address}&lotname=`;
-    this.setData(url, 'currentPageLots');
+    this.setState({searchAddress: address}, () => this.setData(this.getPageUrl(), 'currentPageLots'));
   };
 
   render() {
@@ -103,6 +98,7 @@ class HomePage extends Component {
       lotsAll,
       first,
       itemsPerPage,
+      andOr
     } = this.state;
     const myRef = React.createRef();
     console.log(this.state.myRef)
@@ -111,7 +107,12 @@ class HomePage extends Component {
         <div className={styles.content}>
           <div className={styles.homePageLeft}>
             <div>
-              <SearchLot searchData={this.searchData} searchAddress={this.searchAddress} />
+              <SearchLot
+                searchData={this.searchData}
+                searchAddress={this.searchAddress}
+                setFlag={this.setSearchFlag}
+                andOr={andOr}
+              />
               <LotsList lots={lots} />
               <Paginator
                 className={styles.paginator}

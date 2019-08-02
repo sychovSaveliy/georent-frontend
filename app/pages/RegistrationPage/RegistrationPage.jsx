@@ -6,7 +6,7 @@ import Check from 'components/common/Check';
 import signup from '../../images/signup.jpg';
 import { baseUrl } from 'utils/api';
 import { Button } from 'primereact/button';
-import cs from 'classnames';
+import  test from '../../images/2.jpeg';
 
 /*import { validateName, validateEmail, validatePassword, validatePhone } from 'utils/formValidator.js';*/
 export default class RegistrationPage extends Component {
@@ -143,7 +143,7 @@ export default class RegistrationPage extends Component {
         <div className={styles.registrationPageLeft}>
           <p>Have some stuff to share?</p>
           <p>Easy way to earn money from stuff that is not in use</p>
-          <img src={signup} />
+          <img src={test} />
           <p>Sign up and start to share</p>
         </div>
 
