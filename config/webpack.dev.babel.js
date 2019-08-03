@@ -8,6 +8,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
+var webpackUglifyJsPlugin = require('webpack-uglify-js-plugin');
+
 module.exports = require('./webpack.base.babel')({
   mode: 'development',
   // Add hot reloading in development
@@ -41,6 +43,19 @@ module.exports = require('./webpack.base.babel')({
       filename: '[name].[chunkhash].css',
       chunkFilename: '[name].[chunkhash].css'
     }),
+    new webpackUglifyJsPlugin({
+  cacheFolder: path.resolve(__dirname, 'public/cached_uglify/'),
+  debug: true,
+  minimize: true,
+  sourceMap: false,
+  output: {
+    comments: false
+  },
+  compressor: {
+    warnings: false
+  }
+})
+
   ],
 
   // Emit a source map for easier debugging
