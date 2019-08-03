@@ -2,6 +2,8 @@
 const path = require('path');
 // const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
 
 module.exports = require('./webpack.base.babel')({
   mode: 'production',
@@ -17,7 +19,13 @@ module.exports = require('./webpack.base.babel')({
   },
 
   plugins: [
-
+    new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // both options are optional
+      hashDigestLength: 8,
+      filename: '[name].[chunkhash].css',
+      chunkFilename: '[name].[chunkhash].css'
+    }),
     // Minify and optimize the index.html
     new HtmlWebpackPlugin({
       template: 'app/index.html',
