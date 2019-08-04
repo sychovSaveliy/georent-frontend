@@ -89,6 +89,7 @@ export default class ProfilePage extends Component {
   };
 
   onReset = () => {
+    debugger
     this.setState({
       values: {
         firstName: "",
@@ -97,6 +98,7 @@ export default class ProfilePage extends Component {
       },
       errors: {}
     });
+    window.location.replace(window.location.origin + '/?main=""&path=profedit');
   };
 
 
