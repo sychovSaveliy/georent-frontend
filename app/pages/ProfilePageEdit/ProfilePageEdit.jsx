@@ -6,6 +6,8 @@ import PropTypes from 'prop-types';
 import { baseUrl, getData } from 'utils/api';
 import { Button } from 'primereact/button';
 
+import { Route } from 'react-router-dom';
+
 export default class ProfilePage extends Component {
   static propTypes = {
     styles: PropTypes.object.isRequired
@@ -98,7 +100,6 @@ export default class ProfilePage extends Component {
       },
       errors: {}
     });
-    window.location.replace(window.location.origin + '/?main=""&path=profedit');
   };
 
 
@@ -338,13 +339,16 @@ export default class ProfilePage extends Component {
                     onChange={this.onChange}
                     error={errors.phoneNumber}
                   />
-                  <Button
-                    label='Reset'
-                    type="submit"
-                    className="btn"
-                    onClick={this.onReset}
-                  >
-                  </Button>
+                  <Route render={({ history }) => (
+                    <Button
+                      label='Reset'
+                      type="submit"
+                      className="btn"
+                      // onClick={this.onReset}
+                      onClick={() => { history.push('/prof-edit-reset') }}
+                    >
+                    </Button>
+                  )} />
                   <Button
                     label='Submit'
                     type="submit"

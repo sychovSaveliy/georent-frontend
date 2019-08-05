@@ -64,9 +64,6 @@ export default class App extends Component {
             else if (path === "profile") {
               return <ProfilePage {...props} isLogged={isLogged} />
             } 
-            else if (path === "profedit") {
-              return <ProfilePageEdit {...props} isLogged={isLogged} />
-            }  
             else { 
               return <HomePage {...props} isLogged={isLogged} onExit={this.exit} />
             }
@@ -80,6 +77,7 @@ export default class App extends Component {
           <Route path="/login" render={props => {return <LoginPage {...props} isLogged={isLogged} onLogin={this.login} />}} />
           <PrivateRoute exact path="/profile" component={ProfilePage} isLogged={isLogged} onExit={this.exit} />
           <PrivateRoute path="/profile/edit" component={ProfilePageEdit} isLogged={isLogged} onExit={this.exit} />
+          <Route  path="/prof-edit-reset" render={props => {return <ProfilePageEdit {...props} isLogged={isLogged} />}} />
           <Route path="/create-ad" render={props => {
               {/*if (!window.localStorage.getItem("jwt")) {
                   return <Redirect to={{ pathname: '/login', state: { from: props.location } }} />

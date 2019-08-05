@@ -26,8 +26,9 @@ export default class ProfilePage extends Component {
       fetch(`${baseUrl}user`, {
         method: "GET",
         headers: {
+          'Accept': 'application/json;charset=UTF-8',
+          'Content-Type': 'application/json;charset=UTF-8',
           'Access-Control-Allow-Headers': 'authorization',
-          'Content-Type': 'application/json',
           'Authorization': `Bearer ${token || ''}`
         }
       })
