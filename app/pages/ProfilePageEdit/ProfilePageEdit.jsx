@@ -91,7 +91,6 @@ export default class ProfilePage extends Component {
   };
 
   onReset = () => {
-    debugger
     this.setState({
       values: {
         firstName: "",
