@@ -40,7 +40,8 @@ export default class App extends Component {
       this.setState({
         isLogged : false
       });
-      window.location.assign(window.location.origin);
+      window.location.assign('/');
+      // window.location.assign(window.location.origin);
   };
   render() {
     const { styles } = this.props;
@@ -77,7 +78,7 @@ export default class App extends Component {
           <Route path="/login" render={props => {return <LoginPage {...props} isLogged={isLogged} onLogin={this.login} />}} />
           <PrivateRoute exact path="/profile" component={ProfilePage} isLogged={isLogged} onExit={this.exit} />
           <PrivateRoute path="/profile/edit" component={ProfilePageEdit} isLogged={isLogged} onExit={this.exit} />
-          <Route  path="/prof-edit-reset" render={props => {return <ProfilePageEdit {...props} isLogged={isLogged} />}} />
+          <Route  path="/prof-edit-reset" render={props => {return <ProfilePageEdit {...props} isLogged={isLogged}  onExit={this.exit}/>}} />
           <Route path="/create-ad" render={props => {
               {/*if (!window.localStorage.getItem("jwt")) {
                   return <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
