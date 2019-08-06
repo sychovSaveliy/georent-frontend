@@ -1,9 +1,17 @@
-.feature-page {
+.feature {
+  max-width: 1140px;
+  margin: 0 auto;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+  background-color: white;
+  padding: 20px 30px;
+  .createAdWrapper {
+    width: 50%;
+  }
   h1 {
     font-size: 2em;
     margin-bottom: 0.25em;
   }
-  
+
   ul {
     font-family: Georgia, Times, 'Times New Roman', serif;
     padding-left: 1.75em;

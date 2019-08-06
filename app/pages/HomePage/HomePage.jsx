@@ -28,6 +28,29 @@ class HomePage extends Component {
     myRef: React.createRef()
   };
 
+  defaultState = {
+    first: 0,
+    itemsPerPage: 3,
+    searchAddress: '',
+    searchName: '',
+    currentPageLots: {
+      pageNumber: 1,
+      lots: [],
+      totalPages: 0
+    },
+    lotsAll: [],
+    andOr: false,
+    myRef: React.createRef()
+  };
+
+  resetState = () => {
+    this.setState(this.defaultState, () => {
+      this.setState({key: Math.random()});
+      this.setData(this.getPageUrl(), 'currentPageLots');
+      this.setData(`${baseUrl}lot/`, 'lotsAll');
+    });
+  }
+
   componentDidMount = () => {
     console.log('jwt', window.localStorage.getItem('jwt'));
     this.setData(this.getPageUrl(), 'currentPageLots');
@@ -81,7 +104,7 @@ class HomePage extends Component {
 
   setSearchFlag = (value) => {
     this.setState({andOr: value});
-  }
+  };
 
   searchData = (name, address) => {
     this.setState({searchName: name, searchAddress: address}, () => this.setData(this.getPageUrl(), 'currentPageLots'));
@@ -100,8 +123,6 @@ class HomePage extends Component {
       itemsPerPage,
       andOr
     } = this.state;
-    const myRef = React.createRef();
-    console.log(this.state.myRef)
     return (
       <div>
         <div className={styles.content}>

@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import Field from 'components/common/Field';
-import { baseUrl } from 'utils/api';
+import {baseUrl} from 'utils/api';
 import PropTypes from 'prop-types';
-import cs from 'classnames';
-import { Button } from 'primereact/button';
+import {Button} from 'primereact/button';
 
 class LoginPage extends Component {
   static propTypes = {
     styles: PropTypes.object.isRequired
   };
+
   constructor() {
     super();
 
@@ -52,7 +52,7 @@ class LoginPage extends Component {
   };
   onForgotSubmit = (event) => {
     event.preventDefault();
-    const { email } = this.state;
+    const {email} = this.state;
     const api = window.location.origin;
     fetch(`${baseUrl}forgotpassword`,
       {
@@ -77,7 +77,7 @@ class LoginPage extends Component {
             password: ''
             // repeatPassword: ''
           });
-          this.setState({ forgotPassVisible: false });
+          this.setState({forgotPassVisible: false});
         }
         return resp.json()
       })
@@ -126,7 +126,7 @@ class LoginPage extends Component {
         errors: {}
       });
 
-      const { email, password } = this.state;
+      const {email, password} = this.state;
       fetch(`${baseUrl}login`, {
         method: "POST",
         body: JSON.stringify({
@@ -160,84 +160,84 @@ class LoginPage extends Component {
   };
 
   render() {
-    const { styles } = this.props;
-    const { responseStatusVisible, responseText, forgotPassVisible, newPassVisible } = this.state;
+    const {styles} = this.props;
+    const {responseStatusVisible, responseText, forgotPassVisible, newPassVisible} = this.state;
     return (
       <div className={styles.loginPage}>
         <h2>Login Form</h2>
         <div className={styles.form}>
           {responseStatusVisible &&
-            <div className={styles.loginPage_message}>
-              <h2>
-                {responseText}
-              </h2>
-            </div>
+          <div className={styles.loginPage_message}>
+            <h2>
+              {responseText}
+            </h2>
+          </div>
           }
 
           {forgotPassVisible &&
-            <div>
-              <Field
-                id="email"
-                labelText="Email"
-                type="text"
-                placeholder="Enter email"
-                name="email"
-                value={this.state.email}
-                onChange={this.onChange}
-                error={this.state.errors.email}
-              />
-              <Button
-                label='Submit'
-                type="submit"
-                className="btn"
-                onClick={this.onForgotSubmit}
-              >
-              </Button>
-              <Button
-                label='Back'
-                type="button"
-                className="btn"
-                onClick={this.onForgotBack}
-              >
-              </Button>
-            </div>
+          <div>
+            <Field
+              id="email"
+              labelText="Email"
+              type="text"
+              placeholder="Enter email"
+              name="email"
+              value={this.state.email}
+              onChange={this.onChange}
+              error={this.state.errors.email}
+            />
+            <Button
+              label='Submit'
+              type="submit"
+              className="btn"
+              onClick={this.onForgotSubmit}
+            >
+            </Button>
+            <Button
+              label='Back'
+              type="button"
+              className="btn"
+              onClick={this.onForgotBack}
+            >
+            </Button>
+          </div>
           }
 
           {!forgotPassVisible &&
-            <div>
-              <Field
-                id="email"
-                labelText="Email"
-                type="text"
-                placeholder="Enter email"
-                name="email"
-                value={this.state.email}
-                onChange={this.onChange}
-                error={this.state.errors.email}
-              />
-              <Field
-                id="password"
-                labelText="Password"
-                type="password"
-                placeholder="Enter password"
-                name="password"
-                value={this.state.password}
-                onChange={this.onChange}
-                error={this.state.errors.password}
-              />
-              <Button
-                label='Submit'
-                type="submit"
-                className="btn"
-                onClick={this.onSubmit}
-              />
-              <Button
-                label='Forgot password'
-                type="button"
-                className="btn"
-                onClick={this.onForgot}
-              />
-            </div>
+          <div>
+            <Field
+              id="email"
+              labelText="Email"
+              type="text"
+              placeholder="Enter email"
+              name="email"
+              value={this.state.email}
+              onChange={this.onChange}
+              error={this.state.errors.email}
+            />
+            <Field
+              id="password"
+              labelText="Password"
+              type="password"
+              placeholder="Enter password"
+              name="password"
+              value={this.state.password}
+              onChange={this.onChange}
+              error={this.state.errors.password}
+            />
+            <Button
+              label="Submit"
+              type="submit"
+              className="btn"
+              onClick={this.onSubmit}
+            />
+            <Button
+              label="Forgot password"
+              type="button"
+              className="btn"
+              onClick={this.onForgot}
+            />
+          </div>
           }
         </div>
       </div>

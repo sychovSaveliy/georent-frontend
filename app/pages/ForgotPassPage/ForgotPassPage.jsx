@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import Field from 'components/common/Field';
-import { baseUrl } from 'utils/api';
+import {baseUrl} from 'utils/api';
 import PropTypes from 'prop-types';
 import signup from '../../images/signup.jpg';
 import queryString from 'query-string'
-import { Helmet } from 'react-helmet';
-import { Button } from 'primereact/button';
+import {Helmet} from 'react-helmet';
+import {Button} from 'primereact/button';
 
 class ForgotPassPage extends Component {
   static propTypes = {
@@ -56,8 +56,7 @@ class ForgotPassPage extends Component {
     if (passwordRegExp.test(this.state.password)) {
       if (errors.password != null && errors.password.length > 0) {
         errors.password += ' Must be only latin letters or numbers';
-      }
-      else {
+      } else {
         errors.password = 'Must be only latin letters or numbers';
       }
     }
@@ -77,7 +76,7 @@ class ForgotPassPage extends Component {
 
       console.log('submit', this.state);
       const values = queryString.parse(this.props.location.search);
-      const { password } = this.state;
+      const {password} = this.state;
       fetch(`${baseUrl}forgotpassword/save`, {
         method: 'POST',
         headers: {
@@ -120,8 +119,8 @@ class ForgotPassPage extends Component {
 
 
   render() {
-    const { styles } = this.props;
-    const { responseStatusVisible } = this.state;
+    const {styles} = this.props;
+    const {responseStatusVisible} = this.state;
     return (
       <div>
         <Helmet>
@@ -136,7 +135,7 @@ class ForgotPassPage extends Component {
           <div className={styles.forgotPageLeft}>
             <p>Have some stuff to share?</p>
             <p>Easy way to earn money from stuff that is not in use</p>
-            <img src={signup} />
+            <img src={signup}/>
             <p>Recover password and start sharing</p>
           </div>
 
@@ -144,45 +143,45 @@ class ForgotPassPage extends Component {
             <h2>Change password</h2>
             <div className="form-container card">
               {responseStatusVisible &&
-                <div>
-                  <h2>
-                    {this.state.responseText}
-                  </h2>
-                </div>
+              <div>
+                <h2>
+                  {this.state.responseText}
+                </h2>
+              </div>
               }
 
               {!responseStatusVisible &&
-                <form className="form card-body">
-                  <Field
-                    id="password"
-                    labelText="Password"
-                    type="password"
-                    placeholder="Enter password"
-                    name="password"
-                    value={this.state.password}
-                    onChange={this.onChange}
-                    error={this.state.errors.password}
-                  />
-                  <Field
-                    id="repeatPassword"
-                    labelText="Repeat password"
-                    type="password"
-                    placeholder="Repeat password"
-                    name="repeatPassword"
-                    value={this.state.repeatPassword}
-                    onChange={this.onChange}
-                    error={this.state.errors.repeatPassword}
-                  />
-                  <div>
-                    <Button
-                      label='Click after entering a new passwordt'
-                      type="revers"
-                      className="btn"
-                      onClick={this.onSubmit}
-                    >
-                    </Button>
-                  </div>
-                </form>
+              <form className="form card-body">
+                <Field
+                  id="password"
+                  labelText="Password"
+                  type="password"
+                  placeholder="Enter password"
+                  name="password"
+                  value={this.state.password}
+                  onChange={this.onChange}
+                  error={this.state.errors.password}
+                />
+                <Field
+                  id="repeatPassword"
+                  labelText="Repeat password"
+                  type="password"
+                  placeholder="Repeat password"
+                  name="repeatPassword"
+                  value={this.state.repeatPassword}
+                  onChange={this.onChange}
+                  error={this.state.errors.repeatPassword}
+                />
+                <div>
+                  <Button
+                    label='Click after entering a new passwordt'
+                    type="revers"
+                    className="btn"
+                    onClick={this.onSubmit}
+                  >
+                  </Button>
+                </div>
+              </form>
               }
             </div>
           </div>
@@ -193,4 +192,3 @@ class ForgotPassPage extends Component {
 }
 
 export default ForgotPassPage;
-

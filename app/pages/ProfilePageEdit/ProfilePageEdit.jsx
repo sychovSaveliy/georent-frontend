@@ -288,7 +288,7 @@ export default class ProfilePage extends Component {
         {newPassVisible &&
           <h2>Profile - > change password</h2>
         }
-        <div>
+        <div className={styles.profileEditWrapper}>
           {!newPassVisible &&
             <div>
               <Link to="/user/lots">My staff</Link><br />
@@ -338,7 +338,7 @@ export default class ProfilePage extends Component {
                   />
                   <Button
                     label='Reset'
-                    type="submit"
+                    type='button'
                     className="btn"
                     onClick={this.onReset}
                   >

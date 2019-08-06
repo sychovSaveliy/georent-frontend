@@ -1,9 +1,11 @@
-import React, { Component } from 'react';
-import { Helmet } from 'react-helmet';
+import React, {Component} from 'react';
+import {Helmet} from 'react-helmet';
 import Field from 'components/common/Field';
 import Textarea from 'components/common/Textarea';
 import PropTypes from 'prop-types';
-import { baseUrl, getData } from 'utils/api';
+import {baseUrl, getData} from 'utils/api';
+import {Button} from 'primereact/button';
+
 
 export default class ProfilePage extends Component {
   static propTypes = {
@@ -117,7 +119,7 @@ export default class ProfilePage extends Component {
         errors: {}
       });
       console.log("submit", this.state);
-      const { lotName, price, address, longitude, latitude, lotDescription, avatar } = this.state.values;
+      const {lotName, price, address, longitude, latitude, lotDescription, avatar} = this.state.values;
       let form = new FormData();
       let lot = {
         "lotName": lotName,
@@ -170,112 +172,116 @@ export default class ProfilePage extends Component {
   };
 
   render() {
-    const { styles } = this.props;
-    const { values, errors } = this.state;
+    const {styles} = this.props;
+    const {values, errors} = this.state;
     return (
       <div className={styles.feature}>
         <Helmet>
           <title>Create Ad Page</title>
-          <meta name="description" content="Create Ad Page" />
+          <meta name="description" content="Create Ad Page"/>
         </Helmet>
-        {this.state.responseStatusVisible &&
-        <div>
-          <h2>
-            {this.state.responseText}
-          </h2>
-        </div>
-        }
-        <Field
-          id="lotName"
-          labelText="lotName"
-          type="text"
-          placeholder="Enter lotName"
-          name="lotName"
-          value={values.lotName}
-          onChange={this.onChange}
-          error={errors.lotName}
-        />
-        <Field
-          id="price"
-          labelText="price"
-          type="text"
-          placeholder="Enter price"
-          name="price"
-          value={values.price}
-          onChange={this.onChange}
-          error={errors.price}
-        />
-        <Field
-          id="address"
-          labelText="address"
-          type="text"
-          placeholder="Enter address"
-          name="address"
-          value={values.address}
-          onChange={this.onChange}
-          error={errors.address}
-        />
-        <Field
-          id="longitude"
-          labelText="longitude"
-          type="text"
-          placeholder="Enter longitude"
-          name="longitude"
-          value={values.longitude}
-          onChange={this.onChange}
-          error={errors.longitude}
-        />
-        <Field
-          id="latitude"
-          labelText="latitude"
-          type="text"
-          placeholder="Enter latitude"
-          name="latitude"
-          value={values.latitude}
-          onChange={this.onChange}
-          error={errors.latitude}
-        />
-        <Textarea
-          id="lotDescription"
-          labelText="lotDescription"
-          type="text"
-          placeholder="Enter lotDescription"
-          name="lotDescription"
-          value={values.lotDescription}
-          onChange={this.onChange}
-          error={errors.lotDescription}
-        />
-        <div className='avatar'>
-          {!(values.avatar) ? <img src='./images/default-avatar.59337bae.png' alt=''/> :
-            <img src={values.avatar} alt=''/>}
-        </div>
-        <div className="form-group">
-          <div className="custom-file">
-            <input
-              type="file"
-              className="custom-file-input"
-              id="avatar"
-              name="avatar"
-              onChange={this.onChangeImg}
-            />
-            <label className="custom-file-label" htmlFor="avatar">Choose file</label>
-            {errors.avatar ? <div className="invalid-feedback">{errors.avatar}</div> : null}
+        <div className={styles.createAdWrapper}>
+          {this.state.responseStatusVisible &&
+          <div>
+            <h2>
+              {this.state.responseText}
+            </h2>
+          </div>
+          }
+          <Field
+            id="lotName"
+            labelText="lotName"
+            type="text"
+            placeholder="Enter lotName"
+            name="lotName"
+            value={values.lotName}
+            onChange={this.onChange}
+            error={errors.lotName}
+          />
+          <Field
+            id="price"
+            labelText="price"
+            type="text"
+            placeholder="Enter price"
+            name="price"
+            value={values.price}
+            onChange={this.onChange}
+            error={errors.price}
+          />
+          <Field
+            id="address"
+            labelText="address"
+            type="text"
+            placeholder="Enter address"
+            name="address"
+            value={values.address}
+            onChange={this.onChange}
+            error={errors.address}
+          />
+          <Field
+            id="longitude"
+            labelText="longitude"
+            type="text"
+            placeholder="Enter longitude"
+            name="longitude"
+            value={values.longitude}
+            onChange={this.onChange}
+            error={errors.longitude}
+          />
+          <Field
+            id="latitude"
+            labelText="latitude"
+            type="text"
+            placeholder="Enter latitude"
+            name="latitude"
+            value={values.latitude}
+            onChange={this.onChange}
+            error={errors.latitude}
+          />
+          <Textarea
+            id="lotDescription"
+            labelText="Lot Description"
+            type="text"
+            placeholder="Enter lotDescription"
+            name="lotDescription"
+            value={values.lotDescription}
+            onChange={this.onChange}
+            error={errors.lotDescription}
+          />
+          <div className='avatar'>
+            {!(values.avatar) ? <img src='./images/default-avatar.59337bae.png' alt=''/> :
+              <img src={values.avatar} alt=''/>}
+          </div>
+          <div className="form-group">
+            <div className="custom-file">
+              <input
+                type="file"
+                className="custom-file-input"
+                id="avatar"
+                name="avatar"
+                onChange={this.onChangeImg}
+              />
+              <label className="custom-file-label" htmlFor="avatar">Choose file</label>
+              {errors.avatar ? <div className="invalid-feedback">{errors.avatar}</div> : null}
+            </div>
+          </div>
+          <div>
+            <Button
+              label='Reset'
+              type="button"
+              className="btn"
+              onClick={this.onReset}
+            >
+            </Button>
+            <Button
+              label='Create Lot'
+              type="button"
+              className="btn"
+              onClick={this.onSubmit}
+            >
+            </Button>
           </div>
         </div>
-        <button
-          type="button"
-          className="btn btn-primary w-100"
-          onClick={this.onReset}
-        >
-          Reset
-        </button>
-        <button
-          type="button"
-          className="btn btn-primary m-2"
-          onClick={this.onSubmit}
-        >
-          onSubmit
-        </button>
       </div>
     );
   }
