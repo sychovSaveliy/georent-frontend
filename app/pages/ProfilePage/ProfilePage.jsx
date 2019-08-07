@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { baseUrl, getData} from 'utils/api';
+import avatar from '../../images/avatar.jpg';
 
 export default class ProfilePage extends Component {
   static propTypes = {
@@ -65,14 +66,22 @@ export default class ProfilePage extends Component {
           />
         </Helmet>
         <h2>Profile</h2>
-        <div>
-          <Link to="/user/lots">My staff</Link><br />
-          <Link to="/create-ad">New staff</Link>
-          <h2>{ id } { firstName } {lastName }</h2>
-          <div><b>Email</b> <a href={"mailto:" + email} >{ email }</a></div>
-          <div><b>Phone</b> <a href={"tel:" + phoneNumber} >{ phoneNumber }</a></div>
-          <br/><br/>
-          <Link to="/profile/edit">Edit profile</Link>
+        <div className={styles.profilePage}>
+          <div className={styles.profilePageLeft}>
+            <img src={avatar} alt=""/>
+          </div>
+          <div className={styles.profilePageRight}>
+            <h2>{firstName } {lastName }</h2>
+            <div><b>Email: </b> <a href={"mailto:" + email} >{ email }</a></div>
+            <div><b>Phone: </b> <a href={"tel:" + phoneNumber} >{ phoneNumber }</a></div>
+            <br/><br/>
+            <hr/>
+            <Link to="/user/lots">My staff</Link><br />
+            <hr/>
+            <Link to="/create-ad">New staff</Link><br />
+            <hr/>
+            <Link to="/profile/edit">Edit profile</Link><br />
+          </div>
         </div>
       </div>
     );

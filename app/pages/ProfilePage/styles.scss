@@ -22,3 +22,15 @@
     }
   }
 }
+
+.profilePage {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  .profilePageLeft {
+    width: 30%;
+  }
+  .profilePageRight {
+    width: 70%;
+  }
+}

@@ -344,7 +344,7 @@ export default class ProfilePage extends Component {
                   >
                   </Button>
                   <Button
-                    label='Submit'
+                    label='Save'
                     type="submit"
                     className="btn"
                     onClick={this.onSubmit}

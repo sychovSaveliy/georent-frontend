@@ -226,7 +226,7 @@ class LoginPage extends Component {
               error={this.state.errors.password}
             />
             <Button
-              label="Submit"
+              label="Enter"
               type="submit"
               className="btn"
               onClick={this.onSubmit}

@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
+import { Link } from 'react-router-dom';
 import {Helmet} from 'react-helmet';
 import Field from 'components/common/Field';
 import Textarea from 'components/common/Textarea';
 import PropTypes from 'prop-types';
 import {baseUrl, getData} from 'utils/api';
 import {Button} from 'primereact/button';
-
 
 export default class ProfilePage extends Component {
   static propTypes = {
@@ -99,14 +99,11 @@ export default class ProfilePage extends Component {
     if (values.lotDescription.length < 3 && !textRegExp.test(values.lotDescription)) {
       errors.lotDescription = "Must be 3 characters or more";
     }
-    /*      if (!values.avatar) {
-            errors.avatar = "Required";
-          }*/
     return errors;
   };
 
   onSubmit = event => {
-    event.preventDefault();
+    // event.preventDefault();
     let errors = this.formValidator(this.state.values);
     if (Object.keys(errors).length > 0) {
       // fail
@@ -118,7 +115,6 @@ export default class ProfilePage extends Component {
       this.setState({
         errors: {}
       });
-      console.log("submit", this.state);
       const {lotName, price, address, longitude, latitude, lotDescription, avatar} = this.state.values;
       let form = new FormData();
       let lot = {
@@ -140,34 +136,7 @@ export default class ProfilePage extends Component {
           'Authorization': `Bearer ${window.localStorage.getItem("jwt") || ''}`,
         },
         body: form
-      }).then(resp => {
-        console.log('resp', resp);
-        if (resp.status === 201) {
-          this.setState({
-            lotName: '',
-            price: '',
-            address: '',
-            longitude: '',
-            latitude: '',
-            lotDescription: ''
-          });
-        }
-        return resp.json();
-      })
-        .then(data => {
-          console.log('DATA', data)
-          if (data.message) {
-            this.setState({
-              responseStatusVisible: true,
-              responseText: data.message
-            });
-          } else {
-            this.setState({
-              responseStatusVisible: true,
-              responseText: data.cause
-            });
-          }
-        });
+      });
     }
   };
 
@@ -181,13 +150,6 @@ export default class ProfilePage extends Component {
           <meta name="description" content="Create Ad Page"/>
         </Helmet>
         <div className={styles.createAdWrapper}>
-          {this.state.responseStatusVisible &&
-          <div>
-            <h2>
-              {this.state.responseText}
-            </h2>
-          </div>
-          }
           <Field
             id="lotName"
             labelText="lotName"
@@ -273,13 +235,15 @@ export default class ProfilePage extends Component {
               onClick={this.onReset}
             >
             </Button>
-            <Button
-              label='Create Lot'
-              type="button"
-              className="btn"
-              onClick={this.onSubmit}
-            >
-            </Button>
+            <Link to="/profile">
+              <Button
+                label='Create Lot'
+                type="button"
+                className="btn"
+                onClick={this.onSubmit}
+              >
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
