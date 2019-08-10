@@ -187,7 +187,7 @@ class LoginPage extends Component {
               error={this.state.errors.email}
             />
             <Button
-              label='Submit'
+              label='Send'
               type="submit"
               className="btn"
               onClick={this.onForgotSubmit}
