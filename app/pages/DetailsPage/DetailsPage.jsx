@@ -127,16 +127,10 @@ export default class DetailsPage extends Component {
   render() {
     const { styles } = this.props;
     const { lot: { id, price, coordinates: { address, longitude, latitude }, description: { lotName, lotDescription, pictureIds, urls } }, responseStatusVisible } = this.state;
+    console.log('pictureIds', pictureIds)
     return (
       <div className={styles.detailsPage}>
         <Growl ref={(el) => this.growl = el} />
-        {responseStatusVisible &&
-          <div>
-            <h2>
-              {this.state.responseText}
-            </h2>
-          </div>
-        }
           <h1>{id} . {lotName}</h1>
           <div className={styles.imagesWrapper}>{urls.map(item => <div key={item}><img src={item} /></div>)}</div>
           <h2>Цена:</h2>

@@ -24,7 +24,7 @@ export default class ProfilePage extends Component {
         longitude: "30.520000",
         latitude: "50.350000",
         lotDescription: "lotDescription lotDescription lotDescription lotDescription",
-        avatar: ""
+        avatar: []
       },
       errors: {
         lotName: false,
@@ -54,15 +54,18 @@ export default class ProfilePage extends Component {
   onChangeImg = event => {
     const reader = new FileReader();
     reader.onload = event => {
+      const pic = this.state.values.avatar;
+      pic.push(event.target.result)
       const newValues = {
         ...this.state.values,
-        avatar: event.target.result
+        avatar: pic
       };
       this.setState({
         values: newValues
       });
     };
-    reader.readAsDataURL(event.target.files[0]);
+    console.log(event.target.files);
+    [...event.target.files].map((el) => reader.readAsDataURL(el))
   };
 
 
@@ -130,7 +133,8 @@ export default class ProfilePage extends Component {
       };
       lot = JSON.stringify(lot);
       form.append('lot', lot);
-      let imagedata = document.querySelector('input[type="file"]').files;
+      let imagedata = this.state.values.avatar;
+      console.log('imagedata', imagedata)
       form.append('files', imagedata);
       fetch(`${baseUrl}user/lot/upload-picture`, {
         method: 'POST',
@@ -167,6 +171,7 @@ export default class ProfilePage extends Component {
   render() {
     const {styles} = this.props;
     const {values, errors} = this.state;
+    console.log('val', values)
     return (
       <div className={styles.feature}>
         <Helmet>
@@ -237,7 +242,8 @@ export default class ProfilePage extends Component {
           />
           <div className='avatar'>
             {!(values.avatar) ? <img src='./images/default-avatar.59337bae.png' alt=''/> :
-              <img src={values.avatar} alt=''/>}
+              ((values.avatar).map((el, i) => <img key={i} src={el} alt=''/>))
+            }
           </div>
           <div className="form-group">
             <div className="custom-file">
