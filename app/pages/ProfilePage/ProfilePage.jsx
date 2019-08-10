@@ -66,7 +66,7 @@ export default class ProfilePage extends Component {
             content="Profile Page"
           />
         </Helmet>
-        <h2>Profile</h2>
+        <h2>My profile</h2>
         <div className={styles.profilePage}>
           <div className={styles.profilePageLeft}>
             <img src={avatar} alt=""/>
@@ -75,11 +75,12 @@ export default class ProfilePage extends Component {
             <h2>{firstName } {lastName }</h2>
             <div><b>Email: </b> <a href={"mailto:" + email} >{ email }</a></div>
             <div><b>Phone: </b> <a href={"tel:" + phoneNumber} >{ phoneNumber }</a></div>
+            <div><b>Address: </b></div>
             <br/><br/>
             <hr/>
-            <Link to="/user/lots">My staff</Link><br />
+            <Link to="/user/lots">My lots</Link><br />
             <hr/>
-            <Link to="/create-ad">New staff</Link><br />
+            <Link to="/create-ad">Add lots</Link><br />
             <hr/>
             <Link to="/profile/edit">Edit profile</Link><br />
           </div>
