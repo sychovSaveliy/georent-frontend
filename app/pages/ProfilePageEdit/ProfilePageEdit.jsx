@@ -146,7 +146,6 @@ export default class ProfilePage extends Component {
 
   onSubmit = event => {
     event.preventDefault();
-    debugger
     let errors = this.formValidator(this.state.values);
     if (Object.keys(errors).length > 0) {
       this.setState({
@@ -156,8 +155,6 @@ export default class ProfilePage extends Component {
       this.setState({
         errors: {}
       });
-      console.log("submit", this.state);
-      debugger
       const { firstName, lastName, phoneNumber } = this.state.values;
       fetch(`${baseUrl}user`, {
         method: 'PATCH',

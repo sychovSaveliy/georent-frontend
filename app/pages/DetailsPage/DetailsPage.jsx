@@ -67,7 +67,6 @@ export default class DetailsPage extends Component {
 
   onSubmit = event => {
     event.preventDefault();
-    debugger
     console.log("delete", this.state);
     let token = window.localStorage.getItem('jwt');
     fetch(`${baseUrl}user/lot/${this.props.match.params.lotId}`, {
