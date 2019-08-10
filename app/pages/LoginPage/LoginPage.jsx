@@ -147,7 +147,7 @@ class LoginPage extends Component {
             if (data.accessToken) {
               window.localStorage.setItem("jwt", data.accessToken);
               this.props.onLogin();
-              window.location.assign('/profile');
+              window.location.assign('/?main=""&path=profile');
             } else if (data.message) {
               this.setState({
                 responseStatusVisible: true,
