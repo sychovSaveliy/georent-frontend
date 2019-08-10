@@ -127,7 +127,7 @@ export default class ProfilePage extends Component {
       };
       lot = JSON.stringify(lot);
       form.append('lot', lot);
-      let imagedata = document.querySelector('input[type="file"]').files[0];
+      let imagedata = document.querySelector('input[type="file"]').files;
       form.append('files', imagedata);
       fetch(`${baseUrl}user/lot/upload-picture`, {
         method: 'POST',
