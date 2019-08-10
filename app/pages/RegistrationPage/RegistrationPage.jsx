@@ -7,9 +7,11 @@ import signup from '../../images/signup.jpg';
 import { baseUrl } from 'utils/api';
 import { Button } from 'primereact/button';
 import  test from '../../images/2.jpeg';
+import {Growl} from 'primereact/growl';
+import {withRouter} from "react-router-dom";
 
 /*import { validateName, validateEmail, validatePassword, validatePhone } from 'utils/formValidator.js';*/
-export default class RegistrationPage extends Component {
+class RegistrationPage extends Component {
   static propTypes = {
     styles: PropTypes.object.isRequired
   }
@@ -48,8 +50,7 @@ export default class RegistrationPage extends Component {
 	  });
 	};
 
-	onSubmit = (event) => {
-	  event.preventDefault();
+	onSubmit = () => {
 	  const errors = {};
 	  const nameRegExp	= /^[a-zа-яієїґ\'\s]{2,30}$/i;
 
@@ -120,17 +121,22 @@ export default class RegistrationPage extends Component {
       .then(data => {
           console.log('DATA', data)
           if (data.message) {
+            this.growl.show({severity: 'success', summary: `${data.message}`});
             this.setState({
                 responseStatusVisible: true,
                 responseText: data.message
             });
           } else {
+            this.growl.show({severity: 'success', summary: `${data.cause}`});
             this.setState({
                 responseStatusVisible: true,
                 responseText: data.cause
             });
           }
-      });
+      })
+        .catch(error => {
+          this.growl.show({severity: 'error', summary: `${error.message}`});
+        });
 	  }
 	};
 
@@ -139,7 +145,7 @@ export default class RegistrationPage extends Component {
     const { responseStatusVisible } = this.state;
 	  return (
       <div className={styles.registrationPage}>
-
+        <Growl ref={(el) => this.growl = el} />
         <div className={styles.registrationPageLeft}>
           <p>Have some stuff to share?</p>
           <p>Easy way to earn money from stuff that is not in use</p>
@@ -150,14 +156,6 @@ export default class RegistrationPage extends Component {
         <div className={styles.registrationPageRight}>
           <h2>Sign Up</h2>
           <div className="form-container card">
-
-            { responseStatusVisible &&
-              <div>
-                <h2>
-                  { this.state.responseText }
-                </h2>
-              </div>
-            }
 
             { !responseStatusVisible &&
               <form className="form card-body">
@@ -223,9 +221,14 @@ export default class RegistrationPage extends Component {
                 />
                 <Button
                   label='Register'
-                  type="submit"
+                  type="button"
                   className="btn"
-                  onClick={this.onSubmit}
+                  onClick={() => {
+                    this.onSubmit();
+                    setTimeout(() =>
+                        this.props.history.push("/login")
+                      , 3000);
+                  }}
                 />
               </form>
             }
@@ -235,3 +238,5 @@ export default class RegistrationPage extends Component {
 	  );
 	}
 }
+
+export default withRouter(RegistrationPage);
