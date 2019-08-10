@@ -32,7 +32,6 @@ export default class UserLotsPage extends Component {
               if ([401, 403].indexOf(resp.status) !== -1) {
                   this.props.onExit();
                   this.props.history.push('/login');
-                  //location.reload(true);
               }
               const error = (data && data.message) || resp.statusText;
               return Promise.reject(error);
@@ -54,7 +53,6 @@ export default class UserLotsPage extends Component {
     const { lotsAll } = this.state;
     return (
       <div>
-        { console.log(this.props.isLogged) }
         <div className={styles.content}>
         { this.props.isLogged &&
           <LotsList lots={lotsAll} />

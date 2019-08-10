@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
 import Field from 'components/common/Field';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { baseUrl, getData } from 'utils/api';
 import { Button } from 'primereact/button';
 import {Growl} from "primereact/growl";
 
-export default class ProfilePage extends Component {
+
+class ProfilePage extends Component {
   static propTypes = {
     styles: PropTypes.object.isRequired
   };
@@ -337,8 +338,8 @@ export default class ProfilePage extends Component {
                     onClick={(e) => {
                       this.onSubmit(e);
                       setTimeout(() => {
-                        window.location.assign('/profile');
-                      }, 3000);
+                        this.props.history.push("/profile")
+                      }, 2500);
                     }}
                   >
                   </Button>
@@ -398,3 +399,5 @@ export default class ProfilePage extends Component {
     );
   }
 }
+
+export default withRouter(ProfilePage);

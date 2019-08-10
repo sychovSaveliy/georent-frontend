@@ -151,10 +151,9 @@ export default class DetailsPage extends Component {
           <div>pictureIds {pictureIds.map(item => <div key={item}>picture id {item} </div>)}</div>
           <div>
             <Button onClick={() => {
-              // this.showSuccess();
               this.onDelete();
               setTimeout(() => {
-                window.location.assign('/user/lots');
+                this.props.history.push('/user/lots');
               }, 3000);
             }} label="Delete" className="btn" />
           </div>

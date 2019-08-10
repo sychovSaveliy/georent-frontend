@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import { Link } from 'react-router-dom';
 import {Helmet} from 'react-helmet';
 import Field from 'components/common/Field';
 import Textarea from 'components/common/Textarea';
@@ -7,9 +6,9 @@ import PropTypes from 'prop-types';
 import {baseUrl, getData} from 'utils/api';
 import {Button} from 'primereact/button';
 import {Growl} from 'primereact/growl';
+import { withRouter } from 'react-router-dom';
 
-
-export default class ProfilePage extends Component {
+class ProfilePage extends Component {
   static propTypes = {
     styles: PropTypes.object.isRequired
   };
@@ -130,7 +129,7 @@ export default class ProfilePage extends Component {
       };
       lot = JSON.stringify(lot);
       form.append('lot', lot);
-      let imagedata = document.querySelector('input[type="file"]').files;
+      let imagedata = document.querySelector('input[type="file"]').files[0];
       form.append('files', imagedata);
       fetch(`${baseUrl}user/lot/upload-picture`, {
         method: 'POST',
@@ -262,9 +261,9 @@ export default class ProfilePage extends Component {
             </Button>
               <Button onClick={() => {
                 this.onSubmit();
-                setTimeout(() => {
-                  window.location.assign('/profile');
-                }, 3000);
+                setTimeout(() =>
+                  this.props.history.push("/profile")
+                , 3000);
               }} label="Create Lot" className="btn" />
           </div>
         </div>
@@ -272,3 +271,5 @@ export default class ProfilePage extends Component {
     );
   }
 }
+
+export default withRouter(ProfilePage);

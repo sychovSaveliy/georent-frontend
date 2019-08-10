@@ -134,3 +134,9 @@ label {
   background-color: white !important;
   color: darkviolet !important;
 }
+
+.p-growl.p-growl-topright {
+  width: 400px !important;
+  top: 70px !important;
+  z-index: 1000 !important;
+}
