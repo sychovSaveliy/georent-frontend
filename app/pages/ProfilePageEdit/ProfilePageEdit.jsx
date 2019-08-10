@@ -6,8 +6,6 @@ import PropTypes from 'prop-types';
 import { baseUrl, getData } from 'utils/api';
 import { Button } from 'primereact/button';
 
-import { Route } from 'react-router-dom';
-
 export default class ProfilePage extends Component {
   static propTypes = {
     styles: PropTypes.object.isRequired
@@ -290,7 +288,7 @@ export default class ProfilePage extends Component {
         {newPassVisible &&
           <h2>Profile - > change password</h2>
         }
-        <div>
+        <div className={styles.profileEditWrapper}>
           {!newPassVisible &&
             <div>
               <Link to="/user/lots">My staff</Link><br />
@@ -338,18 +336,15 @@ export default class ProfilePage extends Component {
                     onChange={this.onChange}
                     error={errors.phoneNumber}
                   />
-                  <Route render={({ history }) => (
-                    <Button
-                      label='Reset'
-                      type="submit"
-                      className="btn"
-                      // onClick={this.onReset}
-                      onClick={() => { history.push('/prof-edit-reset') }}
-                    >
-                    </Button>
-                  )} />
                   <Button
-                    label='Submit'
+                    label='Reset'
+                    type='button'
+                    className="btn"
+                    onClick={this.onReset}
+                  >
+                  </Button>
+                  <Button
+                    label='Save'
                     type="submit"
                     className="btn"
                     onClick={this.onSubmit}

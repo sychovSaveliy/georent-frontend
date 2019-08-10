@@ -25,11 +25,11 @@ class Header extends Component {
                   <Link to="/login" className={styles.navItem}>Sign in</Link>
                 </>
               }
-              {  isLogged && 
+              {  isLogged &&
                   <>
                     <Link to="/profile" className={styles.navItem}>Profile</Link>
-                    <Button label='Exit' onClick={this.props.onExit}></Button>
-                  </>  
+                    <Link to="/login"><Button label='Exit' onClick={this.props.onExit}></Button></Link>
+                  </>
               }
             </li>
           </ul>

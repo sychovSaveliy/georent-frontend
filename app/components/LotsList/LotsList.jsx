@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from 'components/common/Button';
+import { Button } from 'primereact/button';
 import { Link } from 'react-router-dom';
 
 const LotsList = ({ styles, lots }) => (
@@ -18,7 +18,13 @@ const LotsList = ({ styles, lots }) => (
               <div className={styles.LocatIcon}></div>
               <div className={styles.AdressWrapper}>{item.address}</div>
               <div className={styles.PriceItem}>{item.price} грн/day</div>
-              <div className={styles.CardButton}><Button text="to rent" active="active"/></div>
+              <div className={styles.CardButton}>
+                <Button
+                  label='to rent'
+                  type="button"
+                  className="btn"
+                />
+              </div>
             </div>
           </div>
         </div>

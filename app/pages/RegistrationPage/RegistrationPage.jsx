@@ -222,7 +222,7 @@ export default class RegistrationPage extends Component {
                   error={this.state.errors.repeatPassword}
                 />
                 <Button
-                  label='Submit'
+                  label='Register'
                   type="submit"
                   className="btn"
                   onClick={this.onSubmit}

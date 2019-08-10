@@ -81,7 +81,7 @@ class HomePage extends Component {
 
   setSearchFlag = (value) => {
     this.setState({andOr: value});
-  }
+  };
 
   searchData = (name, address) => {
     this.setState({searchName: name, searchAddress: address}, () => this.setData(this.getPageUrl(), 'currentPageLots'));
@@ -100,8 +100,6 @@ class HomePage extends Component {
       itemsPerPage,
       andOr
     } = this.state;
-    const myRef = React.createRef();
-    console.log(this.state.myRef)
     return (
       <div>
         <div className={styles.content}>
