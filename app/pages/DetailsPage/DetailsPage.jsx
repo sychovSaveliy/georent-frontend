@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { baseUrl, getData } from 'utils/api';
+import { Button } from 'primereact/button';
 
 export default class DetailsPage extends Component {
   static propTypes = {
@@ -65,10 +66,8 @@ export default class DetailsPage extends Component {
       });
   }
 
-  onSubmit = event => {
+  onDelete = event => {
     event.preventDefault();
-    debugger
-    console.log("delete", this.state);
     let token = window.localStorage.getItem('jwt');
     fetch(`${baseUrl}user/lot/${this.props.match.params.lotId}`, {
       method: "DELETE",
@@ -146,13 +145,13 @@ export default class DetailsPage extends Component {
           <h2>pictureIds</h2>
           <div>pictureIds {pictureIds.map(item => <div key={item}>picture id {item} </div>)}</div>
           <div>
-            <button
-              type="button"
-              className="btn btn-primary m-2"
-              onClick={this.onSubmit}
+            <Button
+              label='Delete'
+              type="submit"
+              className="btn"
+              onClick={this.onDelete}
             >
-              Delete
-            </button>
+            </Button>
           </div>
       </div>
 
