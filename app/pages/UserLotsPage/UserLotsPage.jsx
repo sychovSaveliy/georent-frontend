@@ -8,7 +8,7 @@ export default class UserLotsPage extends Component {
   static propTypes = {
     styles: PropTypes.object.isRequired
   }
-  
+
   constructor() {
     super();
     this.state = {
@@ -25,7 +25,6 @@ export default class UserLotsPage extends Component {
         }
       })
       .then(resp => {
-        console.log('resp', resp);
         return resp.text()
       .then(text => {
           const data = text && JSON.parse(text);
@@ -41,9 +40,8 @@ export default class UserLotsPage extends Component {
           return data;
         });
       })
-      .then(data => 
+      .then(data =>
         {
-          console.log('DATA', data);
           this.setState({
             lotsAll: data
           });

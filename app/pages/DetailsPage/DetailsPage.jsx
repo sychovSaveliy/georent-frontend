@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { baseUrl, getData } from 'utils/api';
 import { Button } from 'primereact/button';
+import {Growl} from "primereact/growl";
 
 export default class DetailsPage extends Component {
   static propTypes = {
@@ -67,7 +68,7 @@ export default class DetailsPage extends Component {
   }
 
   onDelete = event => {
-    event.preventDefault();
+    // event.preventDefault();
     let token = window.localStorage.getItem('jwt');
     fetch(`${baseUrl}user/lot/${this.props.match.params.lotId}`, {
       method: "DELETE",
@@ -99,32 +100,36 @@ export default class DetailsPage extends Component {
             }
           });
         }
-        return resp.json()
+        return resp.json();
       })
       .then(data => {
-        console.log('DATA', data);
         if (data.message) {
+          this.growl.show({severity: 'success', summary: `${data.message}`});
           this.setState({
             responseStatusVisible: true,
             responseText: data.message
           });
         }
         else {
+          this.growl.show({severity: 'error', summary: `${data.cause}`});
           this.setState({
             responseStatusVisible: true,
             responseText: data.cause
           });
         }
-        console.log(this.state)
-      });
+      })
+      .catch(error => {
+        this.growl.show({severity: 'error', summary: `${error.message}`});
+      })
 
-  };
+      };
 
   render() {
     const { styles } = this.props;
     const { lot: { id, price, coordinates: { address, longitude, latitude }, description: { lotName, lotDescription, pictureIds, urls } }, responseStatusVisible } = this.state;
     return (
       <div className={styles.detailsPage}>
+        <Growl ref={(el) => this.growl = el} />
         {responseStatusVisible &&
           <div>
             <h2>
@@ -145,13 +150,13 @@ export default class DetailsPage extends Component {
           <h2>pictureIds</h2>
           <div>pictureIds {pictureIds.map(item => <div key={item}>picture id {item} </div>)}</div>
           <div>
-            <Button
-              label='Delete'
-              type="submit"
-              className="btn"
-              onClick={this.onDelete}
-            >
-            </Button>
+            <Button onClick={() => {
+              // this.showSuccess();
+              this.onDelete();
+              setTimeout(() => {
+                window.location.assign('/user/lots');
+              }, 3000);
+            }} label="Delete" className="btn" />
           </div>
       </div>
 

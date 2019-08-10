@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { baseUrl, getData } from 'utils/api';
 import { Button } from 'primereact/button';
+import {Growl} from "primereact/growl";
 
 export default class ProfilePage extends Component {
   static propTypes = {
@@ -169,31 +170,28 @@ export default class ProfilePage extends Component {
         }),
       })
         .then(resp => {
-          console.log('resp', resp);
-          if (resp.status < 300) {
-            this.setState({
-              firstName: '',
-              lastName: '',
-              phoneNumber: ''
-            });
-          }
           return resp.json();
         })
         .then(data => {
-          console.log('DATA', data)
           if (data.message) {
+            this.growl.show({severity: 'success', summary: `${data.message}`});
             this.setState({
               newPassVisible: false,
               responseStatusVisible: true,
               responseText: data.message
             });
           } else {
+            this.growl.show({severity: 'error', summary: `${data.cause}`});
             this.setState({
               newPassVisible: false,
               responseStatusVisible: true,
               responseText: data.cause
             });
           }
+        })
+        .catch(error => {
+          console.log('ERROR')
+          this.growl.show({severity: 'error', summary: `${error.message}`});
         });
     }
   };
@@ -250,7 +248,6 @@ export default class ProfilePage extends Component {
           return resp.json()
         })
         .then(data => {
-          console.log('DATA', data)
           if (data.message) {
             this.setState({
               responseStatusVisible: true,
@@ -272,6 +269,7 @@ export default class ProfilePage extends Component {
     const { user, values, errors, responseStatusVisible, newPassVisible } = this.state;
     return (
       <div className={styles.feature}>
+        <Growl ref={(el) => this.growl = el} />
         <Helmet>
           <title>Profile Page</title>
           <meta
@@ -293,13 +291,6 @@ export default class ProfilePage extends Component {
             </div>
           }
           <div className="form-container card">
-            {responseStatusVisible &&
-              <div>
-                <h2>
-                  {this.state.responseText}
-                </h2>
-              </div>
-            }
             <form className="form card-body">
               {!newPassVisible &&
                 <div>
@@ -342,9 +333,13 @@ export default class ProfilePage extends Component {
                   </Button>
                   <Button
                     label='Save'
-                    type="submit"
                     className="btn"
-                    onClick={this.onSubmit}
+                    onClick={(e) => {
+                      this.onSubmit(e);
+                      setTimeout(() => {
+                        window.location.assign('/profile');
+                      }, 3000);
+                    }}
                   >
                   </Button>
                   <Button

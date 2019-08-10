@@ -63,7 +63,6 @@ export default class ProfilePage extends Component {
       });
     };
     reader.readAsDataURL(event.target.files[0]);
-    console.log(this.state.avatar)
   };
 
 
@@ -105,9 +104,6 @@ export default class ProfilePage extends Component {
     return errors;
   };
 
-  showSuccess = () => {
-    this.growl.show({severity: 'success', summary: 'Success Message', detail: 'Order submitted'});
-  }
 
   onSubmit = event => {
     // event.preventDefault();
@@ -143,7 +139,28 @@ export default class ProfilePage extends Component {
           'Authorization': `Bearer ${window.localStorage.getItem("jwt") || ''}`,
         },
         body: form
-      });
+      }).then(resp => {
+        return resp.json();
+      })
+        .then(data => {
+          if (data.message) {
+            this.growl.show({severity: 'success', summary: `${data.message}`});
+            this.setState({
+              responseStatusVisible: true,
+              responseText: data.message
+            });
+          } else {
+            this.growl.show({severity: 'error', summary: `${data.cause}`});
+            this.setState({
+              responseStatusVisible: true,
+              responseText: data.cause
+            });
+          }
+        })
+        .catch(error => {
+          this.growl.show({severity: 'error', summary: `${error.message}`});
+        });
+
     }
   };
 
@@ -244,12 +261,10 @@ export default class ProfilePage extends Component {
             >
             </Button>
               <Button onClick={() => {
-                this.showSuccess();
                 this.onSubmit();
                 setTimeout(() => {
-                  this.onSubmit();
                   window.location.assign('/profile');
-                }, 1000);
+                }, 3000);
               }} label="Create Lot" className="btn" />
           </div>
         </div>
