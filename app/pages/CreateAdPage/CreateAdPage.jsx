@@ -187,7 +187,7 @@ class ProfilePage extends Component {
           <Growl ref={(el) => this.growl = el} />
           <Field
             id="lotName"
-            labelText="lotName"
+            labelText="Lot Name"
             type="text"
             placeholder="Enter lotName"
             name="lotName"
@@ -197,7 +197,7 @@ class ProfilePage extends Component {
           />
           <Field
             id="price"
-            labelText="price"
+            labelText="Price"
             type="text"
             placeholder="Enter price"
             name="price"
@@ -207,7 +207,7 @@ class ProfilePage extends Component {
           />
           <Field
             id="address"
-            labelText="address"
+            labelText="Address"
             type="text"
             placeholder="Enter address"
             name="address"
@@ -217,7 +217,7 @@ class ProfilePage extends Component {
           />
           <Field
             id="longitude"
-            labelText="longitude"
+            labelText="Longitude"
             type="text"
             placeholder="Enter longitude"
             name="longitude"
@@ -227,7 +227,7 @@ class ProfilePage extends Component {
           />
           <Field
             id="latitude"
-            labelText="latitude"
+            labelText="Latitude"
             type="text"
             placeholder="Enter latitude"
             name="latitude"
@@ -245,8 +245,8 @@ class ProfilePage extends Component {
             onChange={this.onChange}
             error={errors.lotDescription}
           />
-          <div className='avatar'>
-            {!(values.avatar) ? <img src='./images/default-avatar.59337bae.png' alt=''/> :
+          <div className='lot_image'>
+            {!(values.avatar) ? null :
                ((values.avatar).map((el, i) => <img key={i} src={el} alt=''/>))
               }
           </div>

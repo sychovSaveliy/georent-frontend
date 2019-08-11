@@ -139,17 +139,21 @@ export default class DetailsPage extends Component {
         }
           <h1>{id} . {lotName}</h1>
           <div className={styles.imagesWrapper}>{urls.map(item => <div key={item}><img src={item} /></div>)}</div>
-          <h2>Цена:</h2>
-          <div>{price} грн.</div>
-          <h2>Адрес лота:</h2>
-          <div>address {address}</div>
-          <div>longitude {longitude}</div>
-          <div>latitude {latitude}</div>
-          <h2>Описание лота:</h2>
+          <h2>Price:</h2>
+          <div>{price}$</div>
+          <hr />
+          <h2>Lot address:</h2>
+          <div>Address: {address}</div>
+          <div>Longitude: {longitude}</div>
+          <div>Latitude: {latitude}</div>
+          <hr />
+          <h2>Lot Description:</h2>
           <div>{lotDescription}</div>
-          <h2>pictureIds</h2>
-          <div>pictureIds {pictureIds.map(item => <div key={item}>picture id {item} </div>)}</div>
-          {isLogged &&
+          <hr />
+          <h2>Pictures:</h2>
+          <div>{pictureIds.map(item => <div key={item}>picture id {item} </div>)}</div>
+          <hr />
+          {isLogged ?
           <div>
             <Button onClick={() => {
               this.onDelete();
@@ -157,7 +161,7 @@ export default class DetailsPage extends Component {
                 this.props.history.push('/user/lots');
               }, 3000);
             }} label="Delete" className="btn" />
-          </div>
+          </div> : null
           }
       </div>
 

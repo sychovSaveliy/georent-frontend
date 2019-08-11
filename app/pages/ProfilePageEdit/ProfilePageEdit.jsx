@@ -297,7 +297,7 @@ class ProfilePage extends Component {
                 <div>
                   <Field
                     id="firstName"
-                    labelText="firstName"
+                    labelText="First Name"
                     type="text"
                     placeholder={values.firstName}
                     name="firstName"
@@ -307,7 +307,7 @@ class ProfilePage extends Component {
                   />
                   <Field
                     id="lastName"
-                    labelText="User lastName"
+                    labelText="Last Name"
                     type="text"
                     placeholder={values.lastName}
                     name="lastName"
@@ -317,7 +317,7 @@ class ProfilePage extends Component {
                   />
                   <Field
                     id="phoneNumber"
-                    labelText="phoneNumber"
+                    labelText="Phone Number"
                     type="text"
                     placeholder={values.phoneNumber}
                     name="phoneNumber"

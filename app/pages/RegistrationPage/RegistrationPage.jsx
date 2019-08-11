@@ -161,9 +161,9 @@ class RegistrationPage extends Component {
               <form className="form card-body">
                 <Field
                       id="firstName"
-                      labelText="firstName"
+                      labelText="First Name"
                       type="text"
-                      placeholder="Enter firstName"
+                      placeholder="Enter first name"
                       name="firstName"
                       value={this.state.firstName}
                       onChange={this.onChange}
@@ -171,9 +171,9 @@ class RegistrationPage extends Component {
                     />
                 <Field
                       id="lastName"
-                      labelText="User lastName"
+                      labelText="Last Name"
                       type="text"
-                      placeholder="Enter user lastName"
+                      placeholder="Enter last name"
                       name="lastName"
                       value={this.state.lastName}
                       onChange={this.onChange}
@@ -191,7 +191,7 @@ class RegistrationPage extends Component {
                     />
                 <Field
                       id="phoneNumber"
-                      labelText="phoneNumber"
+                      labelText="Phone Number"
                       type="text"
                       placeholder="Enter phone (000)-000-0000"
                       name="phoneNumber"

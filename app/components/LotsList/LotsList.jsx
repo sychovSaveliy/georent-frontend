@@ -17,7 +17,7 @@ const LotsList = ({ styles, lots }) => (
             <div className={styles.CardFooter}>
               <div className={styles.LocatIcon}></div>
               <div className={styles.AdressWrapper}>{item.address}</div>
-              <div className={styles.PriceItem}>{item.price} грн/day</div>
+              <div className={styles.PriceItem}>{item.price} $/day</div>
               <div className={styles.CardButton}>
                 <Button
                   label='to rent'
