@@ -125,7 +125,7 @@ export default class DetailsPage extends Component {
       };
 
   render() {
-    const { styles } = this.props;
+    const { styles, isLogged } = this.props;
     const { lot: { id, price, coordinates: { address, longitude, latitude }, description: { lotName, lotDescription, pictureIds, urls } }, responseStatusVisible } = this.state;
     return (
       <div className={styles.detailsPage}>
@@ -149,6 +149,7 @@ export default class DetailsPage extends Component {
           <div>{lotDescription}</div>
           <h2>pictureIds</h2>
           <div>pictureIds {pictureIds.map(item => <div key={item}>picture id {item} </div>)}</div>
+          {isLogged &&
           <div>
             <Button onClick={() => {
               this.onDelete();
@@ -157,6 +158,7 @@ export default class DetailsPage extends Component {
               }, 3000);
             }} label="Delete" className="btn" />
           </div>
+          }
       </div>
 
     );
