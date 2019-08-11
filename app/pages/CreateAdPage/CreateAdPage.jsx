@@ -130,7 +130,6 @@ class ProfilePage extends Component {
       };
       lot = JSON.stringify(lot);
       form.append('lot', lot);
-      debugger
       // let imagedata = document.querySelector('input[type="file"]').files[0];
       let imagedata = this.state.values.avatar;
       form.append('files', imagedata);
