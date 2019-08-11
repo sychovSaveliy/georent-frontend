@@ -28,11 +28,6 @@ class LoginPage extends Component {
     };
   };
 
-  // componentDidMount = () => {
-  //   this.setState({
-  //     newPassVisible: this.props.location.pathname === "/login/newpass"
-  //   });
-  // }
   onChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value
