@@ -136,6 +136,9 @@ class ProfilePage extends Component {
       form.append('files', imagedata);
 
       let imagedataBase64 = this.state.values.avatar;
+      if (imagedataBase64[0] == null) {
+        form.append('filesBase64',"")
+      }
       imagedataBase64.forEach(file => {
         form.append('filesBase64',file)
       });
