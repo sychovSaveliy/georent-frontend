@@ -28,7 +28,7 @@ class Header extends Component {
               {  isLogged &&
                   <>
                     <Link to="/profile" className={styles.navItem}>Profile</Link>
-                    <Link to="/login"><Button label='Exit' onClick={this.props.onExit}></Button></Link>
+                    <Link to="/"><Button label='Exit' onClick={this.props.onExit}></Button></Link>
                   </>
               }
             </li>

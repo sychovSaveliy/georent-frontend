@@ -6,6 +6,8 @@ import Textarea from 'components/common/Textarea';
 import PropTypes from 'prop-types';
 import {baseUrl, getData} from 'utils/api';
 import {Button} from 'primereact/button';
+import {Growl} from 'primereact/growl';
+
 
 export default class ProfilePage extends Component {
   static propTypes = {
@@ -47,6 +49,7 @@ export default class ProfilePage extends Component {
       values: newValues
     });
   };
+
 
   onChangeImg = event => {
     const reader = new FileReader();
@@ -102,6 +105,10 @@ export default class ProfilePage extends Component {
     return errors;
   };
 
+  showSuccess = () => {
+    this.growl.show({severity: 'success', summary: 'Success Message', detail: 'Order submitted'});
+  }
+
   onSubmit = event => {
     // event.preventDefault();
     let errors = this.formValidator(this.state.values);
@@ -127,7 +134,7 @@ export default class ProfilePage extends Component {
       };
       lot = JSON.stringify(lot);
       form.append('lot', lot);
-      let imagedata = document.querySelector('input[type="file"]').files[0];
+      let imagedata = document.querySelector('input[type="file"]').files;
       form.append('files', imagedata);
       fetch(`${baseUrl}user/lot/upload-picture`, {
         method: 'POST',
@@ -150,6 +157,7 @@ export default class ProfilePage extends Component {
           <meta name="description" content="Create Ad Page"/>
         </Helmet>
         <div className={styles.createAdWrapper}>
+          <Growl ref={(el) => this.growl = el} />
           <Field
             id="lotName"
             labelText="lotName"
@@ -235,15 +243,14 @@ export default class ProfilePage extends Component {
               onClick={this.onReset}
             >
             </Button>
-            <Link to="/profile">
-              <Button
-                label='Create Lot'
-                type="button"
-                className="btn"
-                onClick={this.onSubmit}
-              >
-              </Button>
-            </Link>
+              <Button onClick={() => {
+                this.showSuccess();
+                this.onSubmit();
+                setTimeout(() => {
+                  this.onSubmit();
+                  window.location.assign('/profile');
+                }, 1000);
+              }} label="Create Lot" className="btn" />
           </div>
         </div>
       </div>

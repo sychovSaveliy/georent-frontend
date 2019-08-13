@@ -147,7 +147,7 @@ class LoginPage extends Component {
             if (data.accessToken) {
               window.localStorage.setItem("jwt", data.accessToken);
               this.props.onLogin();
-              window.location.assign('/profile');
+              window.location.assign('/?main=""&path=profile');
             } else if (data.message) {
               this.setState({
                 responseStatusVisible: true,
@@ -187,7 +187,7 @@ class LoginPage extends Component {
               error={this.state.errors.email}
             />
             <Button
-              label='Submit'
+              label='Send'
               type="submit"
               className="btn"
               onClick={this.onForgotSubmit}

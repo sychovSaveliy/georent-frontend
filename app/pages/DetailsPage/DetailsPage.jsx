@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { baseUrl, getData} from 'utils/api';
+import { baseUrl, getData } from 'utils/api';
+import { Button } from 'primereact/button';
 
 export default class DetailsPage extends Component {
   static propTypes = {
@@ -24,47 +25,104 @@ export default class DetailsPage extends Component {
           pictureIds: [],
           urls: []
         }
-      }
+      },
+      responseStatusVisible: false,
+      responseText: ""
     };
   };
 
   componentDidMount = () => {
-      fetch(`${baseUrl}lot/${this.props.match.params.lotId}`)
+    fetch(`${baseUrl}lot/${this.props.match.params.lotId}`)
       .then(resp => {
         console.log('resp', resp);
         return resp.json()
-     	})
-      .then(data =>
-        {
-          console.log('DATA', data);
-          this.setState(prevState => ({
-              ...prevState,
-              lot: {
-                  ...prevState.lot,
-                  id: data.id,
-                  price: data.price,
-                  coordinates: {
-                      ...prevState.lot.coordinates,
-                      address: data.coordinates.address,
-                      longitude: data.coordinates.longitude,
-                      latitude: data.coordinates.latitude
-                  },
-                  description: {
-                      ...prevState.lot.description,
-                      lotName: data.description.lotName,
-                      lotDescription: data.description.lotDescription,
-                      pictureIds: data.description.pictureIds,
-                      urls: data.description.urls
-                  }
-              }
-          }));
-          console.log(this.state)
+      })
+      .then(data => {
+        console.log('DATA', data);
+        this.setState(prevState => ({
+          ...prevState,
+          lot: {
+            ...prevState.lot,
+            id: data.id,
+            price: data.price,
+            coordinates: {
+              ...prevState.lot.coordinates,
+              address: data.coordinates.address,
+              longitude: data.coordinates.longitude,
+              latitude: data.coordinates.latitude
+            },
+            description: {
+              ...prevState.lot.description,
+              lotName: data.description.lotName,
+              lotDescription: data.description.lotDescription,
+              pictureIds: data.description.pictureIds,
+              urls: data.description.urls
+            }
+          },
+          responseStatusVisible: false,
+          responseText: ""
+        }));
+        console.log(this.state)
       });
   }
 
+  onDelete = event => {
+    event.preventDefault();
+    let token = window.localStorage.getItem('jwt');
+    fetch(`${baseUrl}user/lot/${this.props.match.params.lotId}`, {
+      method: "DELETE",
+      headers: {
+        'Accept': 'application/json;charset=UTF-8',
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Access-Control-Allow-Headers': 'authorization',
+        'Authorization': `Bearer ${token || ''}`
+      }
+    })
+      .then(resp => {
+        console.log('resp', resp);
+        if (resp.status == 200) {
+          this.setState({
+            lot: {
+              id: 0,
+              price: 0,
+              coordinates: {
+                address: '',
+                longitude: 0,
+                latitude: 0
+              },
+              description: {
+                lotName: '',
+                lotDescription: '',
+                pictureIds: [],
+                urls: []
+              }
+            }
+          });
+        }
+        return resp.json()
+      })
+      .then(data => {
+        console.log('DATA', data);
+        if (data.message) {
+          this.setState({
+            responseStatusVisible: true,
+            responseText: data.message
+          });
+        }
+        else {
+          this.setState({
+            responseStatusVisible: true,
+            responseText: data.cause
+          });
+        }
+        console.log(this.state)
+      });
+
+  };
+
   render() {
     const { styles } = this.props;
-    const { lot : {	id,	price, coordinates : { address, longitude, latitude }, description : { lotName, lotDescription, pictureIds, urls } } } = this.state;
+    const { lot: { id, price, coordinates: { address, longitude, latitude }, description: { lotName, lotDescription, pictureIds, urls } }, responseStatusVisible } = this.state;
     return (
       <div className={styles.detailsPage}>
       		<h1>{id} . {lotName}</h1>
@@ -84,6 +142,7 @@ export default class DetailsPage extends Component {
             </div>
           </div>
       </div>
+
     );
   }
 }
