@@ -28,11 +28,27 @@
   font-size: 28px;
   font-weight: 600;
   letter-spacing: 1px;
+  margin-left: 15px;
   &:hover {
     text-decoration: none;
     color: #fff;
     text-shadow: 1px 5px 10px rgb(235, 229, 229), 0px 0px 10px  rgb(235, 229, 229), -2px -2px 5px  rgb(235, 229, 229);
   }
+}
+
+.logoIcon{
+  display: inline-block;
+  height: 30px;
+  width: 24px;
+  background-image: url("./images/map-marker-alt-solid.svg");
+  background-size: cover;
+  color: white;
+  margin-right: 5px;
+}
+
+.logoIcon:hover{
+  background-position-y: 5px;
+  height: 25px;
 }
 
 .navItem {

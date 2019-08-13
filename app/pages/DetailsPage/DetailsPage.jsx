@@ -68,17 +68,21 @@ export default class DetailsPage extends Component {
     return (
       <div className={styles.detailsPage}>
       		<h1>{id} . {lotName}</h1>
-          <div className={styles.imagesWrapper}>{urls.map(item => <div key={item}><img src={item} /></div>)}</div>
-      		<h2>Цена:</h2>
-          <div>{price} грн.</div>
-          <h2>Адрес лота:</h2>
-          <div>address {address}</div>
-          <div>longitude {longitude}</div>
-          <div>latitude {latitude}</div>
-          <h2>Описание лота:</h2>
-          <div>{lotDescription}</div>
-          <h2>pictureIds</h2>
-          <div>pictureIds {pictureIds.map(item => <div key={item}>picture id {item} </div>)}</div>
+          <div className={styles.detailsPageCont}>
+            <div className={styles.imagesWrapper}>{urls.map(item => <div key={item}><img src={item} /></div>)}</div>
+            <div className={styles.infoWrapper}>
+              <h2>Цена:</h2>
+              <div>{price} грн.</div>
+              <h2>Адрес лота:</h2>
+              <div>address {address}</div>
+              <div>longitude {longitude}</div>
+              <div>latitude {latitude}</div>
+              <h2>Описание лота:</h2>
+              <div>{lotDescription}</div>
+              <h2>pictureIds</h2>
+              <div>pictureIds {pictureIds.map(item => <div key={item}>picture id {item} </div>)}</div>
+            </div>
+          </div>
       </div>
     );
   }
