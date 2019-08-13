@@ -15,7 +15,7 @@ class Header extends Component {
     return (
       <nav className={styles.nav}>
         <div className={styles.container}>
-          <Link to="/" className={styles.logo}>Geo<div className={styles.logoIcon}></div>Rent</Link>
+          <Link to="/" className={styles.logo}>Geo<span className={styles.logoIcon}></span>Rent</Link>
           <ul className={styles.navList}>
             <li>
               <Link to="/lots" className={styles.navItem}>Lots</Link>
