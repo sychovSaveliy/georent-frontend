@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
 import Field from 'components/common/Field';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { baseUrl, getData } from 'utils/api';
 import { Button } from 'primereact/button';
+import {Growl} from "primereact/growl";
 
-export default class ProfilePage extends Component {
+
+class ProfilePage extends Component {
   static propTypes = {
     styles: PropTypes.object.isRequired
   };
@@ -169,31 +171,28 @@ export default class ProfilePage extends Component {
         }),
       })
         .then(resp => {
-          console.log('resp', resp);
-          if (resp.status < 300) {
-            this.setState({
-              firstName: '',
-              lastName: '',
-              phoneNumber: ''
-            });
-          }
           return resp.json();
         })
         .then(data => {
-          console.log('DATA', data)
           if (data.message) {
+            this.growl.show({severity: 'success', summary: `${data.message}`});
             this.setState({
               newPassVisible: false,
               responseStatusVisible: true,
               responseText: data.message
             });
           } else {
+            this.growl.show({severity: 'error', summary: `${data.cause}`});
             this.setState({
               newPassVisible: false,
               responseStatusVisible: true,
               responseText: data.cause
             });
           }
+        })
+        .catch(error => {
+          console.log('ERROR')
+          this.growl.show({severity: 'error', summary: `${error.message}`});
         });
     }
   };
@@ -250,7 +249,6 @@ export default class ProfilePage extends Component {
           return resp.json()
         })
         .then(data => {
-          console.log('DATA', data)
           if (data.message) {
             this.setState({
               responseStatusVisible: true,
@@ -272,6 +270,7 @@ export default class ProfilePage extends Component {
     const { user, values, errors, responseStatusVisible, newPassVisible } = this.state;
     return (
       <div className={styles.feature}>
+        <Growl ref={(el) => this.growl = el} />
         <Helmet>
           <title>Profile Page</title>
           <meta
@@ -293,19 +292,12 @@ export default class ProfilePage extends Component {
             </div>
           }
           <div className="form-container card">
-            {responseStatusVisible &&
-              <div>
-                <h2>
-                  {this.state.responseText}
-                </h2>
-              </div>
-            }
             <form className="form card-body">
               {!newPassVisible &&
                 <div>
                   <Field
                     id="firstName"
-                    labelText="firstName"
+                    labelText="First Name"
                     type="text"
                     placeholder={values.firstName}
                     name="firstName"
@@ -315,7 +307,7 @@ export default class ProfilePage extends Component {
                   />
                   <Field
                     id="lastName"
-                    labelText="User lastName"
+                    labelText="Last Name"
                     type="text"
                     placeholder={values.lastName}
                     name="lastName"
@@ -325,7 +317,7 @@ export default class ProfilePage extends Component {
                   />
                   <Field
                     id="phoneNumber"
-                    labelText="phoneNumber"
+                    labelText="Phone Number"
                     type="text"
                     placeholder={values.phoneNumber}
                     name="phoneNumber"
@@ -342,9 +334,13 @@ export default class ProfilePage extends Component {
                   </Button>
                   <Button
                     label='Save'
-                    type="submit"
                     className="btn"
-                    onClick={this.onSubmit}
+                    onClick={(e) => {
+                      this.onSubmit(e);
+                      setTimeout(() => {
+                        this.props.history.push("/profile")
+                      }, 2500);
+                    }}
                   >
                   </Button>
                   <Button
@@ -403,3 +399,5 @@ export default class ProfilePage extends Component {
     );
   }
 }
+
+export default withRouter(ProfilePage);

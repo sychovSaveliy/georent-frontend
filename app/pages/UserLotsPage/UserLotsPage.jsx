@@ -8,7 +8,7 @@ export default class UserLotsPage extends Component {
   static propTypes = {
     styles: PropTypes.object.isRequired
   }
-  
+
   constructor() {
     super();
     this.state = {
@@ -25,7 +25,6 @@ export default class UserLotsPage extends Component {
         }
       })
       .then(resp => {
-        console.log('resp', resp);
         return resp.text()
       .then(text => {
           const data = text && JSON.parse(text);
@@ -33,7 +32,6 @@ export default class UserLotsPage extends Component {
               if ([401, 403].indexOf(resp.status) !== -1) {
                   this.props.onExit();
                   this.props.history.push('/login');
-                  //location.reload(true);
               }
               const error = (data && data.message) || resp.statusText;
               return Promise.reject(error);
@@ -41,9 +39,8 @@ export default class UserLotsPage extends Component {
           return data;
         });
       })
-      .then(data => 
+      .then(data =>
         {
-          console.log('DATA', data);
           this.setState({
             lotsAll: data
           });
@@ -56,7 +53,6 @@ export default class UserLotsPage extends Component {
     const { lotsAll } = this.state;
     return (
       <div>
-        { console.log(this.props.isLogged) }
         <div className={styles.content}>
         { this.props.isLogged &&
           <LotsList lots={lotsAll} />

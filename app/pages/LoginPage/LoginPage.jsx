@@ -1,8 +1,10 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import Field from 'components/common/Field';
-import {baseUrl} from 'utils/api';
+import { baseUrl } from 'utils/api';
 import PropTypes from 'prop-types';
-import {Button} from 'primereact/button';
+import { Button } from 'primereact/button';
+import { Growl } from "primereact/growl";
+import { withRouter } from "react-router-dom";
 
 class LoginPage extends Component {
   static propTypes = {
@@ -26,11 +28,6 @@ class LoginPage extends Component {
     };
   };
 
-  // componentDidMount = () => {
-  //   this.setState({
-  //     newPassVisible: this.props.location.pathname === "/login/newpass"
-  //   });
-  // }
   onChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value
@@ -50,9 +47,8 @@ class LoginPage extends Component {
       responseText: ""
     });
   };
-  onForgotSubmit = (event) => {
-    event.preventDefault();
-    const {email} = this.state;
+  onForgotSubmit = () => {
+    const { email } = this.state;
     const api = window.location.origin;
     fetch(`${baseUrl}forgotpassword`,
       {
@@ -69,33 +65,35 @@ class LoginPage extends Component {
       }
     )
       .then(resp => {
-        console.log('resp onForgot', resp);
         if (resp.status === 301) {
           this.setState({
             tokenType: '',
             accessToken: '',
             password: ''
-            // repeatPassword: ''
           });
-          this.setState({forgotPassVisible: false});
+          this.setState({ forgotPassVisible: false });
         }
         return resp.json()
       })
       .then(data => {
-        console.log('DATA', data)
         if (data) {
           if (data.message) {
+            this.growl.show({ severity: 'success', summary: `${data.message}` });
             this.setState({
               responseStatusVisible: true,
               responseText: data.message
             });
           } else {
+            this.growl.show({ severity: 'success', summary: `${data.cause}` });
             this.setState({
               responseStatusVisible: true,
               responseText: data.cause
             });
           }
         }
+      })
+      .catch(error => {
+        this.growl.show({ severity: 'error', summary: `${error.message}` });
       });
   };
 
@@ -125,8 +123,7 @@ class LoginPage extends Component {
       this.setState({
         errors: {}
       });
-
-      const {email, password} = this.state;
+      const { email, password } = this.state;
       fetch(`${baseUrl}login`, {
         method: "POST",
         body: JSON.stringify({
@@ -138,106 +135,102 @@ class LoginPage extends Component {
         }
       })
         .then(resp => {
-          console.log('resp', resp);
           return resp.json()
         })
         .then(data => {
-          console.log('DATA', data);
           if (data) {
             if (data.accessToken) {
               window.localStorage.setItem("jwt", data.accessToken);
               this.props.onLogin();
-              window.location.assign('/?main=""&path=profile');
+              this.props.history.push("/profile")
             } else if (data.message) {
+              console.log('DATA', data)
+              this.growl.show({ severity: 'error', summary: `${data.message}` });
               this.setState({
                 responseStatusVisible: true,
                 responseText: data.message
               });
             }
           }
+        })
+        .catch(error => {
+          this.growl.show({ severity: 'error', summary: `${error.message}` });
         });
     }
   };
 
   render() {
-    const {styles} = this.props;
-    const {responseStatusVisible, responseText, forgotPassVisible, newPassVisible} = this.state;
+    const { styles } = this.props;
+    const { responseStatusVisible, responseText, forgotPassVisible, newPassVisible } = this.state;
     return (
       <div className={styles.loginPage}>
+        <Growl ref={(el) => this.growl = el} />
         <h2>Login Form</h2>
         <div className={styles.form}>
-          {responseStatusVisible &&
-          <div className={styles.loginPage_message}>
-            <h2>
-              {responseText}
-            </h2>
-          </div>
-          }
-
           {forgotPassVisible &&
-          <div>
-            <Field
-              id="email"
-              labelText="Email"
-              type="text"
-              placeholder="Enter email"
-              name="email"
-              value={this.state.email}
-              onChange={this.onChange}
-              error={this.state.errors.email}
-            />
-            <Button
-              label='Send'
-              type="submit"
-              className="btn"
-              onClick={this.onForgotSubmit}
-            >
-            </Button>
-            <Button
-              label='Back'
-              type="button"
-              className="btn"
-              onClick={this.onForgotBack}
-            >
-            </Button>
-          </div>
+            <div>
+              <Field
+                id="email"
+                labelText="Email"
+                type="text"
+                placeholder="Enter email"
+                name="email"
+                value={this.state.email}
+                onChange={this.onChange}
+                error={this.state.errors.email}
+              />
+              <Button
+                label='Send'
+                type="button"
+                className="btn"
+                onClick={this.onForgotSubmit}
+              >
+              </Button>
+              <Button
+                label='Back'
+                type="button"
+                className="btn"
+                onClick={this.onForgotBack}
+              >
+              </Button>
+            </div>
           }
 
           {!forgotPassVisible &&
-          <div>
-            <Field
-              id="email"
-              labelText="Email"
-              type="text"
-              placeholder="Enter email"
-              name="email"
-              value={this.state.email}
-              onChange={this.onChange}
-              error={this.state.errors.email}
-            />
-            <Field
-              id="password"
-              labelText="Password"
-              type="password"
-              placeholder="Enter password"
-              name="password"
-              value={this.state.password}
-              onChange={this.onChange}
-              error={this.state.errors.password}
-            />
-            <Button
-              label="Enter"
-              type="submit"
-              className="btn"
-              onClick={this.onSubmit}
-            />
-            <Button
-              label="Forgot password"
-              type="button"
-              className="btn"
-              onClick={this.onForgot}
-            />
-          </div>
+            <div>
+              <Field
+                id="email"
+                labelText="Email"
+                type="text"
+                placeholder="Enter email"
+                name="email"
+                value={this.state.email}
+                onChange={this.onChange}
+                error={this.state.errors.email}
+              />
+              <Field
+                id="password"
+                labelText="Password"
+                type="password"
+                placeholder="Enter password"
+                name="password"
+                value={this.state.password}
+                onChange={this.onChange}
+                error={this.state.errors.password}
+              />
+              <Button
+                label="Enter"
+                type="button"
+                className="btn"
+                onClick={this.onSubmit}
+              />
+              <Button
+                label="Forgot password"
+                type="button"
+                className="btn"
+                onClick={this.onForgot}
+              />
+            </div>
           }
         </div>
       </div>
@@ -245,4 +238,4 @@ class LoginPage extends Component {
   }
 }
 
-export default LoginPage;
+export default withRouter(LoginPage);

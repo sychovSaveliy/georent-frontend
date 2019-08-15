@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import { Link } from 'react-router-dom';
 import {Helmet} from 'react-helmet';
 import Field from 'components/common/Field';
 import Textarea from 'components/common/Textarea';
@@ -7,9 +6,9 @@ import PropTypes from 'prop-types';
 import {baseUrl, getData} from 'utils/api';
 import {Button} from 'primereact/button';
 import {Growl} from 'primereact/growl';
+import { withRouter } from 'react-router-dom';
 
-
-export default class ProfilePage extends Component {
+class ProfilePage extends Component {
   static propTypes = {
     styles: PropTypes.object.isRequired
   };
@@ -24,7 +23,7 @@ export default class ProfilePage extends Component {
         longitude: "30.520000",
         latitude: "50.350000",
         lotDescription: "lotDescription lotDescription lotDescription lotDescription",
-        avatar: ""
+        avatar: []
       },
       errors: {
         lotName: false,
@@ -54,18 +53,18 @@ export default class ProfilePage extends Component {
   onChangeImg = event => {
     const reader = new FileReader();
     reader.onload = event => {
+      const pic = this.state.values.avatar;
+      pic.push(event.target.result)
       const newValues = {
         ...this.state.values,
-        avatar: event.target.result
+        avatar: pic
       };
       this.setState({
         values: newValues
       });
     };
-    reader.readAsDataURL(event.target.files[0]);
-    console.log(this.state.avatar)
+    [...event.target.files].map((el) => reader.readAsDataURL(el))
   };
-
 
   onReset = () => {
     this.setState({
@@ -105,9 +104,6 @@ export default class ProfilePage extends Component {
     return errors;
   };
 
-  showSuccess = () => {
-    this.growl.show({severity: 'success', summary: 'Success Message', detail: 'Order submitted'});
-  }
 
   onSubmit = event => {
     // event.preventDefault();
@@ -134,8 +130,18 @@ export default class ProfilePage extends Component {
       };
       lot = JSON.stringify(lot);
       form.append('lot', lot);
-      let imagedata = document.querySelector('input[type="file"]').files;
+      // let imagedata = document.querySelector('input[type="file"]').files[0];
+      let imagedata = this.state.values.avatar;
       form.append('files', imagedata);
+
+      let imagedataBase64 = this.state.values.avatar;
+      if (imagedataBase64[0] == null) {
+        form.append('filesBase64',"")
+      }
+      imagedataBase64.forEach(file => {
+        form.append('filesBase64',file)
+      });
+
       fetch(`${baseUrl}user/lot/upload-picture`, {
         method: 'POST',
         headers: {
@@ -143,7 +149,28 @@ export default class ProfilePage extends Component {
           'Authorization': `Bearer ${window.localStorage.getItem("jwt") || ''}`,
         },
         body: form
-      });
+      }).then(resp => {
+        return resp.json();
+      })
+        .then(data => {
+          if (data.message) {
+            this.growl.show({severity: 'success', summary: `${data.message}`});
+            this.setState({
+              responseStatusVisible: true,
+              responseText: data.message
+            });
+          } else {
+            this.growl.show({severity: 'error', summary: `${data.cause}`});
+            this.setState({
+              responseStatusVisible: true,
+              responseText: data.cause
+            });
+          }
+        })
+        .catch(error => {
+          this.growl.show({severity: 'error', summary: `${error.message}`});
+        });
+
     }
   };
 
@@ -160,7 +187,7 @@ export default class ProfilePage extends Component {
           <Growl ref={(el) => this.growl = el} />
           <Field
             id="lotName"
-            labelText="lotName"
+            labelText="Lot Name"
             type="text"
             placeholder="Enter lotName"
             name="lotName"
@@ -170,7 +197,7 @@ export default class ProfilePage extends Component {
           />
           <Field
             id="price"
-            labelText="price"
+            labelText="Price"
             type="text"
             placeholder="Enter price"
             name="price"
@@ -180,7 +207,7 @@ export default class ProfilePage extends Component {
           />
           <Field
             id="address"
-            labelText="address"
+            labelText="Address"
             type="text"
             placeholder="Enter address"
             name="address"
@@ -190,7 +217,7 @@ export default class ProfilePage extends Component {
           />
           <Field
             id="longitude"
-            labelText="longitude"
+            labelText="Longitude"
             type="text"
             placeholder="Enter longitude"
             name="longitude"
@@ -200,7 +227,7 @@ export default class ProfilePage extends Component {
           />
           <Field
             id="latitude"
-            labelText="latitude"
+            labelText="Latitude"
             type="text"
             placeholder="Enter latitude"
             name="latitude"
@@ -218,9 +245,10 @@ export default class ProfilePage extends Component {
             onChange={this.onChange}
             error={errors.lotDescription}
           />
-          <div className='avatar'>
-            {!(values.avatar) ? <img src='./images/default-avatar.59337bae.png' alt=''/> :
-              <img src={values.avatar} alt=''/>}
+          <div className='lot_image'>
+            {!(values.avatar) ? null :
+               ((values.avatar).map((el, i) => <img key={i} src={el} alt=''/>))
+              }
           </div>
           <div className="form-group">
             <div className="custom-file">
@@ -244,12 +272,10 @@ export default class ProfilePage extends Component {
             >
             </Button>
               <Button onClick={() => {
-                this.showSuccess();
                 this.onSubmit();
-                setTimeout(() => {
-                  this.onSubmit();
-                  window.location.assign('/profile');
-                }, 1000);
+                setTimeout(() =>
+                  this.props.history.push("/profile")
+                , 3000);
               }} label="Create Lot" className="btn" />
           </div>
         </div>
@@ -257,3 +283,5 @@ export default class ProfilePage extends Component {
     );
   }
 }
+
+export default withRouter(ProfilePage);
