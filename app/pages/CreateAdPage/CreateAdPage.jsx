@@ -83,7 +83,7 @@ class ProfilePage extends Component {
     let errors = {};
     let textRegExp = /^[a-zа-яієїґ'\s]{2,30}$/i,
       numberRegExp = /^[0-9]{1,10}$/i;
-    if (values.lotName.length < 3 && !textRegExp.test(values.lotName)) {
+    if (values.lotName.length < 3 || !textRegExp.test(values.lotName)) {
       errors.lotName = "Must be 3 characters or more, only letters";
     }
     if (!values.price.length && !numberRegExp.test(values.price)) {
@@ -107,7 +107,6 @@ class ProfilePage extends Component {
 
   onSubmit = event => {
     // event.preventDefault();
-    console.log(1)
     let errors = this.formValidator(this.state.values);
     if (Object.keys(errors).length > 0) {
       // fail
@@ -119,6 +118,7 @@ class ProfilePage extends Component {
       this.setState({
         errors: {}
       });
+      console.log('AFTER')
       const {lotName, price, address, longitude, latitude, lotDescription, avatar} = this.state.values;
       let form = new FormData();
       let lot = {
@@ -156,6 +156,9 @@ class ProfilePage extends Component {
       })
         .then(data => {
           if (data.message) {
+            setTimeout(() =>
+                this.props.history.push("/profile")
+              , 2000);
             this.growl.show({severity: 'success', summary: `${data.message}`});
             this.setState({
               responseStatusVisible: true,
@@ -273,12 +276,7 @@ class ProfilePage extends Component {
               onClick={this.onReset}
             >
             </Button>
-              <Button onClick={() => {
-                this.onSubmit();
-                setTimeout(() =>
-                  this.props.history.push("/profile")
-                , 3000);
-              }} label="Create Lot" className="btn" />
+              <Button onClick={() => this.onSubmit()} label="Create Lot" className="btn" />
           </div>
         </div>
       </div>
