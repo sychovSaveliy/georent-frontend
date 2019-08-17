@@ -83,6 +83,7 @@ class ProfilePage extends Component {
     let errors = {};
     let textRegExp = /^[a-zа-яієїґ'\s]{2,100}$/i,
       nameRegExp = /^[a-zа-яієїґ'\s\d\-._]{2,100}$/i,
+      addressRegExp = /^[a-zа-яієїґ'\s\d\-._;:,/]{2,100}$/i,
       numberRegExp = /^[0-9.]{1,10}$/i;
     if (values.lotName.length < 3 || !nameRegExp.test(values.lotName)) {
       errors.lotName = "Must be 3 characters or more, only letters";
@@ -90,7 +91,7 @@ class ProfilePage extends Component {
     if (values.price.length < 1 || !numberRegExp.test(values.price)) {
       errors.price = "Must be only numbers";
     }
-    if (values.address.length < 3 || !textRegExp.test(values.address)) {
+    if (values.address.length < 3 || !addressRegExp.test(values.address)) {
       errors.address = "Must be 3 characters or more";
     }
     if (values.longitude.length < 3 || !numberRegExp.test(values.longitude)) {
