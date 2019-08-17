@@ -86,7 +86,7 @@ class ProfilePage extends Component {
     if (values.lotName.length < 3 || !textRegExp.test(values.lotName)) {
       errors.lotName = "Must be 3 characters or more, only letters";
     }
-    if (!values.price.length || !numberRegExp.test(values.price)) {
+    if (values.price.length < 1 || !numberRegExp.test(values.price)) {
       errors.price = "Must be only numbers";
     }
     if (values.address.length < 3 || !textRegExp.test(values.address)) {
