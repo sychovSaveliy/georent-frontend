@@ -86,7 +86,7 @@ class ProfilePage extends Component {
     if (values.lotName.length < 3 && !textRegExp.test(values.lotName)) {
       errors.lotName = "Must be 3 characters or more, only letters";
     }
-    if (values.price.length < 3 && !numberRegExp.test(price.userSurname)) {
+    if (!values.price.length && !numberRegExp.test(values.price)) {
       errors.price = "Must be only numbers";
     }
     if (values.address.length < 3 && !textRegExp.test(values.address)) {
@@ -107,6 +107,7 @@ class ProfilePage extends Component {
 
   onSubmit = event => {
     // event.preventDefault();
+    console.log(1)
     let errors = this.formValidator(this.state.values);
     if (Object.keys(errors).length > 0) {
       // fail
@@ -133,6 +134,7 @@ class ProfilePage extends Component {
       // let imagedata = document.querySelector('input[type="file"]').files[0];
       let imagedata = this.state.values.avatar;
       form.append('files', imagedata);
+      console.log('INPUT', document.querySelector('#avatar').files)
 
       let imagedataBase64 = this.state.values.avatar;
       if (imagedataBase64[0] == null) {
