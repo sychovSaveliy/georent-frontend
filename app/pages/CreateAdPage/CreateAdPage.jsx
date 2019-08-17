@@ -98,9 +98,9 @@ class ProfilePage extends Component {
     if (values.latitude.length < 3 || !numberRegExp.test(values.latitude)) {
       errors.latitude = "Must be 3 characters or more";
     }
-    if (values.lotDescription.length < 3 || !textRegExp.test(values.lotDescription)) {
-      errors.lotDescription = "Must be 3 characters or more";
-    }
+    // if (values.lotDescription.length < 3 || !textRegExp.test(values.lotDescription)) {
+    //   errors.lotDescription = "Must be 3 characters or more";
+    // }
     return errors;
   };
 
