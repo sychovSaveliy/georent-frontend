@@ -81,24 +81,24 @@ class ProfilePage extends Component {
   };
   formValidator = (values) => {
     let errors = {};
-    let textRegExp = /^[a-zа-яієїґ'\s]{2,30}$/i,
-      numberRegExp = /^[0-9]{1,10}$/i;
+    let textRegExp = /^[a-zа-яієїґ'\s]{2,100}$/i,
+      numberRegExp = /^[0-9.]{1,10}$/i;
     if (values.lotName.length < 3 || !textRegExp.test(values.lotName)) {
       errors.lotName = "Must be 3 characters or more, only letters";
     }
-    if (!values.price.length && !numberRegExp.test(values.price)) {
+    if (!values.price.length || !numberRegExp.test(values.price)) {
       errors.price = "Must be only numbers";
     }
-    if (values.address.length < 3 && !textRegExp.test(values.address)) {
+    if (values.address.length < 3 || !textRegExp.test(values.address)) {
       errors.address = "Must be 3 characters or more";
     }
-    if (values.longitude.length < 3 && !textRegExp.test(values.longitude)) {
+    if (values.longitude.length < 3 || !numberRegExp.test(values.longitude)) {
       errors.longitude = "Must be 3 characters or more";
     }
-    if (values.latitude.length < 3 && !textRegExp.test(values.latitude)) {
+    if (values.latitude.length < 3 || !numberRegExp.test(values.latitude)) {
       errors.latitude = "Must be 3 characters or more";
     }
-    if (values.lotDescription.length < 3 && !textRegExp.test(values.lotDescription)) {
+    if (values.lotDescription.length < 3 || !textRegExp.test(values.lotDescription)) {
       errors.lotDescription = "Must be 3 characters or more";
     }
     return errors;
