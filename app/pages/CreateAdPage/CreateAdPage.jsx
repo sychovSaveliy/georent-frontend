@@ -82,8 +82,9 @@ class ProfilePage extends Component {
   formValidator = (values) => {
     let errors = {};
     let textRegExp = /^[a-zа-яієїґ'\s]{2,100}$/i,
+      nameRegExp = /^[a-zа-яієїґ'\s\d\-._]{2,100}$/i,
       numberRegExp = /^[0-9.]{1,10}$/i;
-    if (values.lotName.length < 3 || !textRegExp.test(values.lotName)) {
+    if (values.lotName.length < 3 || !nameRegExp.test(values.lotName)) {
       errors.lotName = "Must be 3 characters or more, only letters";
     }
     if (values.price.length < 1 || !numberRegExp.test(values.price)) {
