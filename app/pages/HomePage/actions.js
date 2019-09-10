@@ -15,7 +15,7 @@
  *    }
  */
 
-import { CHANGE_USERNAME } from './constants';
+import {CHANGE_USERNAME, SET_ALL_LOTS} from './constants';
 
 /**
  * Changes the input field of the form
@@ -30,3 +30,5 @@ export function changeUsername(name) {
     name
   };
 }
+
+export const setAllLots = (data) => ({ type: SET_ALL_LOTS, payload: data });

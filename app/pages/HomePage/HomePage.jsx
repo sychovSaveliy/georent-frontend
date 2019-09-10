@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import LotsList from 'components/LotsList';
@@ -60,6 +61,10 @@ class HomePage extends Component {
 
   setData = (url, target) => {
     getData(url).then((data) => {
+      if (target === 'lotsAll') {
+        console.log('setAlllots', this.props.setAllLots)
+        this.props.setAllLots(data);
+      }
       if (data.lots) {
         this.setState({
           [target]: data
@@ -137,4 +142,8 @@ class HomePage extends Component {
   }
 }
 
-export default HomePage;
+const mapStateToProps = (state) => ({
+
+});
+
+export default connect()(HomePage);

@@ -11,7 +11,13 @@ const makeSelectUsername = () => createSelector(
   (homeState) => homeState.get('username')
 );
 
+const makeSelectAllLots = () => createSelector(
+  selectHome,
+  (homeState) => homeState.get('allLots')
+);
+
 export {
   selectHome,
   makeSelectUsername,
+  makeSelectAllLots
 };

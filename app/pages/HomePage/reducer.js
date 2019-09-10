@@ -11,18 +11,17 @@
  */
 import { fromJS } from 'immutable';
 
-import { CHANGE_USERNAME } from './constants';
+import { SET_ALL_LOTS } from './constants';
 
 // The initial state of the App
 const initialState = fromJS({
-  username: ''
+  allLots: ['test']
 });
 
 function homeReducer(state = initialState, action) {
   switch (action.type) {
-    case CHANGE_USERNAME:
-      // Delete prefixed '@' from the github username
-      return state.set('username', action.name.replace(/@/gi, ''));
+    case SET_ALL_LOTS:
+      return state.set('allLots', action.payload);
     default:
       return state;
   }

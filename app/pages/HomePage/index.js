@@ -12,27 +12,20 @@ import {
   makeSelectError
 } from 'App/selectors';
 import { loadRepos } from 'App/actions';
-import { changeUsername } from './actions';
-import { makeSelectUsername } from './selectors';
+import { setAllLots } from './actions';
+import { makeSelectAllLots } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 
 import styles from './styles.scss';
 import HomePage from './HomePage';
 
-const mapDispatchToProps = (dispatch) => ({
-  onChangeUsername: (evt) => dispatch(changeUsername(evt.target.value)),
-  onSubmitForm: (evt) => {
-    if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-    dispatch(loadRepos());
-  }
-});
+const mapDispatchToProps = {
+  setAllLots
+};
 
 const mapStateToProps = createStructuredSelector({
-  repos: makeSelectRepos(),
-  username: makeSelectUsername(),
-  loading: makeSelectLoading(),
-  error: makeSelectError()
+  allLots: makeSelectAllLots()
 });
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
