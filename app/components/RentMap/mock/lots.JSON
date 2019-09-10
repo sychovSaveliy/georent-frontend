@@ -1,0 +1,13 @@
+{
+  "list": [{
+        "lotName": "lotName",
+        "price": "price",
+        "address": "address",
+        "longitude": "longitude",
+        "latitude": "latitude",
+        "lotDescription": "lotDescription",
+      },
+    ]
+}
+
+

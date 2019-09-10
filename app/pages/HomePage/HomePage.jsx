@@ -11,8 +11,7 @@ import { Paginator } from 'primereact/paginator';
 
 class HomePage extends Component {
   static propTypes = {
-    styles: PropTypes.object.isRequired,
-    setAllLots: () => PropTypes.func,
+    styles: PropTypes.object.isRequired
   };
 
   state = {
@@ -25,7 +24,6 @@ class HomePage extends Component {
       lots: [],
       totalPages: 0
     },
-    lotsAll: [],
     andOr: false,
     myRef: React.createRef()
   };
@@ -63,7 +61,7 @@ class HomePage extends Component {
   setData = (url, target) => {
     getData(url).then((data) => {
       if (target === 'lotsAll') {
-        this.props.setAllLots(data);
+        setAllLots(data);
       }
       if (data.lots) {
         this.setState({
@@ -97,10 +95,9 @@ class HomePage extends Component {
   };
 
   render() {
-    const { styles } = this.props;
+    const { styles, lotsAll } = this.props;
     const {
       currentPageLots: { totalPages, lots },
-      lotsAll,
       first,
       itemsPerPage,
       andOr
@@ -133,7 +130,7 @@ class HomePage extends Component {
           </div>
           <div className={styles.homePageRight}>
             <div ref={this.state.myRef} id="rentMap">
-              <RentMap lots={lotsAll} />
+              <RentMap />
             </div>
           </div>
         </div>
@@ -141,9 +138,5 @@ class HomePage extends Component {
     );
   }
 }
-
-const mapStateToProps = (state) => ({
-
-});
 
 export default connect()(HomePage);
