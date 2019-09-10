@@ -57,8 +57,6 @@
     "react-router-redux": "5.0.0-alpha.6",
     "react-transition-group": "^4.2.2",
     "redux": "3.7.2",
-    "redux-immutable": "4.0.0",
-    "redux-saga": "0.16.2",
     "reselect": "4.0.0",
     "resolve-url-loader": "^3.1.0",
     "sanitize.css": "8.0.0",
