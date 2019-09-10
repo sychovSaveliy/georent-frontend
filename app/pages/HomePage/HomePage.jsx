@@ -11,7 +11,8 @@ import { Paginator } from 'primereact/paginator';
 
 class HomePage extends Component {
   static propTypes = {
-    styles: PropTypes.object.isRequired
+    styles: PropTypes.object.isRequired,
+    setAllLots: () => PropTypes.func,
   };
 
   state = {
@@ -62,7 +63,6 @@ class HomePage extends Component {
   setData = (url, target) => {
     getData(url).then((data) => {
       if (target === 'lotsAll') {
-        console.log('setAlllots', this.props.setAllLots)
         this.props.setAllLots(data);
       }
       if (data.lots) {

@@ -5,9 +5,6 @@
  * code.
  */
 
-// Needed for redux-saga es6 generator support
-import '@babel/polyfill';
-
 // Import all the third party stuff
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -27,7 +24,7 @@ import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 
-import configureStore from './configureStore';
+import store from './store';
 
 // Observe loading of Open Sans (to remove open sans, remove the <link> tag in
 // the index.html file and this observer)
@@ -41,9 +38,7 @@ openSansObserver.load().then(() => {
 });
 
 // Create redux store with history
-const initialState = {};
 const history = createHistory();
-const store = configureStore(initialState, history);
 const MOUNT_NODE = document.getElementById('app');
 
 const render = () => {
