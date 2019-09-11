@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import LotsList from 'components/LotsList';
@@ -23,7 +24,6 @@ class HomePage extends Component {
       lots: [],
       totalPages: 0
     },
-    lotsAll: [],
     andOr: false,
     myRef: React.createRef()
   };
@@ -60,6 +60,9 @@ class HomePage extends Component {
 
   setData = (url, target) => {
     getData(url).then((data) => {
+      if (target === 'lotsAll') {
+        setAllLots(data);
+      }
       if (data.lots) {
         this.setState({
           [target]: data
@@ -92,10 +95,9 @@ class HomePage extends Component {
   };
 
   render() {
-    const { styles } = this.props;
+    const { styles, lotsAll } = this.props;
     const {
       currentPageLots: { totalPages, lots },
-      lotsAll,
       first,
       itemsPerPage,
       andOr
@@ -128,7 +130,7 @@ class HomePage extends Component {
           </div>
           <div className={styles.homePageRight}>
             <div ref={this.state.myRef} id="rentMap">
-              <RentMap lots={lotsAll} />
+              <RentMap />
             </div>
           </div>
         </div>
@@ -137,4 +139,4 @@ class HomePage extends Component {
   }
 }
 
-export default HomePage;
+export default connect()(HomePage);

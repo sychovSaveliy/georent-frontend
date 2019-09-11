@@ -1,11 +1,34 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import {
-  Map as LeafletMap, TileLayer, Marker, Popup
-} from 'react-leaflet';
-const RentMap = ({ styles, lots }) => {
-  return (
+import { baseUrl, getData } from 'utils/api';
+import { Map as LeafletMap, TileLayer, Marker, Popup } from 'react-leaflet';
+import {connect} from 'react-redux';
+import { fetchLots } from 'actions/index'
+import { lotsList } from './mock/lots'
+
+class RentMap extends Component  {
+  static propTypes = {
+    styles: PropTypes.object.isRequired,
+    lots: PropTypes.array.isRequired,
+    fetchLots: PropTypes.func,
+  };
+
+  componentDidMount = () => {
+    const { lots, fetchLots } = this.props
+    console.log('lots',lots)
+    fetchLots(lotsList.list)
+/*      fetch(`${baseUrl}lot/`)
+        .then(response => response.json())
+        .then(data => {
+          console.log(data)
+          this.props.fetchLots(data.lots)
+        })*/
+  };
+
+  render() {
+    const { styles, lots } = this.props;
+    return (
       <LeafletMap
         center={[50.436795, 30.5305163]}
         zoom={10}
@@ -29,19 +52,18 @@ const RentMap = ({ styles, lots }) => {
             </Popup>
           </Marker>
           )
-/*          <Marker key={item.id} position={[50.436795, 30.5305163]}>
-            <Popup>
-              {item.id} {item.lotName}
-            </Popup>
-          </Marker> */
         )}
       </LeafletMap>
-);
-};
+    );
+  }
+}
 
-RentMap.propTypes = {
-  styles: PropTypes.object.isRequired,
-  lots: PropTypes.array.isRequired,
-};
+const mapStateToProps = (state) => ({
+  lots: state.lots
+})
 
-export default RentMap;
+const mapDispatchToProps = {
+  fetchLots: fetchLots
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(RentMap);
