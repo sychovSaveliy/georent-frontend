@@ -4,53 +4,30 @@ import { Link } from 'react-router-dom';
 import { baseUrl, getData } from 'utils/api';
 import { Map as LeafletMap, TileLayer, Marker, Popup } from 'react-leaflet';
 import {connect} from 'react-redux';
-import { setAllLots } from 'actions/index'
-const lotsList = {
-  "list": [{
-        "id": "id",
-        "lotName": "lotName",
-        "price": "price",
-        "address": "address",
-        "coordinates": {
-          "longitude": 30.5805163,
-          "latitude": 50.436795,           
-        },
-        "lotDescription": "lotDescription",
-      },
-      {
-        "id": "id1",
-        "lotName": "lotName",
-        "price": "price",
-        "address": "address",
-        "coordinates": {
-          "longitude": 30.5305163,
-          "latitude": 50.436795,           
-        },
-        "lotDescription": "lotDescription",
-      },
-    ]
-}
+import { fetchLots } from 'actions/index'
+import { lotsList } from './mock/lots'
 
 class RentMap extends Component  {
   static propTypes = {
     styles: PropTypes.object.isRequired,
-    allLots: PropTypes.array.isRequired,
-    setAllLots: PropTypes.func,
+    lots: PropTypes.array.isRequired,
+    fetchLots: PropTypes.func,
   };
 
   componentDidMount = () => {
+    const { lots, fetchLots } = this.props
+    console.log('lots',lots)
+    fetchLots(lotsList.list)
 /*      fetch(`${baseUrl}lot/`)
         .then(response => response.json())
         .then(data => {
           console.log(data)
-          this.props.setAllLots(data.lots)
+          this.props.fetchLots(data.lots)
         })*/
-        this.props.setAllLots(lotsList.list)
-
   };
 
   render() {
-    const { styles, allLots } = this.props;
+    const { styles, lots } = this.props;
     return (
       <LeafletMap
         center={[50.436795, 30.5305163]}
@@ -68,7 +45,7 @@ class RentMap extends Component  {
         <TileLayer
           url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
         />
-        {allLots.map((item) => (
+        {lots.map((item) => (
           <Marker key={item.id} position={[item.coordinates.latitude, item.coordinates.longitude]}>
             <Popup>
               <Link to={`user/lot/${item.id}`}>{item.lotName}</Link>
@@ -82,11 +59,11 @@ class RentMap extends Component  {
 }
 
 const mapStateToProps = (state) => ({
-  allLots: state.allLots
+  lots: state.lots
 })
 
 const mapDispatchToProps = {
-  setAllLots: setAllLots
+  fetchLots: fetchLots
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RentMap);

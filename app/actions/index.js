@@ -1,7 +1,12 @@
-import {SET_ALL_LOTS} from './ActionTypes';
+import {FETCH_LOTS} from './ActionTypes';
 
-const setAllLots = (lots) => ({type: SET_ALL_LOTS, payload: lots});
+const fetchLots = (lots) => (
+		{
+			type: FETCH_LOTS,
+			payload: lots
+		}
+	);
 
 export {
-  setAllLots,
+  fetchLots,
 };

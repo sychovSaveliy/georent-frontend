@@ -1,8 +1,8 @@
-import {SET_ALL_LOTS} from '../actions/ActionTypes';
+import {FETCH_LOTS} from '../actions/ActionTypes';
 
 const lotsReducer = (lotsState = [], action) => {
   switch (action.type) {
-    case SET_ALL_LOTS:
+    case FETCH_LOTS:
       return action.payload;
     default:
       return lotsState;
