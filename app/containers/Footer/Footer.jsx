@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 const Footer = ({ styles }) => (
   <footer className={styles.footer}>
-    <section>Copyright </section>
-    <section>GeoRent</section>
+    <span className={styles.copyright}>Copyright &copy;</span>
+    <section><h1>Geo<span className={styles.logoIcon}></span>Rent</h1></section>
   </footer>
 );
 

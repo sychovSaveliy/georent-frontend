@@ -1,9 +1,14 @@
 footer {
   display: flex;
-  justify-content: space-between;
-  padding: 3em 0;
+  justify-content: flex-end !important;
+  padding: 0.2em 1em !important;
   max-width: 1140px;
   margin: 0 auto;
+  position: relative;
+  border-top: 2px solid #ba05ba;
+  background:linear-gradient(35deg, #ba05ba 60%, white 0);
+  opacity: .85;
+
 
   a {
     color: #41addd;
@@ -11,5 +16,29 @@ footer {
     &:hover {
       color: #6cc0e5;
     }
+  }
+
+  .copyright{
+    position: absolute;
+    bottom: 5px;
+    left: 20px;
+    color: white;
+  }
+
+  h1{
+    padding: 2px 2px 2px 2px !important;
+    font-weight: 900;
+    color: #ba05ba;
+  }
+  .logoIcon{
+    display: inline-block;
+    height: 31px;
+    width: 24px;
+    background-image: url("./images/map-marker-alt-solid.svg");
+    background-size: cover;
+    color: white;
+    margin-right: 5px;
+    position: relative;
+    bottom: 1px;
   }
 }

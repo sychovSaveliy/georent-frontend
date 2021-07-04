@@ -4,8 +4,19 @@
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
   background-color: white;
   padding: 20px 30px;
+  h2{
+    text-shadow: 1px 2px 3px gray;
+  }
   .profileEditWrapper {
     width: 40%;
+    min-width: 350px;
+    div{
+      margin: 5px 0px 25px 0px;
+    }
+    a:hover{
+    text-decoration: none;
+    font-weight: bold;
+    }
   }
   h1 {
     font-size: 2em;
